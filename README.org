@@ -1,0 +1,45 @@
+* emacsbridge
+
+Emacsbridge is a tool to bridge some activities between the Emacs and Android world. It expects an Emacs daemon running and listening to TCP, typically in [[https://termux.com/][Termux]]. On Android side a foreground service is running to receive messages from Emacs.
+
+Actions from Android side are sent as Lisp to be evaluated in Emacs through the Emacs daemon. Actions from Emacs are sent as JSON over HTTP.
+
+** Getting started
+
+On Android access to Emacs' server socket is not available due to Androids security policies. Therefore Emacs needs to be configured to [[https://www.gnu.org/software/emacs/manual/html_node/emacs/TCP-Emacs-server.html][use the TCP server]]. Host, port and auth key should be manually set - the host to avoid having the server listening on anything but localhost, the other two as they need to be configured in the Android application. Without setting them statically they'd change on every server restart, requiring a manual settings change:
+
+#+BEGIN_SRC Emacs-lisp
+(setq server-use-tcp 1
+      server-host "127.0.0.1"
+      server-port 60325
+      server-auth-key "generated-auth-key")
+#+END_SRC
+
+A valid auth key needs to be generated with =server-generate-key=.
+
+Once the Emacs TCP server the auth key needs to be configured on Android side.
+
+When developing on the PC the socket connection can be used. Running the =pc-init.sh= sets sane values (assuming an Emacs with a server is running locally).
+
+** Known issues
+
+This is an initial proof of concept, barely working, with a lot of issues. Those are only some of them:
+
+- service doesn't autostart after boot
+- opening/restoring application from service notification is not working
+- error handling in Emacs daemon communication is mostly absent, causing the occasional temporary lockup
+- on pc, destructor isn't reliably called, leaving service process running now and then
+- stuff on server side (including settings) need to be properly exposed to the UI; UI needs to properly handle signals of property changes
+- especially the current structure of Emacsclient class is probably not a very sensible approach
+- secure the API. This requires:
+  - properly track configuration state
+  - set token on emacs side
+  - only accept secured requests once initialised
+- have a proper setup page in the ui, replaced by the status page once config is initialised
+- have the default page selectable in settings
+- the web server currently mainly has locations to test how this thing behaves
+- some parts of the implementation are a bit messed up due to reality of stuff running on Android being different from the original expectation
+
+To see what goes over the local socket, start socat and adjust socket address:
+
+while true; do echo "Restart."; socat -v GOPEN:/tmp/Emacs1000/server UNIX-LISTEN:/tmp/es; done

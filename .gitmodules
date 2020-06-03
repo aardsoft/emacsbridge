@@ -1,0 +1,3 @@
+[submodule "qthttpserver"]
+	path = qthttpserver
+	url = https://codereview.qt-project.org/qt-labs/qthttpserver

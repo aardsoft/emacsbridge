@@ -1,0 +1,9 @@
+#include <QDateTime>
+#include "emacsbridgesettings.h"
+
+class EmacsBridgeRemote{
+    PROP(QString authToken SOURCEONLYSETTER);
+    PROP(QDateTime startupTime SOURCEONLYSETTER);
+    SLOT(void setQuery(const QString &query));
+    SIGNAL(queryFinished(const QString &query));
+}
