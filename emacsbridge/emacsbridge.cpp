@@ -51,7 +51,9 @@ EmacsBridge::EmacsBridge(QObject *parent)
   connect(m_rep.data(), SIGNAL(queryFinished(QString)),
           this, SLOT(updateQueryResult(QString)));
 
-  connect(this, SIGNAL(notificationChanged()), this, SLOT(updateNotification()));
+  //connect(this, SIGNAL(notificationChanged()), this, SLOT(updateNotification()));
+  connect(m_rep.data(), SIGNAL(notificationAdded(QString, QString)),
+          this, SLOT(updateNotification(QString, QString)));
 }
 
 void EmacsBridge::setNotification(const QString &notification){
@@ -114,7 +116,7 @@ QString EmacsBridge::queryResult() const{
   return m_queryResult;
 }
 
-void EmacsBridge::updateNotification(){
+void EmacsBridge::updateNotification(const QString &title, const QString &message){
 #ifdef __ANDROID_API__
   QAndroidJniObject javaNotification=QAndroidJniObject::fromString(m_notification);
   QAndroidJniObject jNotificationTitle=QAndroidJniObject::fromString("Notification title");
@@ -126,9 +128,8 @@ void EmacsBridge::updateNotification(){
     javaNotification.object<jstring>(),
     jNotificationTitle.object<jstring>());
 #else
-  m_trayIcon->showMessage("Title",
-                          m_notification);
-
+  m_trayIcon->showMessage(title,
+                          message);
 #endif
 }
 

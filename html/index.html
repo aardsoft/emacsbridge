@@ -30,5 +30,18 @@
   "http://localhost:1616/settings")))</code>
 
     <p>For a dynamic key this needs to be repeated on every start of Emacs. After the initial configuration the http auth key is required for that. Code to handle that (including re-trying if the application is not available on emacs startup) will be part of the support libraries.</p>
+
+    <p>If the above steps finished without error it should now be possible to trigger notifications via RPC:</p>
+
+<code>(let ((url-request-method "POST")
+      (url-request-extra-headers
+       `(("Content-Type" ."application/json")
+         ("auth-token" . ,emacsbridge-auth-token)
+         ("method" . "notification")))
+      (url-request-data "{\"title\": \"Title from Emacs\", \"text\": \"Notification sent from Emacs via RPC\"}"))
+  (switch-to-buffer (url-retrieve-synchronously
+                     "http://localhost:1616/rpc")))</code>
+
+    <p>Additional resources: <a href="/lisp/">Lisp files</a>, <a href="/images/">Application icons</a></p>
   </body>
 </html>

@@ -23,3 +23,7 @@ void EmacsBridgeRemote::clientQueryFinished(const QString &queryKey, const QStri
   // TODO: keep track of query keys coming from the remote object, and only send those back there
   emit queryFinished(queryResult);
 }
+
+void EmacsBridgeRemote::displayNotification(const QString &title, const QString &message){
+  emit notificationAdded(title, message);
+}

@@ -5,6 +5,10 @@
  * @date 2020
  */
 
+#ifdef __ANDROID_API__
+#include <QtAndroid>
+#endif
+
 #include "emacsservice.h"
 #include "emacsbridgesettings.h"
 
@@ -19,17 +23,44 @@ EmacsService::EmacsService(): QThread(){
 
   m_client=EmacsClient::instance();
   connect(settings, SIGNAL(settingChanged(QString)), this, SLOT(settingChanged(QString)));
+
+  // on Android the notification needs to come from the service, while on PC
+  // it comes from the GUI process, making this a bit complicated.
+#ifdef __ANDROID_API__
+  connect(&m_server, SIGNAL(notificationAdded(QString, QString)),
+          this, SLOT(displayNotification(QString, QString)));
+#else
+  connect(&m_server, SIGNAL(notificationAdded(QString, QString)),
+          &m_remote, SLOT(displayNotification(QString, QString)));
+#endif
+
   start();
 }
 
 EmacsService::~EmacsService(){
 }
 
+void EmacsService::displayNotification(const QString &title, const QString &message){
+#ifdef __ANDROID_API__
+  QAndroidJniObject javaNotification=QAndroidJniObject::fromString(message);
+  QAndroidJniObject jNotificationTitle=QAndroidJniObject::fromString(title);
+  QAndroidJniObject::callStaticMethod<void>(
+    "fi/aardsoft/emacsbridge/EmacsBridgeNotification",
+    "notify",
+    "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V",
+    QtAndroid::androidContext().object(),
+    javaNotification.object<jstring>(),
+    jNotificationTitle.object<jstring>());
+#endif
+}
+
 void EmacsService::settingChanged(const QString &key){
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
 
   qDebug() << "Setting changed signal for " << key;
-  if (key=="remoteSocket/secret"){
-    m_remote.setAuthToken(settings->value(key).toString());
+  if (key.startsWith("localSocket/") || key.startsWith("networkSocket/")){
+    if (m_client->isSetup()){
+      settings->setValue("core/configured", true);
+    }
   }
 }

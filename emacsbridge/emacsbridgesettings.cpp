@@ -55,14 +55,15 @@ EmacsBridgeSettings::EmacsBridgeSettings(): QSettings(){
 void EmacsBridgeSettings::setValue(const QString &key, const QVariant &value){
   if (QSettings::value(key) == QVariant()){
     qDebug()<< "setting initial value on " << key;
+    QSettings::setValue(key, value);
     if (m_initialized)
       emit settingChanged(key);
   } else if (QSettings::value(key) == value){
     qDebug()<< "value didn't change for " << key;
   } else {
+    QSettings::setValue(key, value);
     if (m_initialized)
       emit settingChanged(key);
     qDebug()<< "new value for " << key;
   }
-  QSettings::setValue(key, value);
 }

@@ -19,6 +19,8 @@ class EmacsClient: public QThread{
   public slots:
     bool queryAgent(const QString &query);
     QString queryResult() const;
+    bool isConnected();
+    bool isSetup();
 
   private:
     EmacsClient();
@@ -30,10 +32,10 @@ class EmacsClient: public QThread{
     QString m_queryString, m_queryResult;
 
   private slots:
-    void doQuery();
+    QString doQuery(const QString &query, bool ownQuery=false);
 
   signals:
-    void queryStarted();
+    void queryStarted(const QString &query);
     void queryFinished(const QString &queryKey, const QString &queryResult);
 };
 

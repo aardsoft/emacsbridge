@@ -10,6 +10,7 @@
 #endif
 
 #include <QTcpSocket>
+#include <QRandomGenerator>
 
 #include "emacsclient.h"
 #include "emacsbridgesettings.h"
@@ -41,7 +42,7 @@ store a ready state, and only accept changes if ready state is back to normal.
 have configurable timer which pings emacs in regular intervals (important on android where emacs might get killed)
  */
 EmacsClient::EmacsClient(): QThread(), m_exitThread(false), m_queryActive(false){
-  connect(this, SIGNAL(queryStarted()), this, SLOT(doQuery()), Qt::DirectConnection);
+  connect(this, SIGNAL(queryStarted(QString)), this, SLOT(doQuery(QString)), Qt::DirectConnection);
 
   start();
 }
@@ -54,15 +55,55 @@ EmacsClient::~EmacsClient(){
   qDebug()<< "...done";
 }
 
-void EmacsClient::doQuery(){
-  qDebug()<< "Executing query: " << m_queryString;
+bool EmacsClient::isSetup(){
+  EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
+  QString queryTemplate="(customize-save-variable 'emacsbridge-auth-token \"%1\")";
+  QString authToken=settings->value("core/auth-token").toString();
+
+  if (authToken=="")
+    return false;
+
+  QString stringResult=doQuery(queryTemplate.arg(authToken));
+
+  if (stringResult==authToken){
+    qDebug()<< authToken << "==" << stringResult;
+    return true;
+  } else {
+    qDebug()<< stringResult;
+    return false;
+  }
+}
+
+bool EmacsClient::isConnected(){
+  quint32 a=QRandomGenerator::global()->bounded(256);
+  quint32 b=QRandomGenerator::global()->bounded(256);
+  quint32 r=a+b;
+  QString queryTemplate="(+ %1 %2)";
+
+  QString stringResult=doQuery(queryTemplate.arg(a).arg(b), true);
+
+  bool ok;
+  quint32 qr=stringResult.toInt(&ok, 10);
+
+  if (ok && qr==r){
+    qDebug()<<"OK: expected " << r << ", got " << qr;
+    return true;
+  } else {
+    qDebug()<<"Error: expected " << r << ", got " << qr << "(" << ok << ")";
+    return true;
+  }
+}
+
+QString EmacsClient::doQuery(const QString &query, bool ownQuery){
+  QString escapedQuery=query;
+  qDebug()<< "Executing query: " << query;
   m_queryActive=false;
 
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
-  m_queryString.replace("&", "&&");
-  m_queryString.replace(" ", "&_");
-  m_queryString.replace("\n", "&n");
-  //m_queryString.replace("-", "&-");
+  escapedQuery.replace("&", "&&");
+  escapedQuery.replace(" ", "&_");
+  escapedQuery.replace("\n", "&n");
+  //escapedQuery.replace("-", "&-");
 
 #ifndef __ANDROID_API__
   int socketType=settings->value("core/socketType", 0).toInt();
@@ -76,13 +117,13 @@ void EmacsClient::doQuery(){
 
     if (!socket.isOpen()){
       qDebug()<< "Problem opening socket " << socketPath;
-      return;
+      return "";
     }
 
-    socket.write(queryTemplate.arg(m_queryString).toLocal8Bit());
+    socket.write(queryTemplate.arg(escapedQuery).toLocal8Bit());
     if (!socket.waitForBytesWritten(100)){
       qDebug()<< "Issue writing";
-      return;
+      return "";
     }
 
     while (socket.waitForReadyRead()){
@@ -115,19 +156,19 @@ void EmacsClient::doQuery(){
 
     if(!socket.waitForConnected(5000)){
       qDebug()<< "Error: " << socket.errorString();
-      return;
+      return "";
     }
 
     qDebug() << "Query: " << queryTemplate
       .arg(networkSecret)
-      .arg(m_queryString).toLocal8Bit();
+      .arg(escapedQuery).toLocal8Bit();
     socket.write(queryTemplate
                  .arg(networkSecret)
-                 .arg(m_queryString).toLocal8Bit());
+                 .arg(escapedQuery).toLocal8Bit());
 
     if (!socket.waitForBytesWritten(100)){
       qDebug()<< "Issue writing";
-      return;
+      return "";
     }
 
     while (socket.waitForReadyRead()){
@@ -157,7 +198,10 @@ void EmacsClient::doQuery(){
   m_queryResult.replace("&-", "-");
   m_queryResult.replace("&&", "&");
 
-  emit queryFinished("", m_queryResult);
+  if (!ownQuery)
+    emit queryFinished("", m_queryResult);
+
+  return m_queryResult;
 }
 
 bool EmacsClient::queryAgent(const QString &query){
@@ -168,7 +212,7 @@ bool EmacsClient::queryAgent(const QString &query){
 
   m_queryString=query;
   m_queryActive=true;
-  emit queryStarted();
+  emit queryStarted(m_queryString);
   return true;
 }
 

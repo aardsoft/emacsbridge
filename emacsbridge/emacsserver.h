@@ -23,11 +23,16 @@ class EmacsServer: public QThread{
   private:
     QHttpServer m_server;
     QDateTime m_startupTime;
+    QString m_htmlTemplate;
+
+    QString listDirectory(const QString &directory);
+    QHttpServerResponse methodCall(const QString &method, const QByteArray &payload);
+    QHttpServerResponse settingCall(const QString &setting, const QByteArray &payload);
 
   private slots:
 
   signals:
-
+    void notificationAdded(const QString &title, const QString &message);
 };
 
 #endif

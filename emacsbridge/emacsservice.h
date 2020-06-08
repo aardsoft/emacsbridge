@@ -32,8 +32,10 @@ class EmacsService: public QThread{
 
   private slots:
     void settingChanged(const QString &key);
+    void displayNotification(const QString &title, const QString &message);
 
   signals:
+    void notificationAdded(const QString &title, const QString &message);
 
 };
 

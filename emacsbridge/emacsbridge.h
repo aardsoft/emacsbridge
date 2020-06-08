@@ -49,7 +49,7 @@ class EmacsBridge: public QObject{
     void queryFinished();
 
   private slots:
-    void updateNotification();
+    void updateNotification(const QString &title, const QString &message);
     void updateQueryResult(const QString &result);
 
   private:

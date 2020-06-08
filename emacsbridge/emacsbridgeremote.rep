@@ -6,4 +6,5 @@ class EmacsBridgeRemote{
     PROP(QDateTime startupTime SOURCEONLYSETTER);
     SLOT(void setQuery(const QString &query));
     SIGNAL(queryFinished(const QString &query));
+    SIGNAL(notificationAdded(const QString &title, const QString &message));
 }
