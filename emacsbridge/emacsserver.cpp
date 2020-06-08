@@ -20,10 +20,6 @@ EmacsServer::EmacsServer(): QThread(){
                         return QHttpServerResponse::fromFile(QStringLiteral(":/html/index.html"));
                       });
 
-  m_server.route("/assets/<arg>", [](const QUrl &url){
-                                     return url.path();
-                                   });
-
   m_server.route("/lisp/<arg>", [this](const QUrl &url){
                                   if (url.path()=="")
                                     return QHttpServerResponse(listDirectory(":/lisp"));

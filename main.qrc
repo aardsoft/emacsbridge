@@ -8,5 +8,7 @@
         <file>images/icon.png</file>
         <file>images/icon_mini.png</file>
         <file>html/index.html</file>
+        <file>lisp/emacsbridge-rpc.el</file>
+        <file>lisp/alert-emacsbridge.el</file>
     </qresource>
 </RCC>

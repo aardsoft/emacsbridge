@@ -6,20 +6,64 @@ Actions from Android side are sent as Lisp to be evaluated in Emacs through the 
 
 ** Getting started
 
-On Android access to Emacs' server socket is not available due to Androids security policies. Therefore Emacs needs to be configured to [[https://www.gnu.org/software/emacs/manual/html_node/emacs/TCP-Emacs-server.html][use the TCP server]]. Host, port and auth key should be manually set - the host to avoid having the server listening on anything but localhost, the other two as they need to be configured in the Android application. Without setting them statically they'd change on every server restart, requiring a manual settings change:
+On Android access to Emacs' server socket is not available due to Androids security policies. Therefore Emacs needs to be configured to [[https://www.gnu.org/software/emacs/manual/html_node/emacs/TCP-Emacs-server.html][use the TCP server]]. Host and port should be manually set - the host to avoid having the server listening on anything but localhost, the port as it needs to be configured in the Android application.
+
+Setting =server-auth-key= prevents the key from changing every emacs restart, but tends to cause interesting problems. A better approach is to use the dynamic key generation, and call =emacsbridge-push-auth-key= on every start, making sure the call succeeds (i.e., Android application is running).
 
 #+BEGIN_SRC Emacs-lisp
 (setq server-use-tcp 1
       server-host "127.0.0.1"
-      server-port 60325
-      server-auth-key "generated-auth-key")
+      server-port 60325)
 #+END_SRC
 
-A valid auth key needs to be generated with =server-generate-key=.
+Once Emacs is started with the TCP server the connection to the Android application needs to be set up. The easiest way for this is opening eww in Emacs, navigating to http://localhost:1616/ and evaluating the three lisp snippets there:
 
-Once the Emacs TCP server the auth key needs to be configured on Android side.
+#+CAPTION: Setup page in eww
+[[./doc/setup_page.png]]
+
+Doing so will first set the current server key in the Android application:
+
+#+CAPTION: Confirmation of server key change
+[[./doc/setup_auth_key.png]]
+
+Then have the Android application test the connectivity, which sets =emacsbridge-auth-token= as custom variable (i.e, persistent), and marks the Android application as fully configured, which causes the RPC interfaces to required the auth token for reconfiguration. Pay attention to the status code and messages:
+
+#+CAPTION: Successful initialisation
+[[./doc/setup_OK_status.png]]
+
+With that part of the setup completed a test notification can be triggered:
+
+#+CAPTION: Test notification
+[[./doc/setup_notification.png]]
+
+To work correctly the Android application needs to run a foreground service. The UI can be closed at any time without impacting operation. The notification about the background service does nothing useful, and can be ignored by long-pressing on it.
 
 When developing on the PC the socket connection can be used. Running the =pc-init.sh= sets sane values (assuming an Emacs with a server is running locally).
+
+** Additional configuration
+
+To interface with the RPC interface loading the =emacsbridge-rpc= library is recommended. It also is available [[http://localhost:1616/emacsbridge-rpc.el][through the embedded web server.]]
+
+For notifications =emacsbridge-rpc.el= provides a backend to [[https://github.com/jwiegley/alert][alert.el]] ([[http://localhost:1616/lisp/alert-emacsbridge.el][local server]]). To use it as default backend configure =alert-default-style=, through customisation or directly:
+
+#+BEGIN_SRC Emacs-lisp
+(require 'alert-emacsbridge)
+(setq alert-default-style 'emacsbridge)
+#+END_SRC
+
+With this configured the following should trigger a notification on Android side:
+
+#+BEGIN_SRC Emacs-lisp
+(alert "Test")
+#+END_SRC
+
+#+CAPTION: Test notification from scratch
+[[./doc/test_from_scratch.png]]
+
+Other applications capable of using alert.el can make use of it. This shows a [[https://github.com/zevlg/telega.el][telega]] query notification:
+
+#+CAPTION: Notification from telega
+[[./doc/telega_notification.png]]
 
 ** Known issues
 
@@ -30,15 +74,8 @@ This is an initial proof of concept, barely working, with a lot of issues. Those
 - error handling in Emacs daemon communication is mostly absent, causing the occasional temporary lockup
 - on pc, destructor isn't reliably called, leaving service process running now and then
 - stuff on server side (including settings) need to be properly exposed to the UI; UI needs to properly handle signals of property changes
-- especially the current structure of Emacsclient class is probably not a very sensible approach
-- secure the API. This requires:
-  - properly track configuration state
-  - set token on emacs side
-  - only accept secured requests once initialised
 - have a proper setup page in the ui, replaced by the status page once config is initialised
 - have the default page selectable in settings
-- the web server currently mainly has locations to test how this thing behaves
-- some parts of the implementation are a bit messed up due to reality of stuff running on Android being different from the original expectation
 
 To see what goes over the local socket, start socat and adjust socket address:
 
