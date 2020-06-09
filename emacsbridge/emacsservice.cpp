@@ -15,6 +15,12 @@
 EmacsService::EmacsService(): QThread(){
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
 
+  QDir dir;
+  if (!dir.mkpath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)+"/qml"))
+    qDebug()<< "Creating storage in "
+            << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+            << " failed. Some things will not work.";
+
   m_startupTime=QDateTime::currentDateTime();
   m_remote.setStartupTime(m_startupTime);
 
