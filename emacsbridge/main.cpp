@@ -52,10 +52,22 @@ int main(int argc, char **argv){
 
     qmlRegisterType<EmacsBridge>("fi.aardsoft.emacsbridge",1,0,"EmacsBridge");
     engine.rootContext()->setContextProperty("emacsBridge", new EmacsBridge);
-    engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
 
-    if (engine.rootObjects().isEmpty())
-      return -1;
+    QDir dir;
+    if (dir.exists(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+                   +"/qml/main.qml")){
+      qDebug()<<"Trying to load main.qml from " << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+      engine.load(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+                  +"/qml/main.qml");
+    }else
+      engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+
+    if (engine.rootObjects().isEmpty()){
+      qDebug()<<"(Re-)trying load of internal qml";
+      engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+      if (engine.rootObjects().isEmpty())
+        return -1;
+    }
 
     return app.exec();
   } else if (argc>1 && strcmp(argv[1], "-service")==0){
