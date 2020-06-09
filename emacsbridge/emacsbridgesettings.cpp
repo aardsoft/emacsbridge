@@ -7,6 +7,7 @@
 
 #include <QDebug>
 #include <QUuid>
+#include <QStandardPaths>
 #include "emacsbridgesettings.h"
 
 EmacsBridgeSettings *EmacsBridgeSettings::emacsBridgeSettings=0;
@@ -19,7 +20,10 @@ EmacsBridgeSettings *EmacsBridgeSettings::instance(){
   return emacsBridgeSettings;
 }
 
-EmacsBridgeSettings::EmacsBridgeSettings(): QSettings(){
+EmacsBridgeSettings::EmacsBridgeSettings():
+  QSettings(
+    QStandardPaths::writableLocation(QStandardPaths::AppConfigLocation)+"/servicesettings.ini",
+    QSettings::IniFormat){
   int settingsVersion=value("core/version", 1).toInt();
 
   if (settingsVersion<=1){

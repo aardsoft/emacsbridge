@@ -24,7 +24,7 @@
 #include "emacsservice.h"
 
 void init(){
-  QCoreApplication::setOrganizationName("AardSoft");
+  QCoreApplication::setOrganizationName("Aardsoft");
   QCoreApplication::setOrganizationDomain("aardsoft.fi");
   QCoreApplication::setApplicationName("emacsbridge");
   QCoreApplication::setApplicationVersion("0.1");
