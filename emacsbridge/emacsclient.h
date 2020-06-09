@@ -9,16 +9,33 @@
 #define _EMACSCLIENT_H
 
 #include <QtCore>
+#include <QIODevice>
 
-class EmacsClient: public QThread{
+class EmacsClient: public QObject{
     Q_OBJECT
 
   public:
+    enum LispType{
+      Invalid,
+      String,
+      Number,
+      Object,
+      Error,
+    };
+    struct Query{
+        QString key;
+        QString queryString;
+    };
+    struct QueryResult{
+        QString key;
+        QString result;
+        LispType type;
+        QDateTime timestamp;
+    };
     static EmacsClient *instance();
 
   public slots:
-    bool queryAgent(const QString &query);
-    QString queryResult() const;
+    bool queryAgent(const QString &queryKey, const QString &queryString);
     bool isConnected();
     bool isSetup();
 
@@ -26,17 +43,17 @@ class EmacsClient: public QThread{
     EmacsClient();
     ~EmacsClient();
     static EmacsClient *emacsClient;
-    QWaitCondition m_cond;
-    bool m_exitThread, m_queryActive;
-    QMutex m_mutex;
-    QString m_queryString, m_queryResult;
+    QString query(const QString &queryKey, const QString &queryString, QIODevice &socket);
+    QQueue<Query> queries;
 
   private slots:
-    QString doQuery(const QString &query, bool ownQuery=false);
+    QString doQuery(const QString &queryKey, const QString &queryString);
 
   signals:
-    void queryStarted(const QString &query);
+    void queryStarted(const QString &queryKey, const QString &queryString);
     void queryFinished(const QString &queryKey, const QString &queryResult);
+    void queryFinished(const QueryResult &result);
+    void queryError(const QString &queryKey, const QString &errorMessage);
 };
 
 #endif

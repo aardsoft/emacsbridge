@@ -15,6 +15,8 @@
 #include <QCoreApplication>
 #endif
 
+#include <QUuid>
+
 #include "emacsbridgesettings.h"
 
 EmacsBridge::EmacsBridge(QObject *parent)
@@ -22,18 +24,8 @@ EmacsBridge::EmacsBridge(QObject *parent)
   m_startupTime=QDateTime::currentDateTime();
 
 #ifndef __ANDROID_API__
-  QMenu *trayIconMenu=new QMenu();
-  trayIconMenu->setObjectName("trayIconMenu");
-  trayIconMenu->installEventFilter(this);
-
-  m_trayIcon=new QSystemTrayIcon(this);
-  m_trayIcon->setContextMenu(trayIconMenu);
-  m_trayIcon->setIcon(QIcon(":/images/icon_mini.png"));
-  m_trayIcon->show();
-
   qDebug()<< "Starting service process";
   startServiceProcess();
-
 #else
   QAndroidJniObject::callStaticMethod<void>(
     "fi/aardsoft/emacsbridge/EmacsBridgeService",
@@ -47,21 +39,22 @@ EmacsBridge::EmacsBridge(QObject *parent)
   bool res=m_rep->waitForSource();
   Q_ASSERT(res);
 
+#ifndef __ANDROID_API__
+  QMenu *trayIconMenu=new QMenu();
+  trayIconMenu->setObjectName("trayIconMenu");
+  trayIconMenu->installEventFilter(this);
 
-  connect(m_rep.data(), SIGNAL(queryFinished(QString)),
-          this, SLOT(updateQueryResult(QString)));
+  m_trayIcon=new QSystemTrayIcon(this);
+  m_trayIcon->setContextMenu(trayIconMenu);
+  m_trayIcon->setIcon(QIcon(":/images/icon_mini.png"));
+  m_trayIcon->show();
 
-  //connect(this, SIGNAL(notificationChanged()), this, SLOT(updateNotification()));
   connect(m_rep.data(), SIGNAL(notificationAdded(QString, QString)),
           this, SLOT(updateNotification(QString, QString)));
-}
+#endif
 
-void EmacsBridge::setNotification(const QString &notification){
-  if (m_notification==notification)
-    return;
-
-  m_notification=notification;
-  emit notificationChanged();
+  connect(m_rep.data(), SIGNAL(queryFinished(QString, QString)),
+          this, SLOT(updateQueryResult(QString, QString)));
 }
 
 EmacsBridge::~EmacsBridge(){
@@ -88,16 +81,8 @@ void EmacsBridge::startServiceProcess(){
 }
 #endif
 
-QString EmacsBridge::notification() const{
-  return m_notification;
-}
-
-// TODO: would be better to add a sequence number here
-void EmacsBridge::setQuery(const QString &query){
-  qDebug()<< "Sending query to emacs: " << query;
-
-  m_query=query;
-  m_rep->setQuery(m_query);
+void EmacsBridge::runQuery(const QString &queryKey, const QString &query){
+  m_rep->setQuery(queryKey, query);
 }
 
 QDateTime EmacsBridge::startupTime() const{
@@ -108,33 +93,14 @@ QDateTime EmacsBridge::serviceStartupTime() const{
   return m_rep->startupTime();
 }
 
-QString EmacsBridge::query() const{
-  return m_query;
-}
-
-QString EmacsBridge::queryResult() const{
-  return m_queryResult;
-}
-
+#ifndef __ANDROID_API__
 void EmacsBridge::updateNotification(const QString &title, const QString &message){
-#ifdef __ANDROID_API__
-  QAndroidJniObject javaNotification=QAndroidJniObject::fromString(m_notification);
-  QAndroidJniObject jNotificationTitle=QAndroidJniObject::fromString("Notification title");
-  QAndroidJniObject::callStaticMethod<void>(
-    "fi/aardsoft/emacsbridge/EmacsBridgeNotification",
-    "notify",
-    "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;)V",
-    QtAndroid::androidContext().object(),
-    javaNotification.object<jstring>(),
-    jNotificationTitle.object<jstring>());
-#else
   m_trayIcon->showMessage(title,
                           message);
-#endif
 }
+#endif
 
-void EmacsBridge::updateQueryResult(const QString &result){
-  qDebug()<< "Update query result";
-  m_queryResult=result;
-  emit queryFinished();
+void EmacsBridge::updateQueryResult(const QString &queryKey, const QString &result){
+  // TODO: should cache query key, result and timestamp
+  emit queryFinished(queryKey, result);
 }

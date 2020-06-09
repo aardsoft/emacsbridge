@@ -12,16 +12,22 @@ EmacsBridgeRemote::EmacsBridgeRemote(QObject *parent): EmacsBridgeRemoteSimpleSo
 
   connect(m_client, SIGNAL(queryFinished(QString, QString)),
           this, SLOT(clientQueryFinished(QString, QString)));
+  connect(m_client, SIGNAL(queryError(QString, QString)),
+          this, SLOT(clientQueryError(QString, QString)));
 }
 
-void EmacsBridgeRemote::setQuery(const QString &query){
-  qDebug()<< "Received query from replica: " << query;
-  m_client->queryAgent(query);
+void EmacsBridgeRemote::setQuery(const QString &queryKey, const QString &query){
+  m_client->queryAgent(queryKey, query);
+}
+
+void EmacsBridgeRemote::clientQueryError(const QString &queryKey, const QString &error){
+  // TODO: keep track of query keys coming from the remote object, and only send those back there
+  emit queryFinished(queryKey, error);
 }
 
 void EmacsBridgeRemote::clientQueryFinished(const QString &queryKey, const QString &queryResult){
   // TODO: keep track of query keys coming from the remote object, and only send those back there
-  emit queryFinished(queryResult);
+  emit queryFinished(queryKey, queryResult);
 }
 
 void EmacsBridgeRemote::displayNotification(const QString &title, const QString &message){

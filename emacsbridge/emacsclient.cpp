@@ -5,6 +5,8 @@
  * @date 2020
  */
 
+#define OWN_QUERY_KEY "EmacsClient::OwnQuery"
+
 #ifndef __ANDROID_API__
 #include <QLocalSocket>
 #endif
@@ -41,18 +43,19 @@ store a ready state, and only accept changes if ready state is back to normal.
 
 have configurable timer which pings emacs in regular intervals (important on android where emacs might get killed)
  */
-EmacsClient::EmacsClient(): QThread(), m_exitThread(false), m_queryActive(false){
-  connect(this, SIGNAL(queryStarted(QString)), this, SLOT(doQuery(QString)), Qt::DirectConnection);
+EmacsClient::EmacsClient(): QObject(){
+  connect(this, SIGNAL(queryStarted(QString, QString)), this, SLOT(doQuery(QString, QString)));
 
-  start();
+  // this used to be a thread class with a reimplementation of QThread::run,
+  // which didn't behave properly on Android. Currently this is running in the
+  // main thread, which can block the service process if it's waiting for emacs
+  // to reply. With all calls now having query keys it should now be safe to
+  // move just the emacs server query to a new thread, and have this class throw
+  // incoming queries into a QQueue
+  //start();
 }
 
 EmacsClient::~EmacsClient(){
-  qDebug()<< "Destroying EmacsClient instance...";
-  m_exitThread=true;
-  quit();
-  wait();
-  qDebug()<< "...done";
 }
 
 bool EmacsClient::isSetup(){
@@ -63,7 +66,7 @@ bool EmacsClient::isSetup(){
   if (authToken=="")
     return false;
 
-  QString stringResult=doQuery(queryTemplate.arg(authToken));
+  QString stringResult=doQuery(OWN_QUERY_KEY, queryTemplate.arg(authToken));
 
   if (stringResult==authToken){
     qDebug()<< authToken << "==" << stringResult;
@@ -80,7 +83,7 @@ bool EmacsClient::isConnected(){
   quint32 r=a+b;
   QString queryTemplate="(+ %1 %2)";
 
-  QString stringResult=doQuery(queryTemplate.arg(a).arg(b), true);
+  QString stringResult=doQuery(OWN_QUERY_KEY, queryTemplate.arg(a).arg(b));
 
   bool ok;
   quint32 qr=stringResult.toInt(&ok, 10);
@@ -94,10 +97,68 @@ bool EmacsClient::isConnected(){
   }
 }
 
-QString EmacsClient::doQuery(const QString &query, bool ownQuery){
-  QString escapedQuery=query;
-  qDebug()<< "Executing query: " << query;
-  m_queryActive=false;
+QString EmacsClient::query(const QString &queryKey, const QString &queryString, QIODevice &socket){
+  int returnType=Invalid;
+  QString queryResult="";
+  QueryResult result;
+  result.key=queryKey;
+  result.timestamp=QDateTime::currentDateTime();
+
+  socket.write(queryString.toLocal8Bit());
+  if (!socket.waitForBytesWritten(100)){
+    qDebug()<< "Issue writing";
+    return "";
+  }
+
+  // this blocks at most 30 seconds, though we're not properly handling
+  // when it runs into that timeout. Also, emacs might still be locked up
+  // after that.
+  while (socket.waitForReadyRead(300000)){
+    QByteArray byteArray=socket.readLine();
+    QString message=QString::fromUtf8(byteArray.constData());
+    qDebug()<< queryKey << "<" << message;
+    if (message.startsWith("-print \"")){
+      // String
+      QRegExp rx("^-print \"(.*)\"\\s*$");
+      rx.indexIn(message);
+      queryResult=rx.capturedTexts().at(1);
+      returnType=EmacsClient::String;
+    } else if (message.startsWith("-print ")){
+      // Number or lisp object
+      // TODO: make it available as number as well
+      QRegExp rx("^-print ([^ \\n]*)\\s*$");
+      rx.indexIn(message);
+      queryResult=rx.capturedTexts().at(1);
+      returnType=EmacsClient::Number;
+    } else if (message.startsWith("-error ")){
+      QRegExp rx("^-error ([^ \\n]*)\\s*$");
+      rx.indexIn(message);
+      queryResult=rx.capturedTexts().at(1);
+      returnType=EmacsClient::Error;
+    }
+  }
+
+  queryResult.replace("&_", " ");
+  queryResult.replace("&n", "\n");
+  queryResult.replace("&-", "-");
+  queryResult.replace("&&", "&");
+
+  if (queryKey!=OWN_QUERY_KEY){
+    switch(returnType){
+      case EmacsClient::Error:
+        emit queryError(queryKey, queryResult);
+        break;
+      case EmacsClient::String:
+      case EmacsClient::Number:
+        emit queryFinished(queryKey, queryResult);
+    }
+  }
+
+  return queryResult;
+}
+
+QString EmacsClient::doQuery(const QString &queryKey, const QString &queryString){
+  QString escapedQuery=queryString;
 
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
   escapedQuery.replace("&", "&&");
@@ -117,32 +178,13 @@ QString EmacsClient::doQuery(const QString &query, bool ownQuery){
 
     if (!socket.isOpen()){
       qDebug()<< "Problem opening socket " << socketPath;
+      emit queryError(queryKey, "Problem opening Emacs server connection");
       return "";
     }
 
-    socket.write(queryTemplate.arg(escapedQuery).toLocal8Bit());
-    if (!socket.waitForBytesWritten(100)){
-      qDebug()<< "Issue writing";
-      return "";
-    }
-
-    while (socket.waitForReadyRead()){
-      QByteArray byteArray=socket.readLine();
-      QString message=QString::fromUtf8(byteArray.constData());
-      qDebug()<< message;
-      if (message.startsWith("-print \"")){
-        // String
-        QRegExp rx("^-print \"(.*)\"\\s*$");
-        rx.indexIn(message);
-        m_queryResult=rx.capturedTexts().at(1);
-      } else if (message.startsWith("-print ")){
-        // Number or lisp object
-        // TODO: make it available as number as well
-        QRegExp rx("^-print ([^ \\n]*)\\s*$");
-        rx.indexIn(message);
-        m_queryResult=rx.capturedTexts().at(1);
-      }
-    }
+    return(query(queryKey,
+                 queryTemplate.arg(escapedQuery),
+                 socket));
   } else {
 #endif
     QString queryTemplate="-auth %1 -current-frame -eval %2\n";
@@ -156,66 +198,22 @@ QString EmacsClient::doQuery(const QString &query, bool ownQuery){
 
     if(!socket.waitForConnected(5000)){
       qDebug()<< "Error: " << socket.errorString();
+      emit queryError(queryKey, "Timeout waiting for Emacs server connection");
       return "";
     }
 
-    qDebug() << "Query: " << queryTemplate
-      .arg(networkSecret)
-      .arg(escapedQuery).toLocal8Bit();
-    socket.write(queryTemplate
-                 .arg(networkSecret)
-                 .arg(escapedQuery).toLocal8Bit());
-
-    if (!socket.waitForBytesWritten(100)){
-      qDebug()<< "Issue writing";
-      return "";
-    }
-
-    while (socket.waitForReadyRead()){
-      QByteArray byteArray=socket.readLine();
-      QString message=QString::fromUtf8(byteArray.constData());
-      qDebug()<< message;
-      if (message.startsWith("-print \"")){
-        // String
-        QRegExp rx("^-print \"(.*)\"\\s*$");
-        rx.indexIn(message);
-        m_queryResult=rx.capturedTexts().at(1);
-      } else if (message.startsWith("-print ")){
-        // Number or lisp object
-        // TODO: make it available as number as well
-        QRegExp rx("^-print ([^ \\n]*)\\s*$");
-        rx.indexIn(message);
-        m_queryResult=rx.capturedTexts().at(1);
-      }
-    }
-
+    return(query(queryKey,
+                 (queryTemplate
+                  .arg(networkSecret)
+                  .arg(escapedQuery).toLocal8Bit()),
+                 socket));
 #ifndef __ANDROID_API__
   }
 #endif
-
-  m_queryResult.replace("&_", " ");
-  m_queryResult.replace("&n", "\n");
-  m_queryResult.replace("&-", "-");
-  m_queryResult.replace("&&", "&");
-
-  if (!ownQuery)
-    emit queryFinished("", m_queryResult);
-
-  return m_queryResult;
 }
 
-bool EmacsClient::queryAgent(const QString &query){
-  // we only allow one query at a time.
-  // That wasn't an issue with the original design, but might be now.
-  if (m_queryActive)
-    return false;
-
-  m_queryString=query;
-  m_queryActive=true;
-  emit queryStarted(m_queryString);
+bool EmacsClient::queryAgent(const QString &queryKey, const QString &queryString){
+  qDebug()<< queryKey << ">" << queryString;
+  emit queryStarted(queryKey, queryString);
   return true;
-}
-
-QString EmacsClient::queryResult() const{
-  return m_queryResult;
 }

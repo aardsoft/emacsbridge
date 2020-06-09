@@ -4,7 +4,8 @@
 class EmacsBridgeRemote{
     PROP(QString authToken SOURCEONLYSETTER);
     PROP(QDateTime startupTime SOURCEONLYSETTER);
-    SLOT(void setQuery(const QString &query));
-    SIGNAL(queryFinished(const QString &query));
+    SLOT(void setQuery(const QString &queryKey, const QString &query));
+    SIGNAL(queryFinished(const QString &queryKey, const QString &queryResult));
+    SIGNAL(queryError(const QString &queryKey, const QString &error));
     SIGNAL(notificationAdded(const QString &title, const QString &message));
 }

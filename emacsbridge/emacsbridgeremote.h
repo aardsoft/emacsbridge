@@ -16,10 +16,11 @@ class EmacsBridgeRemote : public EmacsBridgeRemoteSimpleSource{
   public:
     EmacsBridgeRemote(QObject *parent=nullptr);
   public slots:
-    void setQuery(const QString &query) override;
+    void setQuery(const QString &queryKey, const QString &query) override;
     void displayNotification(const QString &title, const QString &message);
   private slots:
     void clientQueryFinished(const QString &queryKey, const QString &queryResult);
+    void clientQueryError(const QString &queryKey, const QString &error);
   private:
     EmacsClient *m_client;
 };

@@ -6,9 +6,9 @@ import fi.aardsoft.emacsbridge 1.0
 Page {
   Connections {
     target: emacsBridge
-    function onQueryFinished() {
+    function onQueryFinished(key, result) {
       console.log("Query finished");
-      historyArea.append("< " + emacsBridge.queryResult);
+      historyArea.append("< " + result);
     }
   }
 
@@ -44,7 +44,7 @@ Page {
       onClicked: {
         console.log("Button clicked");
         historyArea.append("> " + workArea.text);
-        emacsBridge.query = workArea.text;
+        emacsBridge.runQuery("LispEval_"+Math.random(), workArea.text);
         workArea.text = "";
       }
     }
