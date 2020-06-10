@@ -30,6 +30,7 @@ class EmacsBridge: public QObject{
     ~EmacsBridge();
 
     Q_INVOKABLE void runQuery(const QString &queryKey, const QString &query);
+    Q_INVOKABLE void initDrawer();
     QDateTime serviceStartupTime() const;
     QDateTime startupTime() const;
     bool mobile() const{
@@ -67,6 +68,7 @@ class EmacsBridge: public QObject{
     QSharedPointer<EmacsBridgeRemoteReplica> m_rep;
     QQmlApplicationEngine *m_engine;
     bool m_isDummy=false;
+    QStringList m_drawerComponents;
 };
 
 #endif

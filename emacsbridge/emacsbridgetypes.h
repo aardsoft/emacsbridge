@@ -17,16 +17,17 @@ struct QmlFileContainer{
   public:
     QString title;
     QString fileName;
+    bool inDrawer;
 };
 
 
 inline QDataStream& operator<<(QDataStream& out, const QmlFileContainer& c) {
-  out << c.title << c.fileName;
+  out << c.title << c.fileName << c.inDrawer;
   return out;
 }
 
 inline QDataStream& operator>>(QDataStream& in, QmlFileContainer& c) {
-  in >> c.title >> c.fileName;
+  in >> c.title >> c.fileName >> c.inDrawer;
   return in;
 }
 

@@ -179,7 +179,9 @@ QHttpServerResponse EmacsServer::settingCall(const QString &setting, const QByte
 QHttpServerResponse EmacsServer::addComponent(const QJsonObject &jsonObject){
   qDebug()<< "Uploading QML";
   QmlFileContainer qmlFileContainer;
-  bool qmlInDrawer=jsonObject["in-drawer"].toBool(false);
+  qDebug()<<jsonObject["in-drawer"].toString("<empty>")
+          <<jsonObject["in-drawer"].toBool(false);
+  qmlFileContainer.inDrawer=jsonObject["in-drawer"].toBool(false);
   QString qmlData=jsonObject["qml-data"].toString("");
 
   if (qmlData.isEmpty()){

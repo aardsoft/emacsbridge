@@ -13,6 +13,10 @@ ApplicationWindow {
   Material.theme: Material.Dark
   Material.accent: Material.purple
 
+  Component.onCompleted: {
+    EmacsBridge.initDrawer();
+  }
+
   Settings {
     id: settings
     property string style: "Default"

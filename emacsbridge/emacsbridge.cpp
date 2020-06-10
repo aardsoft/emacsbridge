@@ -16,18 +16,15 @@
 #endif
 
 #include <QUuid>
-/*
-#include <QtQml>
-#include <QQmlEngine>
-#include <QQmlComponent>
-#include <QQuickItem>
-*/
 
 #include "emacsbridgesettings.h"
 
 EmacsBridge::EmacsBridge(QObject *parent)
     : QObject(parent){
   m_startupTime=QDateTime::currentDateTime();
+
+  QSettings settings;
+  m_drawerComponents=settings.value("drawerComponents").toStringList();
 
 #ifndef __ANDROID_API__
   qDebug()<< "Starting service process";
@@ -87,12 +84,33 @@ EmacsBridge::~EmacsBridge(){
 }
 
 void EmacsBridge::addComponent(const QmlFileContainer &qmlFile){
+  QSettings settings;
   qDebug()<<"Adding component";
+  //m_drawerComponents.insert(qmlFile.fileName, qmlFile.title);
+  settings.beginGroup("component_"+qmlFile.fileName);
+  settings.setValue("title", qmlFile.title);
+  settings.setValue("inDrawer", qmlFile.inDrawer);
+  settings.endGroup();
+
+  if (qmlFile.inDrawer && !m_drawerComponents.contains(qmlFile.fileName)){
+    m_drawerComponents.append(qmlFile.fileName);
+    settings.setValue("drawerComponents", m_drawerComponents);
+  }
+
+  if (!qmlFile.inDrawer && m_drawerComponents.contains(qmlFile.fileName)){
+    m_drawerComponents.removeAll(qmlFile.fileName);
+    settings.setValue("drawerComponents", m_drawerComponents);
+  }
   emit componentAdded(qmlFile);
 }
 
 void EmacsBridge::removeComponent(const QString &qmlFile){
+  QSettings settings;
   qDebug()<<"Removing component";
+
+  m_drawerComponents.removeAll(qmlFile);
+  settings.setValue("drawerComponents", m_drawerComponents);
+
   emit componentRemoved(qmlFile);
 }
 
@@ -109,6 +127,20 @@ void EmacsBridge::startServiceProcess(){
 
 void EmacsBridge::runQuery(const QString &queryKey, const QString &query){
   m_rep->setQuery(queryKey, query);
+}
+
+void EmacsBridge::initDrawer(){
+  QSettings settings;
+
+  for (const auto& i: m_drawerComponents){
+    QmlFileContainer c;
+    c.fileName=i;
+    settings.beginGroup("component_"+i);
+    c.title=settings.value("title", i).toString();
+    settings.endGroup();
+    c.inDrawer=true;
+    emit componentAdded(c);
+  }
 }
 
 void EmacsBridge::setData(const JsonDataContainer &jsonContainer){
