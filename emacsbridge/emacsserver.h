@@ -10,8 +10,11 @@
 
 #include <QtCore>
 #include <QHttpServer>
+#include <QJsonObject>
 
-class EmacsServer: public QThread{
+#include "emacsbridgetypes.h"
+
+class EmacsServer: public QObject{
     Q_OBJECT
 
   public:
@@ -19,19 +22,28 @@ class EmacsServer: public QThread{
     ~EmacsServer();
 
   public slots:
+    void startServer();
 
   private:
-    QHttpServer m_server;
+    QHttpServer *m_server;
     QDateTime m_startupTime;
     QString m_htmlTemplate;
+    QString m_dataPath;
 
     QString listDirectory(const QString &directory);
     QHttpServerResponse methodCall(const QString &method, const QByteArray &payload);
     QHttpServerResponse settingCall(const QString &setting, const QByteArray &payload);
 
+    QHttpServerResponse addComponent(const QJsonObject &jsonObject);
+    QHttpServerResponse addNotification(const QJsonObject &jsonObject);
+    QHttpServerResponse removeComponent(const QJsonObject &jsonObject);
+    QHttpServerResponse setData(const QJsonObject &jsonObject, const QString &jsonString);
   private slots:
 
   signals:
+    void componentAdded(const QmlFileContainer &qmlFile);
+    void componentRemoved(const QString &qmlFile);
+    void dataSet(const JsonDataContainer &jsonData);
     void notificationAdded(const QString &title, const QString &message);
 };
 

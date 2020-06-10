@@ -34,7 +34,7 @@ Page {
     Button {
       text: "Send notification"
       Layout.fillWidth: true
-      onClicked: emacsBridge.notification = notificationMessage.text
+      onClicked: EmacsBridge.notification = notificationMessage.text
       Layout.fillHeight: false
       height: 1
     }

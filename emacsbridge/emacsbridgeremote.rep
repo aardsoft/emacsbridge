@@ -1,5 +1,6 @@
 #include <QDateTime>
 #include "emacsbridgesettings.h"
+#include "emacsbridgetypes.h"
 
 class EmacsBridgeRemote{
     PROP(QString authToken SOURCEONLYSETTER);
@@ -8,4 +9,7 @@ class EmacsBridgeRemote{
     SIGNAL(queryFinished(const QString &queryKey, const QString &queryResult));
     SIGNAL(queryError(const QString &queryKey, const QString &error));
     SIGNAL(notificationAdded(const QString &title, const QString &message));
+    SIGNAL(componentAdded(const QmlFileContainer &qmlFile));
+    SIGNAL(componentRemoved(const QString &qmlFile));
+    SIGNAL(dataSet(const JsonDataContainer &dataContainer));
 }

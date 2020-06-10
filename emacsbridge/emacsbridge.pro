@@ -3,6 +3,7 @@ QT += quick quickcontrols2 websockets remoteobjects
 CONFIG += qmltypes
 QML_IMPORT_NAME = fi.aardsoft.emacsbridge
 QML_IMPORT_MAJOR_VERSION = 1
+VERSION = 0.1
 
 REPC_REPLICA += emacsbridgeremote.rep
 REPC_SOURCE += emacsbridgeremote.rep
@@ -24,6 +25,7 @@ qtConfig(ssl){
 
 android {
   QT += androidextras
+  ANDROID_VERSION_NAME = 0.1
   ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../android
   OTHER_FILES += \
     ../android/src/fi/aardsoft/emacsbridge/EmacsBridgeNotification.java \
@@ -58,4 +60,5 @@ HEADERS += \
     emacsclient.h \
     emacsserver.h \
     emacsservice.h \
-    emacsbridgeremote.h
+    emacsbridgeremote.h \
+    emacsbridgetypes.h

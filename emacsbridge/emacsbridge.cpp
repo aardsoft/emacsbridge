@@ -16,6 +16,12 @@
 #endif
 
 #include <QUuid>
+/*
+#include <QtQml>
+#include <QQmlEngine>
+#include <QQmlComponent>
+#include <QQuickItem>
+*/
 
 #include "emacsbridgesettings.h"
 
@@ -55,19 +61,39 @@ EmacsBridge::EmacsBridge(QObject *parent)
 
   connect(m_rep.data(), SIGNAL(queryFinished(QString, QString)),
           this, SLOT(updateQueryResult(QString, QString)));
+  connect(m_rep.data(), SIGNAL(componentAdded(QmlFileContainer)),
+          this, SLOT(addComponent(QmlFileContainer)));
+  connect(m_rep.data(), SIGNAL(componentRemoved(QString)),
+          this, SLOT(removeComponent(QString)));
+  connect(m_rep.data(), SIGNAL(dataSet(JsonDataContainer)),
+          this, SLOT(setData(JsonDataContainer)));
 }
 
 EmacsBridge::~EmacsBridge(){
 #ifndef __ANDROID_API__
-  qDebug()<< "Shutting down service process";
-  m_serviceProcess.terminate();
-  m_serviceProcess.waitForFinished();
+  if (m_isDummy)
+    qDebug()<< "Killing dummy class";
+  else{
+    qDebug()<< "Shutting down service process";
+    m_serviceProcess.terminate();
+    m_serviceProcess.waitForFinished();
 
-  if (m_serviceProcess.state()==QProcess::Running){
-    qDebug()<< "Taking a shotgun to service processes' brain.";
-    m_serviceProcess.kill();
+    if (m_serviceProcess.state()==QProcess::Running){
+      qDebug()<< "Taking a shotgun to service processes' brain.";
+      m_serviceProcess.kill();
+    }
   }
 #endif
+}
+
+void EmacsBridge::addComponent(const QmlFileContainer &qmlFile){
+  qDebug()<<"Adding component";
+  emit componentAdded(qmlFile);
+}
+
+void EmacsBridge::removeComponent(const QString &qmlFile){
+  qDebug()<<"Removing component";
+  emit componentRemoved(qmlFile);
 }
 
 #ifndef __ANDROID_API__
@@ -83,6 +109,17 @@ void EmacsBridge::startServiceProcess(){
 
 void EmacsBridge::runQuery(const QString &queryKey, const QString &query){
   m_rep->setQuery(queryKey, query);
+}
+
+void EmacsBridge::setData(const JsonDataContainer &jsonContainer){
+  Q_ASSERT(qmlEngine(this));
+  const auto& global = qmlEngine(this)->globalObject();
+  const auto& json = global.property("JSON");
+  QJSValue parse = json.property("parse");
+  QJSValue parsedJson = parse.call(QList<QJSValue>() <<
+                              QJSValue(jsonContainer.jsonData));
+
+  emit dataSet(jsonContainer.requesterId, parsedJson);
 }
 
 QDateTime EmacsBridge::startupTime() const{

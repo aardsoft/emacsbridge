@@ -23,15 +23,35 @@
 #include "emacsbridge.h"
 #include "emacsservice.h"
 
-void init(){
+const QString init(){
   QCoreApplication::setOrganizationName("Aardsoft");
   QCoreApplication::setOrganizationDomain("aardsoft.fi");
   QCoreApplication::setApplicationName("emacsbridge");
   QCoreApplication::setApplicationVersion("0.1");
+
+  QString dataPath=QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
+  QDir dir;
+  if (!dir.mkpath(dataPath+"/qml"))
+    qDebug()<< "Creating storage in "
+            << dataPath
+            << " failed. Some things will not work.";
+  if (!dir.mkpath(dataPath+"/qml-staging"))
+    qDebug()<< "Creating storage in "
+            << dataPath
+            << " failed. Some things will not work.";
+
+  return dataPath;
+}
+
+static EmacsBridge* bridgeInstance;
+
+// TODO: If/when Qt >= 5.15 is a requirement, use qmlRegisterSingletonInstance instead.
+static QJSValue bridgeSingletonProvider(QQmlEngine *engine, QJSEngine *scriptEngine){
+  Q_UNUSED(engine);
+  return scriptEngine->newQObject(bridgeInstance);
 }
 
 int main(int argc, char **argv){
-
   if (argc<=1){
 #ifdef __ANDROID_API__
     QGuiApplication app(argc, argv);
@@ -39,7 +59,7 @@ int main(int argc, char **argv){
     QApplication app(argc, argv);
 #endif
 
-    init();
+    QString dataPath=init();
 
     QTranslator qtTranslator;
     qtTranslator.load("qt_" + QLocale::system().name(),
@@ -50,20 +70,32 @@ int main(int argc, char **argv){
 
     QQmlApplicationEngine engine;
 
-    qmlRegisterType<EmacsBridge>("fi.aardsoft.emacsbridge",1,0,"EmacsBridge");
-    engine.rootContext()->setContextProperty("emacsBridge", new EmacsBridge);
+    bridgeInstance = new EmacsBridge;
+    qmlRegisterSingletonType("fi.aardsoft.emacsbridge", 1, 0, "EmacsBridge", bridgeSingletonProvider);
 
+    QString mainQML=dataPath+"/qml/main.qml";
     QDir dir;
-    if (dir.exists(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-                   +"/qml/main.qml")){
-      qDebug()<<"Trying to load main.qml from " << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
-      engine.load(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-                  +"/qml/main.qml");
-    }else
-      engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+    if (!dir.exists(mainQML)){
+      QFile::copy(":/qml/main.qml", mainQML);
+      QFile::setPermissions(mainQML, QFile::ReadOwner|QFile::WriteOwner|QFile::ReadGroup|QFile::WriteGroup);
+    }
+    engine.load(mainQML);
+
+    // Note: This doesn't allow updating the QML when it changes in qrc
+    if (engine.rootObjects().isEmpty()){
+      qDebug()<<"First loading failed, making sure there's a good main.qml";
+      if (!QFile::remove(mainQML)){
+        qDebug()<<"Unable to remove old main.qml";
+      }
+      engine.clearComponentCache();
+
+      QFile::copy(":/qml/main.qml", mainQML);
+      QFile::setPermissions(mainQML, QFile::ReadOwner|QFile::WriteOwner|QFile::ReadGroup|QFile::WriteGroup);
+      engine.load(mainQML);
+    }
 
     if (engine.rootObjects().isEmpty()){
-      qDebug()<<"(Re-)trying load of internal qml";
+      qDebug()<<"Falling back to internal qml";
       engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
       if (engine.rootObjects().isEmpty())
         return -1;

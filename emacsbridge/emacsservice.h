@@ -14,8 +14,9 @@
 #include "emacsclient.h"
 #include "emacsbridgeremote.h"
 
-class EmacsService: public QThread{
+class EmacsService: public QObject{
     Q_OBJECT
+    QThread serverThread;
 
   public:
     EmacsService();
@@ -28,7 +29,7 @@ class EmacsService: public QThread{
     EmacsBridgeRemote m_remote;
     QDateTime m_startupTime;
     EmacsClient *m_client;
-    EmacsServer m_server;
+    EmacsServer *m_server;
 
   private slots:
     void settingChanged(const QString &key);
@@ -36,6 +37,7 @@ class EmacsService: public QThread{
 
   signals:
     void notificationAdded(const QString &title, const QString &message);
+    void startServer();
 
 };
 

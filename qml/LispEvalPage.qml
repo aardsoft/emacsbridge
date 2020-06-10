@@ -5,10 +5,14 @@ import fi.aardsoft.emacsbridge 1.0
 
 Page {
   Connections {
-    target: emacsBridge
+    target: EmacsBridge
     function onQueryFinished(key, result) {
-      console.log("Query finished");
-      historyArea.append("< " + result);
+      if (key.startsWith("LispEval_")){
+        console.log("Query finished");
+        historyArea.append("< " + result);
+      } else {
+        console.log("Ignoring data for "+key);
+      }
     }
   }
 
@@ -42,9 +46,8 @@ Page {
       Layout.fillWidth: true
       text: "Send data"
       onClicked: {
-        console.log("Button clicked");
         historyArea.append("> " + workArea.text);
-        emacsBridge.runQuery("LispEval_"+Math.random(), workArea.text);
+        EmacsBridge.runQuery("LispEval_"+Math.random(), workArea.text);
         workArea.text = "";
       }
     }

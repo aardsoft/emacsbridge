@@ -12,14 +12,8 @@
 #include "emacsservice.h"
 #include "emacsbridgesettings.h"
 
-EmacsService::EmacsService(): QThread(){
+EmacsService::EmacsService(): QObject(){
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
-
-  QDir dir;
-  if (!dir.mkpath(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)+"/qml"))
-    qDebug()<< "Creating storage in "
-            << QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
-            << " failed. Some things will not work.";
 
   m_startupTime=QDateTime::currentDateTime();
   m_remote.setStartupTime(m_startupTime);
@@ -28,19 +22,37 @@ EmacsService::EmacsService(): QThread(){
   m_srcNode.enableRemoting(&m_remote);
 
   m_client=EmacsClient::instance();
+
+  qDebug()<<"Service" << QThread::currentThreadId();
+
+  m_server=new EmacsServer();
+  m_server->moveToThread(&serverThread);
+
   connect(settings, SIGNAL(settingChanged(QString)), this, SLOT(settingChanged(QString)));
 
   // on Android the notification needs to come from the service, while on PC
   // it comes from the GUI process, making this a bit complicated.
 #ifdef __ANDROID_API__
-  connect(&m_server, SIGNAL(notificationAdded(QString, QString)),
+  connect(m_server, SIGNAL(notificationAdded(QString, QString)),
           this, SLOT(displayNotification(QString, QString)));
 #else
-  connect(&m_server, SIGNAL(notificationAdded(QString, QString)),
+  connect(m_server, SIGNAL(notificationAdded(QString, QString)),
           &m_remote, SLOT(displayNotification(QString, QString)));
 #endif
 
-  start();
+  connect(m_server, SIGNAL(componentAdded(QmlFileContainer)),
+          &m_remote, SLOT(addComponent(QmlFileContainer)));
+  connect(m_server, SIGNAL(componentRemoved(QString)),
+          &m_remote, SLOT(removeComponent(QString)));
+
+  connect(m_server, SIGNAL(dataSet(JsonDataContainer)),
+          &m_remote, SLOT(setData(JsonDataContainer)));
+
+  connect(this, SIGNAL(startServer()),
+          m_server, SLOT(startServer()));
+
+  serverThread.start();
+  emit startServer();
 }
 
 EmacsService::~EmacsService(){

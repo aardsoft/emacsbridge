@@ -4,6 +4,8 @@ Emacsbridge is a tool to bridge some activities between the Emacs and Android wo
 
 Actions from Android side are sent as Lisp to be evaluated in Emacs through the Emacs daemon. Actions from Emacs are sent as JSON over HTTP.
 
+Join the [[https://t.me/joinchat/LKbFBxtp5cY6wj8xdNse4w][emacsbridge Telegram group]] to discuss emacsbridge.
+
 ** Getting started
 
 On Android access to Emacs' server socket is not available due to Androids security policies. Therefore Emacs needs to be configured to [[https://www.gnu.org/software/emacs/manual/html_node/emacs/TCP-Emacs-server.html][use the TCP server]]. Host and port should be manually set - the host to avoid having the server listening on anything but localhost, the port as it needs to be configured in the Android application.

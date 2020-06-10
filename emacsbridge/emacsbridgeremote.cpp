@@ -7,6 +7,11 @@
 
 #include "emacsbridgeremote.h"
 
+// currently that's not doing much other than just passing on signals (i.e.,
+// could be done with less monkey work), but I like the option of filtering,
+// caching or modifying some of the data at that level at some point in the
+// future - so doing it this way should save some major refacturing later on.
+
 EmacsBridgeRemote::EmacsBridgeRemote(QObject *parent): EmacsBridgeRemoteSimpleSource(){
   m_client=EmacsClient::instance();
 
@@ -18,6 +23,15 @@ EmacsBridgeRemote::EmacsBridgeRemote(QObject *parent): EmacsBridgeRemoteSimpleSo
 
 void EmacsBridgeRemote::setQuery(const QString &queryKey, const QString &query){
   m_client->queryAgent(queryKey, query);
+}
+
+
+void EmacsBridgeRemote::addComponent(const QmlFileContainer &qmlFile){
+  emit componentAdded(qmlFile);
+}
+
+void EmacsBridgeRemote::removeComponent(const QString &qmlFile){
+  emit componentRemoved(qmlFile);
 }
 
 void EmacsBridgeRemote::clientQueryError(const QString &queryKey, const QString &error){
@@ -32,4 +46,8 @@ void EmacsBridgeRemote::clientQueryFinished(const QString &queryKey, const QStri
 
 void EmacsBridgeRemote::displayNotification(const QString &title, const QString &message){
   emit notificationAdded(title, message);
+}
+
+void EmacsBridgeRemote::setData(const JsonDataContainer &jsonContainer){
+  emit dataSet(jsonContainer);
 }

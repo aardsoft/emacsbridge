@@ -14,7 +14,9 @@
 
 #include <QObject>
 #include <QProcess>
+#include <QQmlApplicationEngine>
 
+#include "emacsbridgetypes.h"
 #include "rep_emacsbridgeremote_replica.h"
 
 class EmacsBridge: public QObject{
@@ -24,6 +26,7 @@ class EmacsBridge: public QObject{
     Q_PROPERTY(QDateTime startupTime READ startupTime CONSTANT)
   public:
     explicit EmacsBridge(QObject *parent=0);
+    explicit EmacsBridge(const QString &dummy, QObject *parent=0){m_isDummy=true;};
     ~EmacsBridge();
 
     Q_INVOKABLE void runQuery(const QString &queryKey, const QString &query);
@@ -40,12 +43,18 @@ class EmacsBridge: public QObject{
   signals:
     void queryFinished(const QString &queryKey, const QString &queryResult);
     void queryError(const QString &queryKey, const QString &errorMessage);
+    void componentAdded(const QmlFileContainer &qmlFile);
+    void componentRemoved(const QString &qmlFile);
+    void dataSet(const QString &requesterId, const QJSValue &jsonData);
 
   private slots:
 #ifndef __ANDROID_API__
     void updateNotification(const QString &title, const QString &message);
 #endif
     void updateQueryResult(const QString &queryKey, const QString &result);
+    void addComponent(const QmlFileContainer &qmlFile);
+    void removeComponent(const QString &qmlFile);
+    void setData(const JsonDataContainer &jsonContainer);
 
   private:
     QDateTime m_startupTime;
@@ -56,6 +65,8 @@ class EmacsBridge: public QObject{
 #endif
     QRemoteObjectNode m_repNode;
     QSharedPointer<EmacsBridgeRemoteReplica> m_rep;
+    QQmlApplicationEngine *m_engine;
+    bool m_isDummy=false;
 };
 
 #endif

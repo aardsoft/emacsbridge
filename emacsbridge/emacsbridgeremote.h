@@ -18,6 +18,9 @@ class EmacsBridgeRemote : public EmacsBridgeRemoteSimpleSource{
   public slots:
     void setQuery(const QString &queryKey, const QString &query) override;
     void displayNotification(const QString &title, const QString &message);
+    void addComponent(const QmlFileContainer &qmlFile);
+    void removeComponent(const QString &qmlFile);
+    void setData(const JsonDataContainer &jsonContainer);
   private slots:
     void clientQueryFinished(const QString &queryKey, const QString &queryResult);
     void clientQueryError(const QString &queryKey, const QString &error);

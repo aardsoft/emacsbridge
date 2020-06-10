@@ -7,11 +7,11 @@ Page {
     anchors.fill: parent
     columns: 2
     Label { text: "Android build: "; }
-    Label { text: emacsBridge.mobile; }
+    Label { text: EmacsBridge.mobile; }
     Label { text: "UI startup time: "; }
-    Label { text: emacsBridge.startupTime }
+    Label { text: EmacsBridge.startupTime }
     Label { text: "Service startup time: "; }
-    Label { text: emacsBridge.serviceStartupTime }
+    Label { text: EmacsBridge.serviceStartupTime }
     Item {
       Layout.fillWidth: true
       Layout.fillHeight: true

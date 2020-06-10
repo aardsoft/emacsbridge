@@ -38,7 +38,6 @@ ApplicationWindow {
   }
 
   header: ToolBar {
-
     RowLayout {
       anchors.fill: parent
       ToolButton {
@@ -52,24 +51,6 @@ ApplicationWindow {
         verticalAlignment: Qt.AlignVCenter
         Layout.fillWidth: true
       }
-      ToolButton {
-        text: qsTr("⋮")
-        onClicked: optionsMenu.open()
-
-        Menu {
-          id: optionsMenu
-          x: parent.width - width
-          transformOrigin: Menu.TopRight
-          Action {
-            text: "Settings"
-            onTriggered: settingsDialog.open()
-          }
-          Action {
-            text: "About"
-            onTriggered: aboutDialog.open()
-          }
-        }
-      }
     }
   }
 
@@ -79,11 +60,56 @@ ApplicationWindow {
     interactive: stackView.depth === 1
     width: Math.min(window.width, window.height) / 3 * 2
 
+    function findInModel(model, source){
+      for(var i=0;i<model.count;++i)
+      if (model.get(i).source==source){
+        return model.get(i);
+      }
+      return null;
+    }
+
+    function findPositionInModel(model, source){
+      for(var i=0;i<model.count;++i)
+      if (model.get(i).source==source){
+        return i;
+      }
+      return null;
+    }
+
+    function insertToModel(model, item){
+      var oldItem=findInModel(model, item.fileName)
+      if (oldItem==null){
+        model.append({"title": item.title, "source": item.fileName});
+      }else{
+        console.log("Component "+item.title+" already exists");
+      }
+    }
+
+    function removeFromModel(model, item){
+      var pos=findPositionInModel(model, item)
+      if (pos!=null){
+        console.log(pos);
+        model.remove(pos);
+      }
+    }
+
     ListView {
       id: listView
       focus: true
       currentIndex: -1
       anchors.fill: parent
+
+      Connections {
+        target: EmacsBridge
+        function onComponentAdded(component){
+          console.log("New component added "+component.title);
+          drawer.insertToModel(listModel, component)
+        }
+        function onComponentRemoved(component){
+          console.log("Component removed "+component);
+          drawer.removeFromModel(listModel, component);
+        }
+      }
 
       delegate: ItemDelegate {
         width: parent.width
@@ -97,8 +123,8 @@ ApplicationWindow {
       }
 
       model: ListModel {
+        id: listModel
         ListElement { title: "Lisp eval"; source: "qrc:/qml/LispEvalPage.qml" }
-        ListElement { title: "Test notifications"; source: "qrc:/qml/NotificationTestPage.qml" }
       }
 
       ScrollIndicator.vertical: ScrollIndicator { }
@@ -110,55 +136,5 @@ ApplicationWindow {
     anchors.fill: parent
 
     initialItem: { source: "qrc:/qml/StatusPage.qml" }
-  }
-
-  Dialog {
-    id: settingsDialog
-    width: window.width
-    height: window.height - header.height
-    standardButtons: Dialog.OK | Dialog.Cancel
-
-    ScrollView {
-      Layout.fillHeight: true
-      Layout.fillWidth: true
-      implicitHeight: 30
-      clip: true
-      GridLayout {
-        anchors.fill: parent
-        columns: 2
-
-        Label { text: "Agent secret: "; }
-        TextField { id: settingsSecret; text: settings.secret; Layout.fillWidth: true; Layout.fillHeight: true}
-      }
-    }
-  }
-
-  Dialog {
-    id: aboutDialog
-    modal: true
-    focus: true
-    title: "About"
-    width: window.width
-    height: window.height - header.height
-
-    Column {
-      id: aboutColumn
-      spacing: 20
-
-      Label {
-        width: aboutDialog.availableWidth
-        text: emacsBridge.mobile
-        wrapMode: Label.Wrap
-      }
-
-      Label {
-        visible: emacsBridge.mobile
-        width: aboutDialog.availableWidth
-        text: "In comparison to the desktop-oriented Qt Quick Controls 1, Qt Quick Controls 2 "
-        + "are an order of magnitude simpler, lighter and faster, and are primarily targeted "
-        + "towards embedded and mobile platforms."
-        wrapMode: Label.Wrap
-      }
-    }
   }
 }

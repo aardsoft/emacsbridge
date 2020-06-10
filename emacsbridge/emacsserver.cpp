@@ -5,36 +5,48 @@
  * @date 2020
  */
 
+#include <QQmlEngine>
+#include <QQmlContext>
+#include <QQmlComponent>
+
 #include "emacsserver.h"
 #include "emacsbridgesettings.h"
 #include "emacsclient.h"
+#include "emacsbridge.h"
 
-EmacsServer::EmacsServer(): QThread(){
+EmacsServer::EmacsServer(): QObject(){
   qDebug()<< "Emacs server starting up.";
-  EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
   m_startupTime=QDateTime::currentDateTime();
-
+  m_dataPath=QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   m_htmlTemplate="<!DOCTYPE html>\n<html><head><title>%1</title></head><body><h1>%1</h1>%2</body></html>";
+}
 
-  m_server.route("/", [](){
+EmacsServer::~EmacsServer(){
+  qDebug()<< "Closing webserver.";
+}
+
+void EmacsServer::startServer(){
+  EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
+  m_server=new QHttpServer();
+  m_server->route("/", [](){
                         return QHttpServerResponse::fromFile(QStringLiteral(":/html/index.html"));
                       });
 
-  m_server.route("/lisp/<arg>", [this](const QUrl &url){
+  m_server->route("/lisp/<arg>", [this](const QUrl &url){
                                   if (url.path()=="")
                                     return QHttpServerResponse(listDirectory(":/lisp"));
                                   else
                                     return QHttpServerResponse::fromFile(QStringLiteral(":/lisp/%1").arg(url.path()));
                                  });
 
-  m_server.route("/images/<arg>", [this](const QUrl &url){
+  m_server->route("/images/<arg>", [this](const QUrl &url){
                                   if (url.path()=="")
                                     return QHttpServerResponse(listDirectory(":/images"));
                                   else
                                     return QHttpServerResponse::fromFile(QStringLiteral(":/images/%1").arg(url.path()));
                                  });
 
-  m_server.route("/test_connection",
+  m_server->route("/test_connection",
                  [](){
                    EmacsClient *client=EmacsClient::instance();
                    if (client->isConnected())
@@ -43,7 +55,7 @@ EmacsServer::EmacsServer(): QThread(){
                      return tr("Emacs connection is not working.");
                  });
 
-  m_server.route("/rpc",
+  m_server->route("/rpc",
                  "POST",
                  [this,settings](const QHttpServerRequest &request)->QHttpServerResponse{
                    if (settings->value("core/configured", false).toBool()==false){
@@ -66,7 +78,7 @@ EmacsServer::EmacsServer(): QThread(){
                  });
 
 
-  m_server.route("/settings",
+  m_server->route("/settings",
                  "POST",
                  [this,settings](const QHttpServerRequest &request)->QHttpServerResponse{
                    if (settings->value("core/configured", false).toBool()==true){
@@ -89,16 +101,10 @@ EmacsServer::EmacsServer(): QThread(){
                    return settingCall(settingsHeader, request.body());
                  });
 
-  m_server.listen(QHostAddress(settings->value("http/bindAddress", "127.0.0.1").toString()),
+  m_server->listen(QHostAddress(settings->value("http/bindAddress", "127.0.0.1").toString()),
                   settings->value("http/bindPort", 1616).toInt());
-
-  start();
 }
 
-EmacsServer::~EmacsServer(){
-  qDebug()<< "Closing webserver.";
-  wait();
-}
 
 QString EmacsServer::listDirectory(const QString &directory){
   QDirIterator it(directory, QDirIterator::Subdirectories);
@@ -113,6 +119,8 @@ QString EmacsServer::listDirectory(const QString &directory){
 }
 
 QHttpServerResponse EmacsServer::methodCall(const QString &method, const QByteArray &payload){
+  qDebug()<<"Server" << QThread::currentThreadId();
+
   QJsonParseError jsonError;
   QJsonDocument document=QJsonDocument::fromJson(payload, &jsonError);
 
@@ -123,15 +131,16 @@ QHttpServerResponse EmacsServer::methodCall(const QString &method, const QByteAr
                                QHttpServerResponder::StatusCode::BadRequest);
   }
 
-  if (method=="notification"){
-    QJsonObject notificationObject=document.object();
-    QString notificationTitle=notificationObject["title"].toString("Missing notification title");
-    QString notificationText=notificationObject["text"].toString("Missing notification text");
+  QJsonObject jsonObject=document.object();
 
-    qDebug()<< "Sending notification: " << notificationText;
-    emit notificationAdded(notificationTitle,
-                           notificationText);
-    return "OK";
+  if (method=="addComponent"){
+    return addComponent(jsonObject);
+  }else if (method=="setData"){
+    return setData(jsonObject, QString::fromUtf8(payload));
+  }else if (method=="notification"){
+    return addNotification(jsonObject);
+  }else if (method=="removeComponent"){
+    return removeComponent(jsonObject);
   }
 
   QString error=tr("Invalid or unknown method %1").arg(method);
@@ -165,4 +174,139 @@ QHttpServerResponse EmacsServer::settingCall(const QString &setting, const QByte
   return QHttpServerResponse("text/plain",
                              error.toUtf8(),
                              QHttpServerResponder::StatusCode::BadRequest);
+}
+
+QHttpServerResponse EmacsServer::addComponent(const QJsonObject &jsonObject){
+  qDebug()<< "Uploading QML";
+  QmlFileContainer qmlFileContainer;
+  bool qmlInDrawer=jsonObject["in-drawer"].toBool(false);
+  QString qmlData=jsonObject["qml-data"].toString("");
+
+  if (qmlData.isEmpty()){
+    return QHttpServerResponse("text/plain",
+                               tr("QML data missing in request").toUtf8(),
+                               QHttpServerResponder::StatusCode::BadRequest);
+  }
+
+  QString qmlFile=jsonObject["file-name"].toString("");
+
+  if (qmlFile.isEmpty()){
+    return QHttpServerResponse("text/plain",
+                               tr("QML filename missing in request").toUtf8(),
+                               QHttpServerResponder::StatusCode::BadRequest);
+  }
+
+  QFileInfo info(qmlFile);
+  QFile stagingFile(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+                    +"/qml-staging/"
+                    +info.fileName());
+  QFile file(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+             +"/qml/"
+             +info.fileName());
+
+  qmlFileContainer.title=jsonObject["title"].toString("");
+  if (qmlFileContainer.title=="")
+    qmlFileContainer.title=info.fileName();
+
+  qmlFileContainer.fileName=info.fileName();
+
+  if (!stagingFile.open(QIODevice::WriteOnly | QIODevice::Text)){
+    return QHttpServerResponse("text/plain",
+                               tr("Unable to open file for writing").toUtf8(),
+                               QHttpServerResponder::StatusCode::BadRequest);
+  }
+
+  stagingFile.write(qmlData.toUtf8());
+  stagingFile.flush();
+  stagingFile.close();
+
+  EmacsBridge emacsBridge("");
+  QQmlEngine engine;
+  qmlRegisterType<EmacsBridge>("fi.aardsoft.emacsbridge",1,0,"EmacsBridge");
+  engine.rootContext()->setContextProperty("emacsBridge", &emacsBridge);
+  QQmlComponent component(&engine, QUrl::fromLocalFile(stagingFile.fileName()));
+  if (component.isError()){
+    qDebug()<<"Component load error";
+    QList<QQmlError> qmlErrors=component.errors();
+    QList<QQmlError>::const_iterator i;
+    QString errors="Unable to push QML file:\n\n";
+    for (i=qmlErrors.constBegin(); i!=qmlErrors.constEnd(); ++i){
+      qDebug()<<(*i).toString();
+      errors+=(*i).toString();
+    }
+    return QHttpServerResponse("text/plain",
+                               errors.toUtf8(),
+                               QHttpServerResponder::StatusCode::BadRequest);
+  }else{
+    QDir dir;
+
+    if (dir.exists(stagingFile.fileName()))
+      dir.remove(file.fileName());
+
+    if (!dir.rename(stagingFile.fileName(),
+                    file.fileName())){
+      qDebug()<< "Rename failed.";
+      return QHttpServerResponse("text/plain",
+                                 tr("Unable to rename uploaded file").toUtf8(),
+                                 QHttpServerResponder::StatusCode::BadRequest);
+    }
+
+    qDebug()<< "Notify!";
+    emit componentAdded(qmlFileContainer);
+    return "OK";
+  }
+}
+
+QHttpServerResponse EmacsServer::addNotification(const QJsonObject &jsonObject){
+  QString notificationTitle=jsonObject["title"].toString("Missing notification title");
+  QString notificationText=jsonObject["text"].toString("Missing notification text");
+
+  qDebug()<< "Sending notification: " << notificationText;
+  emit notificationAdded(notificationTitle,
+                         notificationText);
+  return "OK";
+}
+
+QHttpServerResponse EmacsServer::removeComponent(const QJsonObject &jsonObject){
+  QString qmlFile=jsonObject["file-name"].toString("");
+
+  if (qmlFile.isEmpty()){
+    return QHttpServerResponse("text/plain",
+                               tr("QML filename missing in request").toUtf8(),
+                               QHttpServerResponder::StatusCode::BadRequest);
+  }
+
+  QFileInfo info(qmlFile);
+  QFile file(QStandardPaths::writableLocation(QStandardPaths::AppDataLocation)
+             +"/qml/"
+             +info.fileName());
+
+  if (file.exists()){
+    if (file.remove()){
+      emit componentRemoved(info.fileName());
+      return "OK";
+    }
+  }
+
+  return QHttpServerResponse("text/plain",
+                             tr("Unable to remove file").toUtf8(),
+                             QHttpServerResponder::StatusCode::BadRequest);
+}
+
+QHttpServerResponse EmacsServer::setData(const QJsonObject &jsonObject, const QString &jsonString){
+  JsonDataContainer jsonContainer;
+  jsonContainer.requesterId=jsonObject["requester-id"].toString("");
+
+  // just check if there's a requesterId, and then throw it up the stack to have
+  // the UI deal with it.
+  if (jsonContainer.requesterId.isEmpty()){
+    return QHttpServerResponse("text/plain",
+                               tr("Requester ID missing in setData request").toUtf8(),
+                               QHttpServerResponder::StatusCode::BadRequest);
+  }
+
+  jsonContainer.jsonData=jsonString;
+  qDebug()<< "Setting data:" << jsonContainer.requesterId << jsonObject;
+  emit dataSet(jsonContainer);
+  return "OK";
 }

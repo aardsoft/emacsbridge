@@ -52,7 +52,7 @@ public class EmacsBridgeService extends QtService {
           .setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.icon))
           .setTicker("Emacs bridge service")
           .setContentTitle("Emacs bridge service")
-          .setContentText("Emacs bridge service is running. Tap this notification to launch the application")
+          .setContentText("Emacsbridge is running. Tap to open UI.")
           .setContentIntent(contentIntent);
 
         startForeground(99, m_builder.build());
