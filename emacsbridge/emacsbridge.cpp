@@ -24,6 +24,9 @@ EmacsBridge::EmacsBridge(QObject *parent)
   m_startupTime=QDateTime::currentDateTime();
 
   QSettings settings;
+  if (settings.value("defaultPage", "").toString()=="")
+    settings.setValue("defaultPage", "qrc:/qml/SetupPage.qml");
+
   m_drawerComponents=settings.value("drawerComponents").toStringList();
 
   m_repNode.connectToNode(QUrl(QStringLiteral("local:replica")));
@@ -104,6 +107,11 @@ void EmacsBridge::addComponent(const QmlFileContainer &qmlFile){
   emit componentAdded(qmlFile);
 }
 
+QString EmacsBridge::defaultPage() const{
+  QSettings settings;
+  return(settings.value("defaultPage")).toString();
+}
+
 void EmacsBridge::removeComponent(const QString &qmlFile){
   QSettings settings;
   qDebug()<<"Removing component";
@@ -141,6 +149,12 @@ void EmacsBridge::setData(const JsonDataContainer &jsonContainer){
                               QJSValue(jsonContainer.jsonData));
 
   emit dataSet(jsonContainer.requesterId, parsedJson);
+}
+
+void EmacsBridge::setDefaultPage(const QString &defaultPage){
+  QSettings settings;
+  settings.setValue("defaultPage", defaultPage);
+  emit defaultPageChanged();
 }
 
 QDateTime EmacsBridge::startupTime() const{

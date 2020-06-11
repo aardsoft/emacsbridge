@@ -139,6 +139,6 @@ ApplicationWindow {
     id: stackView
     anchors.fill: parent
 
-    initialItem: { source: "qrc:/qml/StatusPage.qml" }
+    initialItem: { source: EmacsBridge.defaultPage }
   }
 }

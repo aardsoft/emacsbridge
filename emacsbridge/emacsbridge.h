@@ -24,6 +24,7 @@ class EmacsBridge: public QObject{
     Q_PROPERTY(bool mobile READ mobile CONSTANT)
     Q_PROPERTY(QDateTime serviceStartupTime READ serviceStartupTime CONSTANT)
     Q_PROPERTY(QDateTime startupTime READ startupTime CONSTANT)
+    Q_PROPERTY(QString defaultPage READ defaultPage WRITE setDefaultPage NOTIFY defaultPageChanged)
   public:
     explicit EmacsBridge(QObject *parent=0);
     explicit EmacsBridge(const QString &dummy, QObject *parent=0){m_isDummy=true;};
@@ -33,6 +34,8 @@ class EmacsBridge: public QObject{
     Q_INVOKABLE void initDrawer();
     QDateTime serviceStartupTime() const;
     QDateTime startupTime() const;
+    QString defaultPage() const;
+    void setDefaultPage(const QString &defaultPage);
     bool mobile() const{
 #ifdef __ANDROID_API__
       return true;
@@ -47,6 +50,7 @@ class EmacsBridge: public QObject{
     void componentAdded(const QmlFileContainer &qmlFile);
     void componentRemoved(const QString &qmlFile);
     void dataSet(const QString &requesterId, const QJSValue &jsonData);
+    void defaultPageChanged();
 
   private slots:
 #ifndef __ANDROID_API__
