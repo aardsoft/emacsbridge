@@ -60,9 +60,7 @@ class EmacsBridge: public QObject{
   private:
     QDateTime m_startupTime;
 #ifndef __ANDROID_API__
-    void startServiceProcess();
     QSystemTrayIcon *m_trayIcon;
-    QProcess m_serviceProcess;
 #endif
     QRemoteObjectNode m_repNode;
     QSharedPointer<EmacsBridgeRemoteReplica> m_rep;

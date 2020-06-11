@@ -26,9 +26,19 @@ EmacsBridge::EmacsBridge(QObject *parent)
   QSettings settings;
   m_drawerComponents=settings.value("drawerComponents").toStringList();
 
+  m_repNode.connectToNode(QUrl(QStringLiteral("local:replica")));
+  m_rep=QSharedPointer<EmacsBridgeRemoteReplica>(m_repNode.acquire<EmacsBridgeRemoteReplica>());
+
 #ifndef __ANDROID_API__
-  qDebug()<< "Starting service process";
-  startServiceProcess();
+  if (!m_rep->waitForSource(1)){
+    qDebug()<< "Starting service process";
+    QStringList serviceArguments;
+    serviceArguments << "-service";
+    QProcess::startDetached(QCoreApplication::applicationFilePath(),
+                            serviceArguments);
+  }else{
+    qDebug()<< "Connected to existing process";
+  }
 #else
   QAndroidJniObject::callStaticMethod<void>(
     "fi/aardsoft/emacsbridge/EmacsBridgeService",
@@ -37,10 +47,10 @@ EmacsBridge::EmacsBridge(QObject *parent)
     QtAndroid::androidActivity().object());
 #endif
 
-  m_repNode.connectToNode(QUrl(QStringLiteral("local:replica")));
-  m_rep=QSharedPointer<EmacsBridgeRemoteReplica>(m_repNode.acquire<EmacsBridgeRemoteReplica>());
-  bool res=m_rep->waitForSource();
-  Q_ASSERT(res);
+  if (!m_rep->isInitialized()){
+    bool res=m_rep->waitForSource();
+    Q_ASSERT(res);
+  }
 
 #ifndef __ANDROID_API__
   QMenu *trayIconMenu=new QMenu();
@@ -70,16 +80,6 @@ EmacsBridge::~EmacsBridge(){
 #ifndef __ANDROID_API__
   if (m_isDummy)
     qDebug()<< "Killing dummy class";
-  else{
-    qDebug()<< "Shutting down service process";
-    m_serviceProcess.terminate();
-    m_serviceProcess.waitForFinished();
-
-    if (m_serviceProcess.state()==QProcess::Running){
-      qDebug()<< "Taking a shotgun to service processes' brain.";
-      m_serviceProcess.kill();
-    }
-  }
 #endif
 }
 
@@ -113,17 +113,6 @@ void EmacsBridge::removeComponent(const QString &qmlFile){
 
   emit componentRemoved(qmlFile);
 }
-
-#ifndef __ANDROID_API__
-void EmacsBridge::startServiceProcess(){
-  QStringList serviceArguments;
-  serviceArguments << "-service";
-
-  m_serviceProcess.setProcessChannelMode(QProcess::ForwardedChannels);
-  m_serviceProcess.start(QCoreApplication::applicationFilePath(),
-                       serviceArguments);
-}
-#endif
 
 void EmacsBridge::runQuery(const QString &queryKey, const QString &query){
   m_rep->setQuery(queryKey, query);
