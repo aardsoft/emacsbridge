@@ -27,7 +27,7 @@ const QString init(){
   QCoreApplication::setOrganizationName("Aardsoft");
   QCoreApplication::setOrganizationDomain("aardsoft.fi");
   QCoreApplication::setApplicationName("emacsbridge");
-  QCoreApplication::setApplicationVersion("0.1");
+  QCoreApplication::setApplicationVersion(VERSION);
 
   QString dataPath=QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   QDir dir;
@@ -40,6 +40,7 @@ const QString init(){
             << dataPath
             << " failed. Some things will not work.";
 
+  qDebug()<< "Version" << QCoreApplication::applicationVersion() << "initializing";
   return dataPath;
 }
 

@@ -1,9 +1,13 @@
+include(../build_info.pri)
+# main uses the version number passed in by defines. This is a hack to rebuild
+# main every time to make sure the version is correct
+REBUILD = $$system(touch main.cpp)
+
 TARGET = emacsbridge
 QT += quick quickcontrols2 websockets remoteobjects
 CONFIG += qmltypes
 QML_IMPORT_NAME = fi.aardsoft.emacsbridge
 QML_IMPORT_MAJOR_VERSION = 1
-VERSION = 0.1
 
 REPC_REPLICA += emacsbridgeremote.rep
 REPC_SOURCE += emacsbridgeremote.rep
@@ -16,7 +20,7 @@ android{
 # INCLUDEPATH insists on changing this to a relative path if the directory
 # exists. Unfortunately the relative path is wrong, so builds fail. Explicitely
 # set compiler flags as workaround.
-QMAKE_CXXFLAGS *= -I$$OUT_PWD/../qthttpserver/include -I$$OUT_PWD/../qthttpserver/include/QtHttpServer -DQT_HTTPSERVER_LIB
+QMAKE_CXXFLAGS *= -I$$OUT_PWD/../qthttpserver/include -I$$OUT_PWD/../qthttpserver/include/QtHttpServer -DQT_HTTPSERVER_LIB -std=c++2a
 QMAKE_LFLAGS *= -L$$OUT_PWD/../qthttpserver/lib -lQt5HttpServer$$ANDROID_ARCH
 
 qtConfig(ssl){
@@ -25,7 +29,8 @@ qtConfig(ssl){
 
 android {
   QT += androidextras
-  ANDROID_VERSION_NAME = 0.1
+  ANDROID_VERSION_NAME = $$VERSION
+  ANDROID_VERSION_CODE = $$TOTAL_COMMIT_COUNT
   ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../android
   OTHER_FILES += \
     ../android/src/fi/aardsoft/emacsbridge/EmacsBridgeNotification.java \
@@ -41,6 +46,11 @@ unix:!android {
   QT += widgets
 }
 
+windows {
+  QT += widgets
+  QMAKE_LIBS_PRIVATE += -lQt5HttpServer
+  CONFIG += console
+}
 
 SOURCES += \
     main.cpp \

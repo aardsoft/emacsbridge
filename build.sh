@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 # build.sh
 # (c) 2020 Bernd Wachter <bwachter@aardsoft.fi>
 
@@ -63,26 +63,48 @@ deploy_android(){
     cd $SOURCE_DIR
 }
 
+release(){
+  _newest_tag=`git describe --abbrev=0 --tags`
+  _total_commit_count=`git rev-list HEAD --count`
+  (( _total_commit_count=_total_commit_count+1 ))
+  if [ -n "$1" ]; then
+      _new_tag=$1
+  else
+      _newest_tag_minor=${_newest_tag//*./}
+      _newest_tag_major=${_newest_tag//.*/}
+      (( _newest_tag_minor=_newest_tag_minor+1 ))
+      _new_tag=$_newest_tag_major.$_newest_tag_minor
+  fi
+  cat >release_version.pri <<-EOF
+NEWEST_TAG = $_new_tag
+COMMIT_COUNT = 0
+TOTAL_COMMIT_COUNT = $_total_commit_count
+EOF
+  git add release_version.pri
+  git commit -m "Release $_new_tag"
+  git tag $_new_tag
+}
+
 mkdir -p $BUILD_DIR
 
 case "$1" in
     "build-icons")
         build_android_icons
         build_pc_icons
-        break
         ;;
     "deploy-android")
         build_android
         deploy_android
-        break
         ;;
     "android")
         build_android
-        break
         ;;
     "pc")
         build_pc
-        break
+        ;;
+    "release")
+        release "$2"
+        ;;
         ;;
     *)
         build_pc
