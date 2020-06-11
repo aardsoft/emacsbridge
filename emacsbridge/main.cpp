@@ -55,6 +55,7 @@ static QJSValue bridgeSingletonProvider(QQmlEngine *engine, QJSEngine *scriptEng
 int main(int argc, char **argv){
   if (argc<=1){
 #ifdef __ANDROID_API__
+    QGuiApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
     QGuiApplication app(argc, argv);
 #else
     QApplication app(argc, argv);
@@ -68,6 +69,7 @@ int main(int argc, char **argv){
     app.installTranslator(&qtTranslator);
 
     QQuickStyle::setStyle("Material");
+    QIcon::setThemeName("gallery");
 
     QQmlApplicationEngine engine;
 

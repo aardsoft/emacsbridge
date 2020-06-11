@@ -5,10 +5,23 @@
         <file>qml/SetupPage.qml</file>
         <file>qml/NotificationTestPage.qml</file>
         <file>qml/LispEvalPage.qml</file>
-        <file>images/icon.png</file>
-        <file>images/icon_mini.png</file>
+        <file>icons/icon.png</file>
+        <file>icons/icon_mini.png</file>
         <file>html/index.html</file>
         <file>lisp/emacsbridge-rpc.el</file>
         <file>lisp/alert-emacsbridge.el</file>
+        <file>icons/gallery/index.theme</file>
+        <file>icons/gallery/20x20/back.png</file>
+        <file>icons/gallery/20x20/drawer.png</file>
+        <file>icons/gallery/20x20/menu.png</file>
+        <file>icons/gallery/20x20@2/back.png</file>
+        <file>icons/gallery/20x20@2/drawer.png</file>
+        <file>icons/gallery/20x20@2/menu.png</file>
+        <file>icons/gallery/20x20@3/back.png</file>
+        <file>icons/gallery/20x20@3/drawer.png</file>
+        <file>icons/gallery/20x20@3/menu.png</file>
+        <file>icons/gallery/20x20@4/back.png</file>
+        <file>icons/gallery/20x20@4/drawer.png</file>
+        <file>icons/gallery/20x20@4/menu.png</file>
     </qresource>
 </RCC>

@@ -63,7 +63,7 @@ build_pc(){
 }
 
 build_pc_icons(){
-    mkdir -p images
+    mkdir -p icons
     for _res_name in "${!PC_ICONS[@]}"; do
         _res=${PC_ICONS[$_res_name]}
         if [ $_res_name = "regular" ]; then
@@ -71,8 +71,8 @@ build_pc_icons(){
         else
             _icon_name="icon_${_res_name}.png"
         fi
-        echo "magick -density ${_res}x${_res} -background transparent source_icons/merged.svg -define icon:auto-resize -resize ${_res}x${_res} -colors 256 images/${_icon_name}"
-        magick -density ${_res}x${_res} -background transparent source_icons/merged.svg -define icon:auto-resize -resize ${_res}x${_res} -colors 256 images/${_icon_name}
+        echo "magick -density ${_res}x${_res} -background transparent source_icons/merged.svg -define icon:auto-resize -resize ${_res}x${_res} -colors 256 icons/${_icon_name}"
+        magick -density ${_res}x${_res} -background transparent source_icons/merged.svg -define icon:auto-resize -resize ${_res}x${_res} -colors 256 icons/${_icon_name}
     done
 }
 

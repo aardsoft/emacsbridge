@@ -62,7 +62,7 @@ EmacsBridge::EmacsBridge(QObject *parent)
 
   m_trayIcon=new QSystemTrayIcon(this);
   m_trayIcon->setContextMenu(trayIconMenu);
-  m_trayIcon->setIcon(QIcon(":/images/icon_mini.png"));
+  m_trayIcon->setIcon(QIcon(":/icons/icon_mini.png"));
   m_trayIcon->show();
 
   connect(m_rep.data(), SIGNAL(notificationAdded(QString, QString)),

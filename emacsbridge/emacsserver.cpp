@@ -39,11 +39,11 @@ void EmacsServer::startServer(){
                                     return QHttpServerResponse::fromFile(QStringLiteral(":/lisp/%1").arg(url.path()));
                                  });
 
-  m_server->route("/images/<arg>", [this](const QUrl &url){
+  m_server->route("/icons/<arg>", [this](const QUrl &url){
                                   if (url.path()=="")
-                                    return QHttpServerResponse(listDirectory(":/images"));
+                                    return QHttpServerResponse(listDirectory(":/icons"));
                                   else
-                                    return QHttpServerResponse::fromFile(QStringLiteral(":/images/%1").arg(url.path()));
+                                    return QHttpServerResponse::fromFile(QStringLiteral(":/icons/%1").arg(url.path()));
                                  });
 
   m_server->route("/test_connection",

@@ -43,9 +43,9 @@ ApplicationWindow {
 
   header: ToolBar {
     RowLayout {
+      spacing: 20
       anchors.fill: parent
       ToolButton {
-        text: "..."
         action: navigateBackAction
       }
       Label {
