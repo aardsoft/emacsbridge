@@ -66,19 +66,3 @@ Other applications capable of using alert.el can make use of it. This shows a [[
 
 #+CAPTION: Notification from telega
 [[./doc/telega_notification.png]]
-
-** Known issues
-
-This is an initial proof of concept, barely working, with a lot of issues. Those are only some of them:
-
-- service doesn't autostart after boot
-- opening/restoring application from service notification is not working
-- error handling in Emacs daemon communication is mostly absent, causing the occasional temporary lockup
-- on pc, destructor isn't reliably called, leaving service process running now and then
-- stuff on server side (including settings) need to be properly exposed to the UI; UI needs to properly handle signals of property changes
-- have a proper setup page in the ui, replaced by the status page once config is initialised
-- have the default page selectable in settings
-
-To see what goes over the local socket, start socat and adjust socket address:
-
-while true; do echo "Restart."; socat -v GOPEN:/tmp/Emacs1000/server UNIX-LISTEN:/tmp/es; done
