@@ -121,7 +121,8 @@ ApplicationWindow {
         highlighted: ListView.isCurrentItem
         onClicked: {
           listView.currentIndex = index
-          stackView.push(model.source)
+          let comp = Qt.createComponent(model.source)
+          stackView.createFromComponentAndPush(comp)
           drawer.close()
         }
       }
@@ -138,6 +139,43 @@ ApplicationWindow {
   StackView {
     id: stackView
     anchors.fill: parent
+
+    // Create an item from the given component (synchronously, if it is ready, or asynchronously if not).
+    // Ownership of the component passes, and it is destroyed when completion is done.
+    function createFromComponentAndPush(component) {
+      let createItemAndPush = (c) => {
+        let item = c.createObject(stackView);
+        stackView.push(item);
+      };
+
+      let isLoadingAsync = false;
+      let handleStatusChanged = () => {
+        console.log("Component loading status changed: ", component.status);
+        switch (component.status) {
+        case Component.Ready:
+          createItemAndPush(component);
+          component.destroy();
+          break;
+        case Component.Loading:
+          if (isLoadingAsync) {
+            console.warn("Component tried to load asynchronously while it was already doing so; I give up");
+            component.destroy();
+            return;
+          } else {
+            isLoadingAsync = true;
+            component.statusChanged.connect(handleStatusChanged);
+          }
+          break;
+        case Component.Error:
+          console.warn("Error loading component: %1".arg(component.errorString()));
+          component.destroy();
+          break;
+        };
+      };
+
+      // Check the current status, and create if it's ready, wait for it if not.
+      handleStatusChanged();
+    }
 
     initialItem: { source: EmacsBridge.defaultPage }
   }
