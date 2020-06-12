@@ -302,6 +302,7 @@ QHttpServerResponse EmacsServer::setData(const QJsonObject &jsonObject, const QS
   // just check if there's a requesterId, and then throw it up the stack to have
   // the UI deal with it.
   if (jsonContainer.requesterId.isEmpty()){
+    qDebug()<< "Invalid data:" << jsonContainer.requesterId << jsonString;
     return QHttpServerResponse("text/plain",
                                tr("Requester ID missing in setData request").toUtf8(),
                                QHttpServerResponder::StatusCode::BadRequest);
