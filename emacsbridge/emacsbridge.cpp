@@ -88,6 +88,8 @@ EmacsBridge::~EmacsBridge(){
 
 void EmacsBridge::addComponent(const QmlFileContainer &qmlFile){
   QSettings settings;
+  QQmlEngine *engine=qmlEngine(this);
+  Q_ASSERT(engine);
   qDebug()<<"Adding component";
   //m_drawerComponents.insert(qmlFile.fileName, qmlFile.title);
   settings.beginGroup("component_"+qmlFile.fileName);
@@ -104,6 +106,9 @@ void EmacsBridge::addComponent(const QmlFileContainer &qmlFile){
     m_drawerComponents.removeAll(qmlFile.fileName);
     settings.setValue("drawerComponents", m_drawerComponents);
   }
+
+  qDebug()<<"Trimming component cache.";
+  engine->trimComponentCache();
   emit componentAdded(qmlFile);
 }
 
@@ -114,11 +119,15 @@ QString EmacsBridge::defaultPage() const{
 
 void EmacsBridge::removeComponent(const QString &qmlFile){
   QSettings settings;
+  QQmlEngine *engine=qmlEngine(this);
+  Q_ASSERT(engine);
   qDebug()<<"Removing component";
 
   m_drawerComponents.removeAll(qmlFile);
   settings.setValue("drawerComponents", m_drawerComponents);
 
+  qDebug()<<"Trimming component cache.";
+  engine->trimComponentCache();
   emit componentRemoved(qmlFile);
 }
 
