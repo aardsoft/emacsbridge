@@ -106,6 +106,7 @@ deploy_windows(){
     for _plugin in ${WIN32_PLUGINS}; do
         cp -R ${QT_WINDOWS_BIN}/../plugins/${_plugin} ${BUILD_TARGET}/plugins/
     done
+    cp -R ${QT_WINDOWS_BIN}/../qml ${BUILD_TARGET}/
     cd $SOURCE_DIR
 }
 

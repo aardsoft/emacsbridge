@@ -15,11 +15,23 @@ DIRTY=$$split(NEWEST_TAG_DIRTY, /)
 message("Newest tag: $$NEWEST_TAG")
 message("Commits since tag: $$COMMIT_COUNT")
 message("Total commits: $$TOTAL_COMMIT_COUNT")
-contains(DIRTY, dirty){
-  VERSION=$${NEWEST_TAG}.$${COMMIT_COUNT}-dirty
-}else{
-  VERSION=$${NEWEST_TAG}.$${COMMIT_COUNT}
+
+unix {
+  contains(DIRTY, dirty){
+    VERSION=$${NEWEST_TAG}.$${COMMIT_COUNT}-dirty
+  }else{
+    VERSION=$${NEWEST_TAG}.$${COMMIT_COUNT}
+  }
 }
+
+windows {
+  contains(DIRTY, dirty){
+    VERSION=$${NEWEST_TAG}.$${COMMIT_COUNT}.0
+  }else{
+    VERSION=$${NEWEST_TAG}.$${COMMIT_COUNT}
+  }
+}
+
 message("Building version $$VERSION")
 
 DEFINES += VERSION="'\"$$VERSION\"'"
