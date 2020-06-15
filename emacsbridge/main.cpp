@@ -110,7 +110,7 @@ int main(int argc, char **argv){
     qDebug()<< "Service starting with from the same .so file";
     QAndroidService app(argc, argv);
 #else
-    QApplication app(argc, argv);
+    QCoreApplication app(argc, argv);
 #endif
     init();
     EmacsService service;
