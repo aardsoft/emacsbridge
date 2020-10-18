@@ -9,6 +9,11 @@ if [ $IS_GITDIR -eq 0 ]; then
     if [ -f $GIT_SOURCE_DIR/../.local ]; then
         . $GIT_SOURCE_DIR/../.local
     fi
+    GIT_NEWEST_TAG=`git describe --abbrev=0 --tags`
+    GIT_COMMIT_COUNT=`git rev-list ${GIT_NEWEST_TAG}.. --count`
+    GIT_TOTAL_COMMIT_COUNT=`git rev-list HEAD --count`
+    # 0 if dirty, 1 if clean
+    IS_GITDIRTY=`git describe --abbrev=0 --tags --dirty="/dirty"|grep -q dirty; echo $?`
 else
     if [ -f .local ]; then
         .local
@@ -94,6 +99,25 @@ build_pc_icons(){
     done
 }
 
+build_dev_rpm(){
+    if [ $IS_GITDIR -eq 0 ]; then
+        if [ $IS_GITDIRTY -eq 0 ]; then
+            _release="dirty"
+        else
+            _release=1
+        fi
+        mkdir -p ~/rpmbuild/SPECS ~/rpmbuild/SOURCES
+        if [ -d $GIT_SOURCE_DIR/../build ]; then
+            rm -Rf $GIT_SOURCE_DIR/../build
+        fi
+        tar czf ~/rpmbuild/SOURCES/emacsbridge.tar.gz $GIT_SOURCE_DIR/..
+        sed -e "s/RELEASE/$_release/" -e "s/VERSION/$GIT_NEWEST_TAG.$GIT_COMMIT_COUNT/" $GIT_SOURCE_DIR/../emacsbridge.spec > ~/rpmbuild/SPECS/emacsbridge.spec
+        rpmbuild -ba ~/rpmbuild/SPECS/emacsbridge.spec
+    else
+        echo "Building dev RPMs is only supported from within a git tree"
+    fi
+}
+
 build_windows(){
     mkdir -p ${BUILD_DIR}/windows
     cd ${BUILD_DIR}/windows
@@ -129,14 +153,12 @@ deploy_windows(){
 }
 
 release(){
-  _newest_tag=`git describe --abbrev=0 --tags`
-  _total_commit_count=`git rev-list HEAD --count`
-  (( _total_commit_count=_total_commit_count+1 ))
+  (( _total_commit_count=$GIT_TOTAL_COMMIT_COUNT+1 ))
   if [ -n "$1" ]; then
       _new_tag=$1
   else
-      _newest_tag_minor=${_newest_tag//*./}
-      _newest_tag_major=${_newest_tag//.*/}
+      _newest_tag_minor=${GIT_NEWEST_TAG//*./}
+      _newest_tag_major=${GIT_NEWEST_TAG//.*/}
       (( _newest_tag_minor=_newest_tag_minor+1 ))
       _new_tag=$_newest_tag_major.$_newest_tag_minor
   fi
@@ -163,6 +185,9 @@ case "$1" in
         ;;
     "android")
         build_android
+        ;;
+    "dev-rpm")
+        build_dev_rpm
         ;;
     "pc")
         build_pc

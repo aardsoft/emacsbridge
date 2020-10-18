@@ -1,0 +1,11 @@
+[Unit]
+Description=Emacsbridge user session service
+Documentation=https://github.com/aardsoft/emacsbridge
+
+[Service]
+Type=exec
+ExecStart=/usr/bin/emacsbridge -service
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

@@ -44,6 +44,10 @@ android {
 
 unix:!android {
   QT += widgets
+  target.path = /usr/bin
+  user_service.path = /usr/lib/systemd/user
+  user_service.files = ../emacsbridge-service.service ../emacsbridge.service
+  INSTALLS += target user_service
 }
 
 windows {
