@@ -2,6 +2,19 @@
 # build.sh
 # (c) 2020 Bernd Wachter <bwachter@aardsoft.fi>
 
+GIT_SOURCE_DIR=`git rev-parse -q --absolute-git-dir 2>/dev/null`
+IS_GITDIR=$?
+
+if [ $IS_GITDIR -eq 0 ]; then
+    if [ -f $GIT_SOURCE_DIR/../.local ]; then
+        . $GIT_SOURCE_DIR/../.local
+    fi
+else
+    if [ -f .local ]; then
+        .local
+    fi
+fi
+
 QT_ANDROID_BIN=${QT_ANDROID_BIN:-$HOME/qt/qt5.15.0-android-27/bin}
 QT_WINDOWS_BIN=${QT_WINDOWS_BIN:-$HOME/qt/qt5.15.0-mingw64/bin}
 WIN32_OBJDUMP=${WIN32_OBJDUMP:-x86_64-w64-mingw32-objdump}
@@ -11,6 +24,7 @@ BUILD_DIR=${BUILD_DIR:-build}
 SOURCE_DIR=`pwd`
 declare -A ANDROID_ICONS=( [hdpi]=72 [mdpi]=48 [ldpi]=36 [xhdpi]=96 [xxhdpi]=142 [xxxhdpi]=192 )
 declare -A PC_ICONS=( [mini]=48 [regular]=256 )
+export ANDROID_SDK_ROOT
 
 dump_DLL(){
     if [ -n "$1" ]; then
@@ -31,6 +45,10 @@ deploy_DLLs(){
 }
 
 build_android(){
+    if [ -z "$ANDROID_SDK_ROOT" ]; then
+        echo "ANDROID_SDK_ROOT not set. It can be configured in the .local file."
+        exit 1
+    fi
     mkdir -p ${BUILD_DIR}/android
     cd ${BUILD_DIR}/android
     $QT_ANDROID_BIN/qmake $SOURCE_DIR
