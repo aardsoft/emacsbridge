@@ -34,7 +34,9 @@ public class EmacsBridgeService extends QtService {
         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
       Context context = getApplicationContext();
-      Intent showTaskIntent = new Intent(context, EmacsBridgeService.class);
+      Intent showTaskIntent =
+        new Intent(context,
+                   org.qtproject.qt5.android.bindings.QtActivity.class);
       showTaskIntent.setAction(Intent.ACTION_MAIN);
       showTaskIntent.addCategory(Intent.CATEGORY_LAUNCHER);
       showTaskIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -59,6 +61,7 @@ public class EmacsBridgeService extends QtService {
         return Service.START_NOT_STICKY;
     }
 
+    // handler for starting the service from Qt
     public static void startEmacsBridgeService(Context context) {
       context.startService(new Intent(context, EmacsBridgeService.class));
     }
