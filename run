@@ -1,0 +1,7 @@
+#!/bin/sh
+# run.sh
+# simple wrapper to test build on PC
+# add -service to launch a service process
+# (c) 2020 Bernd Wachter <bwachter@aardsoft.fi>
+
+./build.sh run $@

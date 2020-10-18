@@ -170,6 +170,13 @@ case "$1" in
     "release")
         release "$2"
         ;;
+    "run")
+        if [ -z "$2" ]; then
+            LD_LIBRARY_PATH=$BUILD_DIR/pc/qthttpserver/lib $BUILD_DIR/pc/emacsbridge/emacsbridge
+        elif [ "$2" = "-service" ]; then
+            LD_LIBRARY_PATH=$BUILD_DIR/pc/qthttpserver/lib $BUILD_DIR/pc/emacsbridge/emacsbridge
+        fi
+        ;;
     "windows")
         build_windows
         deploy_windows
