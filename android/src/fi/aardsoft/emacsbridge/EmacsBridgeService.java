@@ -5,10 +5,15 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.Service;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.util.Log;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.JSONException;
 import org.qtproject.qt5.android.bindings.QtService;
 
 public class EmacsBridgeService extends QtService {
@@ -64,5 +69,118 @@ public class EmacsBridgeService extends QtService {
     // handler for starting the service from Qt
     public static void startEmacsBridgeService(Context context) {
       context.startService(new Intent(context, EmacsBridgeService.class));
+    }
+
+    // call intents as defined in JSON similar to the following:
+    // {
+    //   "package": "com.termux",
+    //   "class": "com.termux.app.RunCommandService",
+    //   "extra": [
+    //     {
+    //       "type": "string",
+    //       "key": "com.termux.RUN_COMMAND_PATH",
+    //       "value": "/data/data/com.termux/files/usr/bin/ps"
+    //     },
+    //     {
+    //       "type": "string",
+    //       "key": "com.termux.RUN_COMMAND_ARGUMENTS",
+    //       "value": "-a"
+    //     }
+    //   ],
+    //   "action": "com.termux.RUN_COMMAND"
+    // }
+    //
+    // The matching lisp would be:
+    //
+    // (emacsbridge-post-json "intent" (json-encode `((:package . "com.termux")
+    //                                                (:class . "com.termux.app.RunCommandService")
+    //                                                (:extra . (((:type . "string")
+    //                                                            (:key . "com.termux.RUN_COMMAND_PATH")
+    //                                                            (:value . "/data/data/com.termux/files/usr/bin/ps"))
+    //                                                           ((:type . "string")
+    //                                                            (:key . "com.termux.RUN_COMMAND_ARGUMENTS")
+    //                                                            (:value . "-a"))))
+    //                                                (:action . "com.termux.RUN_COMMAND"))))
+    public static void callIntentFromJson(Context context, String jsonData){
+      try {
+        JSONObject json = new JSONObject(jsonData);
+        Intent intent = new Intent();
+        // this is required as that call will always come from a service context
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        if (!json.isNull("action")){
+          intent.setAction(json.getString("action"));
+        }
+
+        if (!json.isNull("data")){
+          intent.setData(Uri.parse(json.getString("data")));
+        }
+
+        if (!json.isNull("package") && !json.isNull("class")){
+          ComponentName componentName =
+            new ComponentName(json.getString("package"), json.getString("class"));
+          intent.setComponent(componentName);
+        }
+
+        if (!json.isNull("extra")){
+          JSONArray extra = json.getJSONArray("extra");
+          for (int i=0;i<extra.length();i++){
+            JSONObject e = extra.getJSONObject(i);
+            if (!e.isNull("type") && !e.isNull("key") && !e.isNull("value")){
+              String type = e.getString("type");
+              String key = e.getString("key");
+              if (type == "string"){
+                intent.putExtra(key, e.getString("value"));
+              } else if (type == "boolean"){
+                intent.putExtra(key, e.getBoolean("value"));
+              } else if (type == "double"){
+                intent.putExtra(key, e.getInt("double"));
+              } else if (type == "int"){
+                intent.putExtra(key, e.getInt("value"));
+              } else if (type == "long"){
+                intent.putExtra(key, e.getLong("value"));
+              }
+            }
+          }
+        }
+
+        context.startActivity(intent);
+      } catch (JSONException e) {
+        // TODO
+      }
+    }
+
+    // If intentData is present it needs to be a valid string representation of
+    // a URI, so possible something like package: needs to be pre-pended
+    // this is a convenience function for calling simple intents from the UI
+    // part of the application. Anything requiring additional data should go
+    // through the json call.
+    // Not that intentData needs to be a valid string representation of a URL,
+    // so possibly something like package: needs to be pre-pended
+    public static void callIntent(Context context,
+                                  String intentAction,
+                                  String intentData,
+                                  String intentPackage,
+                                  String intentClass){
+      Intent intent = new Intent();
+      if (!intentAction.isEmpty()){
+        intent.setAction(intentAction);
+      }
+      if (!intentData.isEmpty()){
+        intent.setData(Uri.parse(intentData));
+      }
+      if (!intentPackage.isEmpty() && !intentClass.isEmpty()){
+        ComponentName componentName =
+          new ComponentName(intentPackage, intentClass);
+        intent.setComponent(componentName);
+      }
+      context.startActivity(intent);
+    }
+
+    public static void openAppSettings(Context context){
+      callIntent(context,
+                 android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
+                 "package:" + context.getPackageName(),
+                 "", "");
     }
 }

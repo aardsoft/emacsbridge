@@ -5,6 +5,11 @@
  * @date 2020
  */
 
+#ifdef __ANDROID_API__
+#include <QtAndroid>
+#include <QAndroidJniEnvironment>
+#endif
+
 #include <QQmlEngine>
 #include <QQmlContext>
 #include <QQmlComponent>
@@ -139,6 +144,10 @@ QHttpServerResponse EmacsServer::methodCall(const QString &method, const QByteAr
     return setData(jsonObject, QString::fromUtf8(payload));
   }else if (method=="notification"){
     return addNotification(jsonObject);
+#ifdef __ANDROID_API__
+  }else if (method=="intent"){
+    return handleIntent(jsonObject, QString::fromUtf8(payload));
+#endif
   }else if (method=="removeComponent"){
     return removeComponent(jsonObject);
   }
@@ -268,6 +277,53 @@ QHttpServerResponse EmacsServer::addNotification(const QJsonObject &jsonObject){
                          notificationText);
   return "OK";
 }
+
+#ifdef __ANDROID_API__
+QString EmacsServer::callIntent(const QString &jsonString){
+  QAndroidJniEnvironment env;
+
+  QString returnString="OK";
+  QAndroidJniObject jJsonData=QAndroidJniObject::fromString(jsonString);
+  QAndroidJniObject::callStaticMethod<void>(
+    "fi/aardsoft/emacsbridge/EmacsBridgeService",
+    "callIntentFromJson",
+    "(Landroid/content/Context;Ljava/lang/String;)V",
+    QtAndroid::androidContext().object(),
+    jJsonData.object<jstring>());
+
+  if (env->ExceptionCheck()) {
+    jthrowable exception=env->ExceptionOccurred();
+    // JNI blocks pretty much everything without clearing the exception
+    env->ExceptionClear();
+    jmethodID jToString=
+      env->GetMethodID(env->FindClass("java/lang/Object"),
+                       "toString",
+                       "()Ljava/lang/String;");
+
+    jstring exceptionString=(jstring)env->CallObjectMethod(exception, jToString);
+    returnString=env->GetStringUTFChars(exceptionString, 0);
+  }
+
+  return returnString;
+}
+
+QHttpServerResponse EmacsServer::handleIntent(const QJsonObject &jsonObject,
+                                            const QString &jsonString){
+  QString notificationTitle=jsonObject["title"].toString("Missing notification title");
+  QString notificationText=jsonObject["text"].toString("Missing notification text");
+
+  qDebug()<< "Calling intent: " << notificationText;
+  QString ret=callIntent(jsonString);
+  if (ret=="OK"){
+    return "OK";
+  } else {
+    qDebug()<< "Returning" << ret;
+    return QHttpServerResponse("text/plain",
+                               ret.toUtf8(),
+                               QHttpServerResponder::StatusCode::BadRequest);
+  }
+}
+#endif
 
 QHttpServerResponse EmacsServer::removeComponent(const QJsonObject &jsonObject){
   QString qmlFile=jsonObject["file-name"].toString("");

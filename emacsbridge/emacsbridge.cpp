@@ -9,6 +9,7 @@
 
 #ifdef __ANDROID_API__
 #include <QtAndroid>
+#include <QAndroidJniEnvironment>
 #else
 #include <QMenu>
 #include <QIcon>
@@ -112,6 +113,29 @@ void EmacsBridge::addComponent(const QmlFileContainer &qmlFile){
   emit componentAdded(qmlFile);
 }
 
+#ifdef __ANDROID_API__
+void EmacsBridge::callIntent(const QString &iAction, const QString &iData,
+                             const QString &iPackage, const QString &iClass){
+  QAndroidJniObject jAction = QAndroidJniObject::fromString(iAction);
+  QAndroidJniObject jData = QAndroidJniObject::fromString(iData);
+  QAndroidJniObject jPackage = QAndroidJniObject::fromString(iPackage);
+  QAndroidJniObject jClass = QAndroidJniObject::fromString(iClass);
+  QAndroidJniObject::callStaticMethod<void>(
+    "fi/aardsoft/emacsbridge/EmacsBridgeService",
+    "callIntent",
+    "(Landroid/content/Context;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;Ljava/lang/String;)V",
+    QtAndroid::androidActivity().object(),
+    jAction.object<jstring>(),
+    jData.object<jstring>(),
+    jPackage.object<jstring>(),
+    jClass.object<jstring>());
+  QAndroidJniEnvironment env;
+  if (env->ExceptionCheck()) {
+    // Handle exception here.
+    env->ExceptionClear();
+  }
+}
+#endif
 QString EmacsBridge::defaultPage() const{
   QSettings settings;
   return(settings.value("defaultPage")).toString();
@@ -148,6 +172,16 @@ void EmacsBridge::initDrawer(){
     emit componentAdded(c);
   }
 }
+
+#ifdef __ANDROID_API__
+void EmacsBridge::openAppSettings(){
+  QAndroidJniObject::callStaticMethod<void>(
+    "fi/aardsoft/emacsbridge/EmacsBridgeService",
+    "openAppSettings",
+    "(Landroid/content/Context;)V",
+    QtAndroid::androidActivity().object());
+}
+#endif
 
 void EmacsBridge::setData(const JsonDataContainer &jsonContainer){
   Q_ASSERT(qmlEngine(this));

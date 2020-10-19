@@ -32,6 +32,11 @@ class EmacsBridge: public QObject{
 
     Q_INVOKABLE void runQuery(const QString &queryKey, const QString &query);
     Q_INVOKABLE void initDrawer();
+#ifdef __ANDROID_API__
+    Q_INVOKABLE void openAppSettings();
+    Q_INVOKABLE void callIntent(const QString &iAction, const QString &iData="",
+                                const QString &iPackage="", const QString &iClass="");
+#endif
     QDateTime serviceStartupTime() const;
     QDateTime startupTime() const;
     QString defaultPage() const;

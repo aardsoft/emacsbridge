@@ -23,6 +23,9 @@ class EmacsServer: public QObject{
 
   public slots:
     void startServer();
+#ifdef __ANDROID_API__
+    QString callIntent(const QString &jsonString);
+#endif
 
   private:
     QHttpServer *m_server;
@@ -36,6 +39,10 @@ class EmacsServer: public QObject{
 
     QHttpServerResponse addComponent(const QJsonObject &jsonObject);
     QHttpServerResponse addNotification(const QJsonObject &jsonObject);
+#ifdef __ANDROID_API__
+    QHttpServerResponse handleIntent(const QJsonObject &jsonObject,
+                                     const QString &jsonString);
+#endif
     QHttpServerResponse removeComponent(const QJsonObject &jsonObject);
     QHttpServerResponse setData(const QJsonObject &jsonObject, const QString &jsonString);
   private slots:
