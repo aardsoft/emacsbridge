@@ -14,7 +14,9 @@ if [ $IS_GITDIR -eq 0 ]; then
     GIT_TOTAL_COMMIT_COUNT=`git rev-list HEAD --count`
     # 0 if dirty, 1 if clean
     IS_GITDIRTY=`git describe --abbrev=0 --tags --dirty="/dirty"|grep -q dirty; echo $?`
+    SOURCE_DIR=$GIT_SOURCE_DIR/../
 else
+    SOURCE_DIR=`pwd`
     if [ -f .local ]; then
         .local
     fi
@@ -26,7 +28,8 @@ WIN32_OBJDUMP=${WIN32_OBJDUMP:-x86_64-w64-mingw32-objdump}
 WIN32_SYSROOT=${WIN32_SYSROOT:-/usr/x86_64-w64-mingw32/sys-root/mingw/bin}
 WIN32_PLUGINS=${WIN32_PLUGINS:-platforms}
 BUILD_DIR=${BUILD_DIR:-build}
-SOURCE_DIR=`pwd`
+QMAKE_CXX=${QMAKE_CXX:-clang++}
+QMAKE_LINK=${QMAKE_LINK:-clang++}
 declare -A ANDROID_ICONS=( [hdpi]=72 [mdpi]=48 [ldpi]=36 [xhdpi]=96 [xxhdpi]=142 [xxxhdpi]=192 )
 declare -A PC_ICONS=( [mini]=48 [regular]=256 )
 export ANDROID_SDK_ROOT
@@ -80,7 +83,7 @@ build_pc(){
     echo "Building PC build in ${BUILD_DIR}/pc"
     mkdir -p ${BUILD_DIR}/pc
     cd ${BUILD_DIR}/pc
-    qmake-qt5 $SOURCE_DIR
+    qmake-qt5 QMAKE_CXX=$QMAKE_CXX QMAKE_LINK=$QMAKE_LINK $SOURCE_DIR
     make -j$(nproc)
     cd $SOURCE_DIR
 }
