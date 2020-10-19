@@ -78,6 +78,8 @@ EmacsBridge::EmacsBridge(QObject *parent)
           this, SLOT(removeComponent(QString)));
   connect(m_rep.data(), SIGNAL(dataSet(JsonDataContainer)),
           this, SLOT(setData(JsonDataContainer)));
+  connect(m_rep.data(), SIGNAL(activeServerListenPortChanged(quint16)),
+          this, SIGNAL(activeServerListenPortChanged(quint16)));
 }
 
 EmacsBridge::~EmacsBridge(){
@@ -136,6 +138,7 @@ void EmacsBridge::callIntent(const QString &iAction, const QString &iData,
   }
 }
 #endif
+
 QString EmacsBridge::defaultPage() const{
   QSettings settings;
   return(settings.value("defaultPage")).toString();
@@ -198,6 +201,26 @@ void EmacsBridge::setDefaultPage(const QString &defaultPage){
   QSettings settings;
   settings.setValue("defaultPage", defaultPage);
   emit defaultPageChanged();
+}
+
+quint16 EmacsBridge::activeServerListenPort() const{
+  return m_rep->activeServerListenPort();
+}
+
+void EmacsBridge::setServerListenAddress(const QString &serverAddress) const{
+  m_rep->pushServerListenAddress(serverAddress);
+}
+
+QString EmacsBridge::serverListenAddress() const{
+  return m_rep->serverListenAddress();
+}
+
+void EmacsBridge::setServerListenPort(const quint16 serverPort) const{
+  m_rep->pushServerListenPort(serverPort);
+}
+
+quint16 EmacsBridge::serverListenPort() const{
+  return m_rep->serverListenPort();
 }
 
 QDateTime EmacsBridge::startupTime() const{

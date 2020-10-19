@@ -22,6 +22,9 @@
 class EmacsBridge: public QObject{
     Q_OBJECT
     Q_PROPERTY(bool mobile READ mobile CONSTANT)
+    Q_PROPERTY(quint16 activeServerListenPort READ activeServerListenPort NOTIFY activeServerListenPortChanged)
+    Q_PROPERTY(QString serverListenAddress READ serverListenAddress WRITE setServerListenAddress NOTIFY serverListenAddressChanged)
+    Q_PROPERTY(quint16 serverListenPort READ serverListenPort WRITE setServerListenPort NOTIFY serverListenPortChanged)
     Q_PROPERTY(QDateTime serviceStartupTime READ serviceStartupTime CONSTANT)
     Q_PROPERTY(QDateTime startupTime READ startupTime CONSTANT)
     Q_PROPERTY(QString defaultPage READ defaultPage WRITE setDefaultPage NOTIFY defaultPageChanged)
@@ -41,6 +44,11 @@ class EmacsBridge: public QObject{
     QDateTime startupTime() const;
     QString defaultPage() const;
     void setDefaultPage(const QString &defaultPage);
+    quint16 activeServerListenPort() const;
+    QString serverListenAddress() const;
+    void setServerListenAddress(const QString &serverAddress) const;
+    quint16 serverListenPort() const;
+    void setServerListenPort(const quint16 serverPort) const;
     bool mobile() const{
 #ifdef __ANDROID_API__
       return true;
@@ -56,6 +64,9 @@ class EmacsBridge: public QObject{
     void componentRemoved(const QString &qmlFile);
     void dataSet(const QString &requesterId, const QJSValue &jsonData);
     void defaultPageChanged();
+    void activeServerListenPortChanged(quint16 serverPort);
+    void serverListenAddressChanged(QString &serverAddress);
+    void serverListenPortChanged(quint16 serverPort);
 
   private slots:
 #ifndef __ANDROID_API__

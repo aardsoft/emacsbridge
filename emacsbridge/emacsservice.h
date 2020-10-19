@@ -34,11 +34,13 @@ class EmacsService: public QObject{
   private slots:
     void settingChanged(const QString &key);
     void displayNotification(const QString &title, const QString &message);
+    void changeServerListenPort(const quint16 serverPort);
+    void changeServerListenAddress(const QString &serverAddress);
 
   signals:
     void notificationAdded(const QString &title, const QString &message);
     void startServer();
-
+    void restartServer();
 };
 
 #endif

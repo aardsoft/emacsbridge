@@ -31,6 +31,7 @@ EmacsServer::~EmacsServer(){
 }
 
 void EmacsServer::startServer(){
+  qDebug()<<"startServer" << QThread::currentThreadId();
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
   m_server=new QHttpServer();
   m_server->route("/", [](){
@@ -108,8 +109,18 @@ void EmacsServer::startServer(){
 
   m_server->listen(QHostAddress(settings->value("http/bindAddress", "127.0.0.1").toString()),
                   settings->value("http/bindPort", 1616).toInt());
+  qDebug()<<"HTTP server initialized at"
+          <<settings->value("http/bindAddress", "127.0.0.1").toString()
+          <<"port"
+          <<settings->value("http/bindPort", 1616).toInt();
+  emit activePortChanged(activeServerPort());
 }
 
+void EmacsServer::restartServer(){
+  qDebug()<< "Restarting HTTP server";
+  delete m_server;
+  startServer();
+}
 
 QString EmacsServer::listDirectory(const QString &directory){
   QDirIterator it(directory, QDirIterator::Subdirectories);
@@ -368,4 +379,17 @@ QHttpServerResponse EmacsServer::setData(const QJsonObject &jsonObject, const QS
   qDebug()<< "Setting data:" << jsonContainer.requesterId << jsonObject;
   emit dataSet(jsonContainer);
   return "OK";
+}
+
+quint16 EmacsServer::activeServerPort(){
+  QVector<quint16> serverPorts=m_server->serverPorts();
+
+  if (serverPorts.count() <= 0){
+    qDebug()<< "HTTP server not listening on any port";
+    return 0;
+  } else if (serverPorts.count() > 1){
+    qDebug()<< "HTTP server listening to wrong number of ports" << serverPorts;
+  }
+
+  return serverPorts.at(0);
 }

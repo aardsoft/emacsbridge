@@ -23,6 +23,8 @@ class EmacsServer: public QObject{
 
   public slots:
     void startServer();
+    void restartServer();
+    quint16 activeServerPort();
 #ifdef __ANDROID_API__
     QString callIntent(const QString &jsonString);
 #endif
@@ -52,6 +54,7 @@ class EmacsServer: public QObject{
     void componentRemoved(const QString &qmlFile);
     void dataSet(const JsonDataContainer &jsonData);
     void notificationAdded(const QString &title, const QString &message);
+    void activePortChanged(const quint16 port);
 };
 
 #endif

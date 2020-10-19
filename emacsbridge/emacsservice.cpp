@@ -15,6 +15,10 @@
 EmacsService::EmacsService(): QObject(){
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
 
+  m_remote.setServerListenPort(settings->value("http/bindPort", 1616).toInt());
+  m_remote.setServerListenAddress(settings->value("http/bindAddress", "127.0.0.1").toString());
+  m_remote.setActiveServerListenPort(0);
+
   m_startupTime=QDateTime::currentDateTime();
   m_remote.setStartupTime(m_startupTime);
 
@@ -44,12 +48,22 @@ EmacsService::EmacsService(): QObject(){
           &m_remote, SLOT(addComponent(QmlFileContainer)));
   connect(m_server, SIGNAL(componentRemoved(QString)),
           &m_remote, SLOT(removeComponent(QString)));
+  // 'this' here is required to make sure the lambda gets called in the correct thread
+  connect(m_server, &EmacsServer::activePortChanged,
+          this,
+          [=](const quint16 serverPort){m_remote.setActiveServerListenPort(serverPort);});
 
+  connect(&m_remote, SIGNAL(serverListenPortChanged(quint16)),
+          this, SLOT(changeServerListenPort(quint16)));
+  connect(&m_remote, SIGNAL(serverListenAddressChanged(QString)),
+          this, SLOT(changeServerListenAddress(QString)));
   connect(m_server, SIGNAL(dataSet(JsonDataContainer)),
           &m_remote, SLOT(setData(JsonDataContainer)));
 
   connect(this, SIGNAL(startServer()),
           m_server, SLOT(startServer()));
+  connect(this, SIGNAL(restartServer()),
+          m_server, SLOT(restartServer()));
 
   serverThread.start();
   emit startServer();
@@ -81,4 +95,20 @@ void EmacsService::settingChanged(const QString &key){
       settings->setValue("core/configured", true);
     }
   }
+  if (key.startsWith("http/")){
+    qDebug()<<"Triggering server restart";
+    emit restartServer();
+  }
+}
+
+void EmacsService::changeServerListenPort(const quint16 serverPort){
+  EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
+  qDebug()<<"Server port changed to" << serverPort;
+  settings->setValue("http/bindPort", serverPort);
+}
+
+void EmacsService::changeServerListenAddress(const QString &serverAddress){
+  EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
+  qDebug()<<"Server address changed to" << serverAddress;
+  settings->setValue("http/bindAddress", serverAddress);
 }
