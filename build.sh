@@ -131,6 +131,27 @@ build_windows(){
     cd $SOURCE_DIR
 }
 
+copy_android_artifacts(){
+    _debug_dir=$BUILD_DIR/android/emacsbridge/android-build/build/outputs/apk/debug
+    _release_dir=$BUILD_DIR/android-deploy/build/outputs/apk/release
+    if [ -n "$ARTIFACT_COPY_DIR" ]; then
+        _version=$GIT_NEWEST_TAG.$GIT_COMMIT_COUNT
+        if [ $IS_GITDIRTY -eq 0 ]; then
+            _version=${_version}-dirty
+        fi
+        mkdir -p "$ARTIFACT_COPY_DIR"
+        if  [ -f $_debug_dir/android-build-debug.apk ]; then
+            cp $_debug_dir/android-build-debug.apk $ARTIFACT_COPY_DIR/emacsbridge-${_version}-debug.apk
+        fi
+        if [ -f $_release_dir/android-deploy-release-signed.apk ]; then
+            cp $_release_dir/android-deploy-release-signed.apk $ARTIFACT_COPY_DIR/emacsbridge-${_version}-release-signed.apk
+        fi
+        if [ -f $_release_dir/android-deploy-release-unsigned.apk ]; then
+            cp $_release_dir/android-deploy-release-unsigned.apk $ARTIFACT_COPY_DIR/emacsbridge-${_version}-release-unsigned.apk
+        fi
+    fi
+}
+
 deploy_android(){
     mkdir -p ${BUILD_DIR}/android-deploy
     export BUILD_TARGET=${BUILD_DIR}/android-deploy
@@ -190,9 +211,11 @@ case "$1" in
     "deploy-android")
         build_android
         deploy_android
+        copy_android_artifacts
         ;;
     "android")
         build_android
+        copy_android_artifacts
         ;;
     "dev-rpm")
         build_dev_rpm
