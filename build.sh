@@ -23,7 +23,7 @@ else
 fi
 
 ANDROID_ABIS=${ANDROID_ABIS:-arm64-v8a x86_64}
-ANDROID_SDK_VERSION=${ANDROID_SDK_VERSION:-android-30}
+ANDROID_SDK_VERSION=${ANDROID_SDK_VERSION:-android-29}
 QT_VERSION=${QT_VERSION:-5.15.1}
 QT_ANDROID_BIN=${QT_ANDROID_BIN:-$HOME/qt/qt${QT_VERSION}-${ANDROID_SDK_VERSION}/bin}
 QT_WINDOWS_BIN=${QT_WINDOWS_BIN:-$HOME/qt/qt${QT_VERSION}-mingw64/bin}
@@ -135,6 +135,7 @@ build_windows(){
 copy_android_artifacts(){
     _debug_dir=$BUILD_DIR/android/emacsbridge/android-build/build/outputs/apk/debug
     _release_dir=$BUILD_DIR/android-deploy/build/outputs/apk/release
+    _bundle_dir=$BUILD_DIR/android-deploy/build/outputs/bundle
     if [ -n "$ARTIFACT_COPY_DIR" ]; then
         _version=$GIT_NEWEST_TAG.$GIT_COMMIT_COUNT
         if [ $IS_GITDIRTY -eq 0 ]; then
@@ -150,6 +151,12 @@ copy_android_artifacts(){
         if [ -f $_release_dir/android-deploy-release-unsigned.apk ]; then
             cp $_release_dir/android-deploy-release-unsigned.apk $ARTIFACT_COPY_DIR/emacsbridge-${_version}-release-unsigned.apk
         fi
+        if [ -f $_bundle_dir/release/android-deploy-release.aab ]; then
+            cp $_bundle_dir/release/android-deploy-release.aab $ARTIFACT_COPY_DIR/emacsbridge-${_version}-release.aab
+        fi
+        if [ -f $_bundle_dir/debug/android-deploy-debug.aab ]; then
+            cp $_bundle_dir/debug/android-deploy-debug.aab $ARTIFACT_COPY_DIR/emacsbridge-${_version}-debug.aab
+        fi
     fi
 }
 
@@ -161,7 +168,7 @@ deploy_android(){
     if  [ -n "$SIGN_URL" ] && [ -n "$SIGN_ALIAS" ]; then
         DEPLOY_SIGN_ARGS="--sign $SIGN_URL $SIGN_ALIAS"
     fi
-    $QT_ANDROID_BIN/androiddeployqt --release --output $BUILD_TARGET --gradle --android-platform $ANDROID_SDK_VERSION --input emacsbridge/android-emacsbridge-deployment-settings.json $DEPLOY_SIGN_ARGS
+    $QT_ANDROID_BIN/androiddeployqt --release --output $BUILD_TARGET --gradle --android-platform $ANDROID_SDK_VERSION --input emacsbridge/android-emacsbridge-deployment-settings.json --aab $DEPLOY_SIGN_ARGS
     cd $SOURCE_DIR
 }
 

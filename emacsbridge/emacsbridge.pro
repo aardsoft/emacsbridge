@@ -29,6 +29,10 @@ qtConfig(ssl){
 
 android {
   QT += androidextras
+  # see android_deployment_settings.prf
+  # setting sdk versions in gradle.properties gets overwritten for some qt versions
+  ANDROID_MIN_SDK_VERSION = 27
+  ANDROID_TARGET_SDK_VERSION = 29
   ANDROID_VERSION_NAME = $$VERSION
   ANDROID_VERSION_CODE = $$TOTAL_COMMIT_COUNT
   ANDROID_PACKAGE_SOURCE_DIR = $$PWD/../android
