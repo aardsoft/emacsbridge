@@ -22,8 +22,9 @@ else
     fi
 fi
 
-ANDROID_SDK_VERSION=${ANDROID_SDK_VERSION:-android-27}
-QT_VERSION=${QT_VERSION:-5.15.0}
+ANDROID_ABIS=${ANDROID_ABIS:-arm64-v8a x86_64}
+ANDROID_SDK_VERSION=${ANDROID_SDK_VERSION:-android-30}
+QT_VERSION=${QT_VERSION:-5.15.1}
 QT_ANDROID_BIN=${QT_ANDROID_BIN:-$HOME/qt/qt${QT_VERSION}-${ANDROID_SDK_VERSION}/bin}
 QT_WINDOWS_BIN=${QT_WINDOWS_BIN:-$HOME/qt/qt${QT_VERSION}-mingw64/bin}
 WIN32_OBJDUMP=${WIN32_OBJDUMP:-x86_64-w64-mingw32-objdump}
@@ -61,7 +62,7 @@ build_android(){
     fi
     mkdir -p ${BUILD_DIR}/android
     cd ${BUILD_DIR}/android
-    $QT_ANDROID_BIN/qmake CONFIG+=release $SOURCE_DIR
+    $QT_ANDROID_BIN/qmake CONFIG+=release ANDROID_ABIS="$ANDROID_ABIS" $SOURCE_DIR
     make -j$(nproc)
     cd emacsbridge
     make -j$(nproc) apk

@@ -3,7 +3,6 @@ include(../build_info.pri)
 # main every time to make sure the version is correct
 REBUILD = $$system(touch main.cpp)
 
-TARGET = emacsbridge
 QT += quick quickcontrols2 websockets remoteobjects
 CONFIG += qmltypes
 QML_IMPORT_NAME = fi.aardsoft.emacsbridge
@@ -12,16 +11,17 @@ QML_IMPORT_MAJOR_VERSION = 1
 REPC_REPLICA += emacsbridgeremote.rep
 REPC_SOURCE += emacsbridgeremote.rep
 
-# part of the libraries, should probably be autodetected on build
-android{
-  ANDROID_ARCH=_arm64-v8a
-}
-
 # INCLUDEPATH insists on changing this to a relative path if the directory
 # exists. Unfortunately the relative path is wrong, so builds fail. Explicitely
 # set compiler flags as workaround.
 QMAKE_CXXFLAGS *= -I$$OUT_PWD/../qthttpserver/include -I$$OUT_PWD/../qthttpserver/include/QtHttpServer -DQT_HTTPSERVER_LIB -std=c++2a
-QMAKE_LFLAGS *= -L$$OUT_PWD/../qthttpserver/lib -lQt5HttpServer$$ANDROID_ARCH
+QMAKE_LFLAGS *= -L$$OUT_PWD/../qthttpserver/lib
+android{
+QMAKE_LFLAGS *=  -lQt5HttpServer_$$QT_ARCH
+}
+unix:!android {
+QMAKE_LFLAGS *=  -lQt5HttpServer
+}
 
 qtConfig(ssl){
   QMAKE_LFLAGS *= -lQt5SslServer
@@ -38,7 +38,7 @@ android {
     ../android/src/fi/aardsoft/emacsbridge/EmacsBridgeService.java \
     ../android/src/fi/aardsoft/emacsbridge/EmacsBridgeBroadcastReceiver.java \
     ../android/AndroidManifest.xml
-  ANDROID_EXTRA_LIBS *= $$OUT_PWD/../qthttpserver/lib/libQt5HttpServer$${ANDROID_ARCH}.so
+  ANDROID_EXTRA_LIBS *= $$OUT_PWD/../qthttpserver/lib/libQt5HttpServer_$${QT_ARCH}.so
 }
 
 
