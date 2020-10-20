@@ -69,10 +69,10 @@ bool EmacsClient::isSetup(){
   QString stringResult=doQuery(OWN_QUERY_KEY, queryTemplate.arg(authToken));
 
   if (stringResult==authToken){
-    qDebug()<< authToken << "==" << stringResult;
+    qDebug()<< "Auth token query:" << authToken << "==" << stringResult;
     return true;
   } else {
-    qDebug()<< stringResult;
+    qDebug()<< "Auth token query:" << stringResult;
     return false;
   }
 }
