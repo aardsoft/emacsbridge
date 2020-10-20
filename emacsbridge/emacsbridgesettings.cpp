@@ -66,8 +66,8 @@ void EmacsBridgeSettings::setValue(const QString &key, const QVariant &value){
     qDebug()<< "value didn't change for " << key;
   } else {
     QSettings::setValue(key, value);
+    qDebug()<< "new value for " << key;
     if (m_initialized)
       emit settingChanged(key);
-    qDebug()<< "new value for " << key;
   }
 }
