@@ -22,8 +22,10 @@ else
     fi
 fi
 
-QT_ANDROID_BIN=${QT_ANDROID_BIN:-$HOME/qt/qt5.15.0-android-27/bin}
-QT_WINDOWS_BIN=${QT_WINDOWS_BIN:-$HOME/qt/qt5.15.0-mingw64/bin}
+ANDROID_SDK_VERSION=${ANDROID_SDK_VERSION:-android-27}
+QT_VERSION=${QT_VERSION:-5.15.0}
+QT_ANDROID_BIN=${QT_ANDROID_BIN:-$HOME/qt/qt${QT_VERSION}-${ANDROID_SDK_VERSION}/bin}
+QT_WINDOWS_BIN=${QT_WINDOWS_BIN:-$HOME/qt/qt${QT_VERSION}-mingw64/bin}
 WIN32_OBJDUMP=${WIN32_OBJDUMP:-x86_64-w64-mingw32-objdump}
 WIN32_SYSROOT=${WIN32_SYSROOT:-/usr/x86_64-w64-mingw32/sys-root/mingw/bin}
 WIN32_PLUGINS=${WIN32_PLUGINS:-platforms}
@@ -59,7 +61,7 @@ build_android(){
     fi
     mkdir -p ${BUILD_DIR}/android
     cd ${BUILD_DIR}/android
-    $QT_ANDROID_BIN/qmake $SOURCE_DIR
+    $QT_ANDROID_BIN/qmake CONFIG+=release $SOURCE_DIR
     make -j$(nproc)
     cd emacsbridge
     make -j$(nproc) apk
@@ -131,16 +133,19 @@ build_windows(){
 
 deploy_android(){
     mkdir -p ${BUILD_DIR}/android-deploy
-    export BUILD_TARGET=`pwd`/${BUILD_DIR}/android-deploy
+    export BUILD_TARGET=${BUILD_DIR}/android-deploy
     cd ${BUILD_DIR}/android
     make install INSTALL_ROOT=$BUILD_TARGET
-    $QT_ANDROID_BIN/androiddeployqt --output $BUILD_TARGET --gradle --android-platform android-27 --input android-emacsbridge-deployment-settings.json
+    if  [ -n "$SIGN_URL" ] && [ -n "$SIGN_ALIAS" ]; then
+        DEPLOY_SIGN_ARGS="--sign $SIGN_URL $SIGN_ALIAS"
+    fi
+    $QT_ANDROID_BIN/androiddeployqt --release --output $BUILD_TARGET --gradle --android-platform $ANDROID_SDK_VERSION --input emacsbridge/android-emacsbridge-deployment-settings.json $DEPLOY_SIGN_ARGS
     cd $SOURCE_DIR
 }
 
 deploy_windows(){
     mkdir -p ${BUILD_DIR}/windows-deploy
-    export BUILD_TARGET=`pwd`/${BUILD_DIR}/windows-deploy
+    export BUILD_TARGET=${BUILD_DIR}/windows-deploy
     cd ${BUILD_DIR}/windows
     cp qthttpserver/lib/Qt5HttpServer.dll ${BUILD_TARGET}/
     deploy_DLLs emacsbridge/debug/emacsbridge.exe ${BUILD_TARGET}/
