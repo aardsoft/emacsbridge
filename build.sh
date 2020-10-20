@@ -31,7 +31,7 @@ BUILD_DIR=${BUILD_DIR:-build}
 QMAKE_CXX=${QMAKE_CXX:-clang++}
 QMAKE_LINK=${QMAKE_LINK:-clang++}
 declare -A ANDROID_ICONS=( [hdpi]=72 [mdpi]=48 [ldpi]=36 [xhdpi]=96 [xxhdpi]=142 [xxxhdpi]=192 )
-declare -A PC_ICONS=( [mini]=48 [regular]=256 )
+declare -A PC_ICONS=( [mini]=48 [regular]=256 [large]=512 )
 export ANDROID_SDK_ROOT
 
 dump_DLL(){
