@@ -34,9 +34,9 @@ void EmacsServer::startServer(){
   qDebug()<<"startServer" << QThread::currentThreadId();
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
   m_server=new QHttpServer();
-  m_server->route("/", [](){
-                        return QHttpServerResponse::fromFile(QStringLiteral(":/html/index.html"));
-                      });
+  m_server->route("/", [this](){
+    return parseFile(":/html/index.html");
+  });
 
   m_server->route("/lisp/<arg>", [this](const QUrl &url){
                                   if (url.path()=="")
@@ -335,6 +335,27 @@ QHttpServerResponse EmacsServer::handleIntent(const QJsonObject &jsonObject,
   }
 }
 #endif
+
+QHttpServerResponse EmacsServer::parseFile(const QString &fileName){
+  QFile file(fileName);
+  if (!file.open(QFile::ReadOnly | QFile::Text))
+    return QHttpServerResponse("text/plain",
+                               tr("Unable to open file: %1.")
+                               .arg(fileName)
+                               .toUtf8(),
+                               QHttpServerResponder::StatusCode::BadRequest);
+
+  QTextStream fileStream(&file);
+  QString fileContent=fileStream.readAll();
+  EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
+  // probably simple replace of some tokens is enough for what we're doing
+  fileContent.replace("{{SERVER_HOST}}",
+                      settings->value("http/bindAddress", "127.0.0.1").toString());
+  fileContent.replace("{{SERVER_PORT}}",
+                      settings->value("http/bindPort", 1616).toString());
+  fileContent.replace("{{SERVER_PROTOCOL}}", "http");
+  return fileContent;
+}
 
 QHttpServerResponse EmacsServer::removeComponent(const QJsonObject &jsonObject){
   QString qmlFile=jsonObject["file-name"].toString("");

@@ -45,6 +45,7 @@ class EmacsServer: public QObject{
     QHttpServerResponse handleIntent(const QJsonObject &jsonObject,
                                      const QString &jsonString);
 #endif
+    QHttpServerResponse parseFile(const QString &fileName);
     QHttpServerResponse removeComponent(const QJsonObject &jsonObject);
     QHttpServerResponse setData(const QJsonObject &jsonObject, const QString &jsonString);
   private slots:
