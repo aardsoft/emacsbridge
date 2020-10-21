@@ -52,6 +52,13 @@ void EmacsServer::startServer(){
                                     return QHttpServerResponse::fromFile(QStringLiteral(":/icons/%1").arg(url.path()));
                                  });
 
+  m_server->route("/scripts/<arg>", [this](const QUrl &url){
+    if (url.path()=="")
+      return QHttpServerResponse(listDirectory(":/scripts"));
+    else
+      return parseFile(QStringLiteral(":/scripts/%1").arg(url.path()));
+  });
+
   m_server->route("/test_connection",
                  [](){
                    EmacsClient *client=EmacsClient::instance();

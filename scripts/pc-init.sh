@@ -4,7 +4,7 @@
 # (c) 2020 Bernd Wachter <bwachter@aardsoft.fi>
 
 SERVER_SOCKET=`emacsclient -e '(concat server-socket-dir "/server")'|sed 's/"//g'`
-curl -v -d $SERVER_SOCKET --header "setting: server-socket" localhost:1616/settings
+curl -v -d $SERVER_SOCKET --header "setting: server-socket" {{SERVER_HOST}}:{{SERVER_PORT}}/settings
 
 echo
 echo "Checking if variables should be set"

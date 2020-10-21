@@ -23,5 +23,6 @@
         <file>icons/gallery/20x20@4/back.png</file>
         <file>icons/gallery/20x20@4/drawer.png</file>
         <file>icons/gallery/20x20@4/menu.png</file>
+        <file>scripts/pc-init.sh</file>
     </qresource>
 </RCC>

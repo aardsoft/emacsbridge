@@ -40,7 +40,11 @@ With that part of the setup completed a test notification can be triggered:
 
 To work correctly the Android application needs to run a foreground service. The UI can be closed at any time without impacting operation. The notification about the background service does nothing useful, and can be ignored by long-pressing on it.
 
-When developing on the PC the socket connection can be used. Running the =pc-init.sh= sets sane values (assuming an Emacs with a server is running locally).
+When developing on the PC the socket connection can be used. Running the =pc-init.sh= script sets sane values (assuming an Emacs with a server is running locally). It can be downloaded from the integrated web server, adjusting address and port as needed:
+
+#+BEGIN_SRC bash
+curl -l localhost:1616/scripts/pc-init.sh|bash
+#+END_SRC
 
 ** Additional configuration
 
