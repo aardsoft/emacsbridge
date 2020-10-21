@@ -131,6 +131,15 @@ public class EmacsBridgeService extends QtService {
               String key = e.getString("key");
               if (type.equals("string")){
                 intent.putExtra(key, e.getString("value"));
+              } else if (type.equals("stringarray")){
+                JSONArray value = e.getJSONArray("value");
+                String[] valueArray = new String[value.length()];
+                for(int j=0;j<value.length();j++){
+                  Log.i(TAG, "Adding " + value.getJSONObject(j).getString("value")
+                        + " for key " + key);
+                  valueArray[j] = value.getJSONObject(j).getString("value");
+                }
+                intent.putExtra(key, valueArray);
               } else if (type.equals("boolean")){
                 intent.putExtra(key, e.getBoolean("value"));
               } else if (type.equals("double")){
