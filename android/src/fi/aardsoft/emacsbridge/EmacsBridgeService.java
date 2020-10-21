@@ -129,22 +129,34 @@ public class EmacsBridgeService extends QtService {
             if (!e.isNull("type") && !e.isNull("key") && !e.isNull("value")){
               String type = e.getString("type");
               String key = e.getString("key");
-              if (type == "string"){
+              if (type.equals("string")){
                 intent.putExtra(key, e.getString("value"));
-              } else if (type == "boolean"){
+              } else if (type.equals("boolean")){
                 intent.putExtra(key, e.getBoolean("value"));
-              } else if (type == "double"){
+              } else if (type.equals("double")){
                 intent.putExtra(key, e.getInt("double"));
-              } else if (type == "int"){
+              } else if (type.equals("int")){
                 intent.putExtra(key, e.getInt("value"));
-              } else if (type == "long"){
+              } else if (type.equals("long")){
                 intent.putExtra(key, e.getLong("value"));
               }
             }
           }
         }
 
-        context.startActivity(intent);
+        if (!json.isNull("startType")){
+          String startType = json.getString("startType");
+          if (startType.equals("activity")){
+            Log.i(TAG, "Starting intent as activity");
+            context.startActivity(intent);
+          } else if (startType.equals("service")){
+            Log.i(TAG, "Starting intent as service");
+            context.startService(intent);
+          } else {
+            Log.i(TAG, "Unhandled start type: " + startType);
+          }
+        } else
+          context.startActivity(intent);
       } catch (JSONException e) {
         // TODO
       }
