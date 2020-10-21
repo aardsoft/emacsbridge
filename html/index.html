@@ -27,7 +27,7 @@
   '(("Content-Type" ."application/x-www-form-urlencoded")
   ("setting" . "server-key")))
   (url-request-data emacsbridge-auth-key)) (switch-to-buffer (url-retrieve-synchronously
-  "{{SERVER_PROTOCOL}://{{SERVER_HOST}}:{{SERVER_PORT}}/settings")))</code>
+  "{{SERVER_PROTOCOL}}://{{SERVER_HOST}}:{{SERVER_PORT}}/settings")))</code>
 
     <p>For a dynamic key this needs to be repeated on every start of Emacs. After the initial configuration the http auth key is required for that. Code to handle that (including re-trying if the application is not available on emacs startup) will be part of the support libraries.</p>
 
