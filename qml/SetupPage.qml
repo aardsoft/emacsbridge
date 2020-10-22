@@ -45,6 +45,14 @@ Page {
     }
     Button {
       visible: EmacsBridge.mobile
+      text: "Run termux setup"
+      onClicked: {
+        EmacsBridge.setupTermux()
+      }
+    }
+    Label { visible: EmacsBridge.mobile }
+    Button {
+      visible: EmacsBridge.mobile
       text: "Open app settings"
       onClicked: {
         EmacsBridge.openAppSettings()

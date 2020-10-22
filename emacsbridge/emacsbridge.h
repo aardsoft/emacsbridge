@@ -40,6 +40,7 @@ class EmacsBridge: public QObject{
     Q_INVOKABLE void callIntent(const QString &iAction, const QString &iData="",
                                 const QString &iPackage="", const QString &iClass="");
     Q_INVOKABLE void requestAndroidPermission(const QString &permissionName);
+    Q_INVOKABLE void setupTermux();
 #endif
     QDateTime serviceStartupTime() const;
     QDateTime startupTime() const;

@@ -36,6 +36,9 @@ class EmacsService: public QObject{
     void displayNotification(const QString &title, const QString &message);
     void changeServerListenPort(const quint16 serverPort);
     void changeServerListenAddress(const QString &serverAddress);
+#ifdef __ANDROID_API__
+    void triggerTermuxSetup();
+#endif
 
   signals:
     void notificationAdded(const QString &title, const QString &message);

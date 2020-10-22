@@ -55,3 +55,7 @@ void EmacsBridgeRemote::setData(const JsonDataContainer &jsonContainer){
 void EmacsBridgeRemote::requestAndroidPermission(const QString &permissionName){
   emit androidPermissionRequested(permissionName);
 }
+
+void EmacsBridgeRemote::setupTermux(){
+  emit termuxSetupRequested();
+}

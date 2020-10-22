@@ -39,6 +39,8 @@ EmacsService::EmacsService(): QObject(){
 #ifdef __ANDROID_API__
   connect(m_server, SIGNAL(notificationAdded(QString, QString)),
           this, SLOT(displayNotification(QString, QString)));
+  connect(&m_remote, SIGNAL(termuxSetupRequested()),
+          this, SLOT(triggerTermuxSetup()));
 #else
   connect(m_server, SIGNAL(notificationAdded(QString, QString)),
           &m_remote, SLOT(displayNotification(QString, QString)));
@@ -116,3 +118,27 @@ void EmacsService::changeServerListenAddress(const QString &serverAddress){
   qDebug()<<"Server address changed to" << serverAddress;
   settings->setValue("http/bindAddress", serverAddress);
 }
+
+#ifdef __ANDROID_API__
+void EmacsService::triggerTermuxSetup(){
+  qDebug()<<"Triggering termux setup";
+
+  if (m_server->checkPermissions("com.termux.app.RunCommandService")!="")
+    return;
+
+  QFile file(":/json/termux-setup.json");
+  if (!file.open(QFile::ReadOnly | QFile::Text))
+    return;
+
+  QTextStream fileStream(&file);
+  QString fileContent=fileStream.readAll();
+  EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
+
+  fileContent=fileContent.arg("http")
+    .arg(settings->value("http/bindAddress").toString())
+    .arg(settings->value("http/bindPort").toString())
+    .arg("/scripts/termux-init.sh");
+
+  m_server->callIntent(fileContent);
+}
+#endif

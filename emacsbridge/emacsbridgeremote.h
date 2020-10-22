@@ -21,6 +21,7 @@ class EmacsBridgeRemote : public EmacsBridgeRemoteSimpleSource{
     void addComponent(const QmlFileContainer &qmlFile);
     void removeComponent(const QString &qmlFile);
     void setData(const JsonDataContainer &jsonContainer);
+    void setupTermux();
     void requestAndroidPermission(const QString &permissionName);
   private slots:
     void clientQueryFinished(const QString &queryKey, const QString &queryResult);

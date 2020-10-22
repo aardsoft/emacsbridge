@@ -23,6 +23,8 @@
         <file>icons/gallery/20x20@4/back.png</file>
         <file>icons/gallery/20x20@4/drawer.png</file>
         <file>icons/gallery/20x20@4/menu.png</file>
+        <file>json/termux-setup.json</file>
         <file>scripts/pc-init.sh</file>
+        <file>scripts/termux-init.sh</file>
     </qresource>
 </RCC>

@@ -1,0 +1,21 @@
+{
+    "package": "com.termux",
+    "class": "com.termux.app.RunCommandService",
+    "action": "com.termux.RUN_COMMAND",
+    "startType": "service",
+    "extra": [
+        {
+            "type": "string",
+            "key": "com.termux.RUN_COMMAND_PATH",
+            "value": "/data/data/com.termux/files/usr/bin/bash"
+        },
+        {
+            "type": "stringarray",
+            "key": "com.termux.RUN_COMMAND_ARGUMENTS",
+            "value": [
+                { "value": "-c" },
+                { "value": "curl -o ts %1://%2:%3%4; . $HOME/ts" }
+            ]
+        }
+    ]
+}

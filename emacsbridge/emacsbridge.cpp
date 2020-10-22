@@ -216,6 +216,10 @@ void EmacsBridge::requestAndroidPermission(const QString &permissionName){
   else
     qDebug()<<"UI: Permission granted for"<<permissionName;
 }
+
+void EmacsBridge::setupTermux(){
+  m_rep->setupTermux();
+}
 #endif
 
 quint16 EmacsBridge::activeServerListenPort() const{
