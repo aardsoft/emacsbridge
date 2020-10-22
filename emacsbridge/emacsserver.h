@@ -27,6 +27,9 @@ class EmacsServer: public QObject{
     quint16 activeServerPort();
 #ifdef __ANDROID_API__
     QString callIntent(const QString &jsonString);
+    // for now we're just assuming that we know which permissions to ask for
+    // based on the class set in the intent
+    QString checkPermissions(const QString &intentClass);
 #endif
 
   private:
@@ -56,6 +59,7 @@ class EmacsServer: public QObject{
     void dataSet(const JsonDataContainer &jsonData);
     void notificationAdded(const QString &title, const QString &message);
     void activePortChanged(const quint16 port);
+    void androidPermissionDenied(const QString &permission);
 };
 
 #endif

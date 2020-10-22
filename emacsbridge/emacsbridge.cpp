@@ -68,6 +68,9 @@ EmacsBridge::EmacsBridge(QObject *parent)
 
   connect(m_rep.data(), SIGNAL(notificationAdded(QString, QString)),
           this, SLOT(updateNotification(QString, QString)));
+#else
+  connect(m_rep.data(), SIGNAL(androidPermissionRequested(QString)),
+          this, SLOT(requestAndroidPermission(QString)));
 #endif
 
   connect(m_rep.data(), SIGNAL(queryFinished(QString, QString)),
@@ -202,6 +205,18 @@ void EmacsBridge::setDefaultPage(const QString &defaultPage){
   settings.setValue("defaultPage", defaultPage);
   emit defaultPageChanged();
 }
+
+#ifdef __ANDROID_API__
+void EmacsBridge::requestAndroidPermission(const QString &permissionName){
+  QtAndroid::PermissionResultMap resultHash=
+    QtAndroid::requestPermissionsSync(QStringList({permissionName}));
+
+  if(resultHash[permissionName] == QtAndroid::PermissionResult::Denied)
+    qDebug()<<"UI: Permission denied for"<<permissionName;
+  else
+    qDebug()<<"UI: Permission granted for"<<permissionName;
+}
+#endif
 
 quint16 EmacsBridge::activeServerListenPort() const{
   return m_rep->activeServerListenPort();

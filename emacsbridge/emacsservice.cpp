@@ -59,6 +59,10 @@ EmacsService::EmacsService(): QObject(){
           this, SLOT(changeServerListenAddress(QString)));
   connect(m_server, SIGNAL(dataSet(JsonDataContainer)),
           &m_remote, SLOT(setData(JsonDataContainer)));
+#ifdef __ANDROID_API__
+  connect(m_server, SIGNAL(androidPermissionDenied(QString)),
+          &m_remote, SLOT(requestAndroidPermission(QString)));
+#endif
 
   connect(this, SIGNAL(startServer()),
           m_server, SLOT(startServer()));

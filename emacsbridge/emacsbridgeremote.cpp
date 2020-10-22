@@ -51,3 +51,7 @@ void EmacsBridgeRemote::displayNotification(const QString &title, const QString 
 void EmacsBridgeRemote::setData(const JsonDataContainer &jsonContainer){
   emit dataSet(jsonContainer);
 }
+
+void EmacsBridgeRemote::requestAndroidPermission(const QString &permissionName){
+  emit androidPermissionRequested(permissionName);
+}

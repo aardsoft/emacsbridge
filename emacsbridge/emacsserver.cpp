@@ -325,13 +325,42 @@ QString EmacsServer::callIntent(const QString &jsonString){
   return returnString;
 }
 
+QString EmacsServer::checkPermissions(const QString &intentClass){
+  QString permissionName="";
+
+  if (intentClass=="com.termux.app.RunCommandService"){
+    permissionName="com.termux.permission.RUN_COMMAND";
+  }
+
+  if (!permissionName.isEmpty()){
+    auto result=QtAndroid::checkPermission(permissionName);
+    if(result==QtAndroid::PermissionResult::Denied){
+      // permissions can't be requested from android services -> just
+      // fail quickly after notifying the UI to ask for permissions
+      emit androidPermissionDenied(permissionName);
+      return permissionName;
+    }
+  }
+
+  return "";
+}
+
 QHttpServerResponse EmacsServer::handleIntent(const QJsonObject &jsonObject,
                                             const QString &jsonString){
-  QString notificationTitle=jsonObject["title"].toString("Missing notification title");
-  QString notificationText=jsonObject["text"].toString("Missing notification text");
+  QString className=jsonObject["class"].toString("");
+  QString ret;
 
-  qDebug()<< "Calling intent: " << notificationText;
-  QString ret=callIntent(jsonString);
+  if (!className.isEmpty()){
+    ret=checkPermissions(className);
+    if (!ret.isEmpty())
+          return QHttpServerResponse("text/plain",
+                                     tr("Permission denied for %1")
+                                     .arg(ret)
+                                     .toUtf8(),
+                                     QHttpServerResponder::StatusCode::BadRequest);
+  }
+
+  ret=callIntent(jsonString);
   if (ret=="OK"){
     return "OK";
   } else {

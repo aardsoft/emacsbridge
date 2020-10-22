@@ -9,10 +9,12 @@ class EmacsBridgeRemote{
     PROP(quint16 serverListenPort);
     PROP(QString serverListenAddress);
     SLOT(void setQuery(const QString &queryKey, const QString &query));
+    SLOT(void requestAndroidPermission(const QString &permissionName));
     SIGNAL(queryFinished(const QString &queryKey, const QString &queryResult));
     SIGNAL(queryError(const QString &queryKey, const QString &error));
     SIGNAL(notificationAdded(const QString &title, const QString &message));
     SIGNAL(componentAdded(const QmlFileContainer &qmlFile));
     SIGNAL(componentRemoved(const QString &qmlFile));
     SIGNAL(dataSet(const JsonDataContainer &dataContainer));
+    SIGNAL(androidPermissionRequested(const QString &permissionName));
 }
