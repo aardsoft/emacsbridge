@@ -33,10 +33,17 @@ EmacsBridgeSettings::EmacsBridgeSettings():
 #else
     setValue("socketType", 0);
 #endif
+    setValue("version", 1);
     endGroup();
 
     beginGroup("localSocket");
     setValue("socketTemplate", "/tmp/emacs%1/server");
+    endGroup();
+
+    beginGroup("http");
+    setValue("bindAddress", "127.0.0.1");
+    setValue("bindPort", "1616");
+    setValue("protocol", "http");
     endGroup();
 
     beginGroup("networkSocket");
