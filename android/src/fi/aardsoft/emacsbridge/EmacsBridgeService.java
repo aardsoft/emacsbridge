@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.util.Log;
+import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.json.JSONException;
@@ -140,6 +141,15 @@ public class EmacsBridgeService extends QtService {
                   valueArray[j] = value.getJSONObject(j).getString("value");
                 }
                 intent.putExtra(key, valueArray);
+              } else if (type.equals("arrayliststring")){
+                JSONArray value = e.getJSONArray("value");
+                ArrayList<String> valueList = new ArrayList<String>();
+                for(int j=0;j<value.length();j++){
+                  Log.i(TAG, "Adding " + value.getJSONObject(j).getString("value")
+                        + " for key " + key);
+                  valueList.add(value.getJSONObject(j).getString("value"));
+                }
+                intent.putStringArrayListExtra(key, valueList);
               } else if (type.equals("boolean")){
                 intent.putExtra(key, e.getBoolean("value"));
               } else if (type.equals("double")){
