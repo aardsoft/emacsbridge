@@ -35,6 +35,7 @@ class EmacsClient: public QObject{
     static EmacsClient *instance();
 
   public slots:
+    void insertKeySequence(const QString &sequence);
     bool queryAgent(const QString &queryKey, const QString &queryString);
     bool isConnected();
     bool isSetup();

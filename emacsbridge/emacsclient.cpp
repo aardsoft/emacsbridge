@@ -212,6 +212,11 @@ QString EmacsClient::doQuery(const QString &queryKey, const QString &queryString
 #endif
 }
 
+void EmacsClient::insertKeySequence(const QString &sequence){
+  QString queryTemplate="(setq unread-command-events (listify-key-sequence \"%1\"))";
+  doQuery(OWN_QUERY_KEY, queryTemplate.arg(sequence));
+}
+
 bool EmacsClient::queryAgent(const QString &queryKey, const QString &queryString){
   qDebug()<< queryKey << ">" << queryString;
   emit queryStarted(queryKey, queryString);
