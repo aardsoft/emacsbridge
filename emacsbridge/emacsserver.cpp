@@ -24,6 +24,9 @@ EmacsServer::EmacsServer(): QObject(){
   m_startupTime=QDateTime::currentDateTime();
   m_dataPath=QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   m_htmlTemplate="<!DOCTYPE html>\n<html><head><title>%1</title></head><body><h1>%1</h1>%2</body></html>";
+
+  // everything more complex needs to go to startServer() to make sure it is in
+  // the correct thread
 }
 
 EmacsServer::~EmacsServer(){
@@ -31,6 +34,25 @@ EmacsServer::~EmacsServer(){
 }
 
 void EmacsServer::startServer(){
+  m_morseInterpreter=new EmacsBridgeMorse();
+  m_ambientLightSensor=new QAmbientLightSensor(this);
+
+  connect(this, SIGNAL(parseMorse(int)),
+          m_morseInterpreter, SLOT(stateChange(int)));
+
+  connect(m_ambientLightSensor, &QAmbientLightSensor::readingChanged,
+          this,
+          [=](){m_morseInterpreter->
+              stateChange(m_ambientLightSensor->
+                          reading()->lightLevel());});
+
+  m_ambientLightSensor->setDataRate(1);
+  m_ambientLightSensor->start();
+
+  startHttpServer();
+}
+
+void EmacsServer::startHttpServer(){
   qDebug()<<"startServer" << QThread::currentThreadId();
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
   m_server=new QHttpServer();
@@ -126,7 +148,7 @@ void EmacsServer::startServer(){
 void EmacsServer::restartServer(){
   qDebug()<< "Restarting HTTP server";
   delete m_server;
-  startServer();
+  startHttpServer();
 }
 
 QString EmacsServer::listDirectory(const QString &directory){
@@ -166,6 +188,8 @@ QHttpServerResponse EmacsServer::methodCall(const QString &method, const QByteAr
   }else if (method=="intent"){
     return handleIntent(jsonObject, QString::fromUtf8(payload));
 #endif
+  }else if (method=="sensor"){
+    return handleSensorCall(jsonObject);
   }else if (method=="removeComponent"){
     return removeComponent(jsonObject);
   }
@@ -371,6 +395,18 @@ QHttpServerResponse EmacsServer::handleIntent(const QJsonObject &jsonObject,
   }
 }
 #endif
+
+/*
+ * Allow:
+ * - starting a sensor
+ * - stopping a senosr
+ * - checking sensor status
+ * - mapping specific sensor values to actions to be executed inside of emacs
+ */
+QHttpServerResponse EmacsServer::handleSensorCall(const QJsonObject &jsonObject){
+  QString sensorName=jsonObject["sensor"].toString("");
+
+}
 
 QHttpServerResponse EmacsServer::parseFile(const QString &fileName){
   QFile file(fileName);

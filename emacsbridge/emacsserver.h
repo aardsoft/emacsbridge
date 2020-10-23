@@ -12,7 +12,10 @@
 #include <QHttpServer>
 #include <QJsonObject>
 
+#include <QAmbientLightSensor>
+
 #include "emacsbridgetypes.h"
+#include "emacsbridgemorse.h"
 
 class EmacsServer: public QObject{
     Q_OBJECT
@@ -37,7 +40,9 @@ class EmacsServer: public QObject{
     QDateTime m_startupTime;
     QString m_htmlTemplate;
     QString m_dataPath;
+    EmacsBridgeMorse *m_morseInterpreter;
 
+    void startHttpServer();
     QString listDirectory(const QString &directory);
     QHttpServerResponse methodCall(const QString &method, const QByteArray &payload);
     QHttpServerResponse settingCall(const QString &setting, const QByteArray &payload);
@@ -48,9 +53,13 @@ class EmacsServer: public QObject{
     QHttpServerResponse handleIntent(const QJsonObject &jsonObject,
                                      const QString &jsonString);
 #endif
+    QHttpServerResponse handleSensorCall(const QJsonObject &jsonObject);
     QHttpServerResponse parseFile(const QString &fileName);
     QHttpServerResponse removeComponent(const QJsonObject &jsonObject);
     QHttpServerResponse setData(const QJsonObject &jsonObject, const QString &jsonString);
+    // sensors
+    QAmbientLightSensor *m_ambientLightSensor;
+
   private slots:
 
   signals:
@@ -60,6 +69,7 @@ class EmacsServer: public QObject{
     void notificationAdded(const QString &title, const QString &message);
     void activePortChanged(const quint16 port);
     void androidPermissionDenied(const QString &permission);
+    void parseMorse(int level);
 };
 
 #endif

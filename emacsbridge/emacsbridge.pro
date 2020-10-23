@@ -3,7 +3,7 @@ include(../build_info.pri)
 # main every time to make sure the version is correct
 REBUILD = $$system(touch main.cpp)
 
-QT += quick quickcontrols2 websockets remoteobjects
+QT += quick quickcontrols2 websockets remoteobjects sensors
 CONFIG += qmltypes
 QML_IMPORT_NAME = fi.aardsoft.emacsbridge
 QML_IMPORT_MAJOR_VERSION = 1
@@ -63,6 +63,7 @@ windows {
 SOURCES += \
     main.cpp \
     emacsbridge.cpp \
+    emacsbridgemorse.cpp \
     emacsbridgeremote.cpp \
     emacsbridgesettings.cpp \
     emacsclient.cpp \
@@ -74,6 +75,7 @@ RESOURCES += \
 
 HEADERS += \
     emacsbridge.h \
+    emacsbridgemorse.h \
     emacsbridgesettings.h \
     emacsclient.h \
     emacsserver.h \
