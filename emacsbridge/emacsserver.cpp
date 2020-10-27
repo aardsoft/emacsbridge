@@ -81,6 +81,13 @@ void EmacsServer::startHttpServer(){
       return parseFile(QStringLiteral(":/scripts/%1").arg(url.path()));
   });
 
+  m_server->route("/html/<arg>", [this](const QUrl &url){
+    if (url.path()=="")
+      return parseFile(":/html/index.html");
+    else
+      return parseFile(QStringLiteral(":/html/%1").arg(url.path()));
+  });
+
   m_server->route("/test_connection",
                  [](){
                    EmacsClient *client=EmacsClient::instance();
