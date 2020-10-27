@@ -42,7 +42,7 @@ android {
     ../android/src/fi/aardsoft/emacsbridge/EmacsBridgeService.java \
     ../android/src/fi/aardsoft/emacsbridge/EmacsBridgeBroadcastReceiver.java \
     ../android/AndroidManifest.xml
-  ANDROID_EXTRA_LIBS *= $$OUT_PWD/../qthttpserver/lib/libQt5HttpServer_$${QT_ARCH}.so
+  for(abi, ANDROID_ABIS): ANDROID_EXTRA_LIBS *= $$OUT_PWD/../qthttpserver/lib/libQt5HttpServer_$${abi}.so
 }
 
 
