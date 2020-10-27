@@ -12,6 +12,7 @@ BuildRequires: pkgconfig(Qt5QuickControls2)
 BuildRequires: pkgconfig(Qt5WebSockets)
 BuildRequires: pkgconfig(Qt5RemoteObjects)
 BuildRequires: pkgconfig(Qt5Network)
+BuildRequires: pkgconfig(Qt5Sensors)
 BuildRequires: libQt5Core-private-headers-devel
 %{?systemd_requires}
 
