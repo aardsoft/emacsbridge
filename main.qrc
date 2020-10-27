@@ -1,5 +1,6 @@
 <RCC>
     <qresource prefix="/">
+        <file>css/default.css</file>
         <file>qml/main.qml</file>
         <file>qml/StatusPage.qml</file>
         <file>qml/SetupPage.qml</file>
