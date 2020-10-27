@@ -3,8 +3,8 @@
 # Script to quickly configure emacsbridge on Android/termux
 # (c) 2020 Bernd Wachter <bwachter@aardsoft.fi>
 
-EMACSBRIDGE_PORT={{SERVER_PORT}}
-EMACSBRIDGE_HOST={{SERVER_HOST}}
+EMACSBRIDGE_PORT={{http/bindPort}}
+EMACSBRIDGE_HOST={{http/bindAddress}}
 
 red(){
     echo -e "\e[31m$1\e[0m"

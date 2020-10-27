@@ -6,7 +6,7 @@
   <body>
     <p>This is the <a href="https://github.com/aardsoft/emacsbridge">Emacs bridge</a> default site. If the Emacs connection is currently not configured please follow the steps below. Note that the links only work until the initial configuration is finished. If you want to redo the steps you first need to enable this in the Android application.</p>
 
-    <p>For the basic configuration open this page in eww (M-x eww {{SERVER_HOST}}:{{SERVER_PORT}}), scroll through the page, and evaluate (C-x e) all lisp snippets relevant to your setup.</p>
+    <p>For the basic configuration open this page in eww (M-x eww {{http/bindAddress}}:{{http/bindPort}}), scroll through the page, and evaluate (C-x e) all lisp snippets relevant to your setup.</p>
 
     <p>First the emacsbridge-auth-key variable needs to be configured. The following snippets try to autofill it by either a dynamically generated server key, or a statically set one:</p>
 
@@ -28,7 +28,7 @@
   '(("Content-Type" ."application/x-www-form-urlencoded")
   ("setting" . "server-key")))
   (url-request-data emacsbridge-auth-key)) (switch-to-buffer (url-retrieve-synchronously
-  "{{SERVER_PROTOCOL}}://{{SERVER_HOST}}:{{SERVER_PORT}}/settings")))</code>
+  "{{http/protocol}}://{{http/bindAddress}}:{{http/bindPort}}/settings")))</code>
 
     <p>For a dynamic key this needs to be repeated on every start of Emacs. After the initial configuration the http auth key is required for that. Code to handle that (including re-trying if the application is not available on emacs startup) will be part of the support libraries.</p>
 
@@ -41,7 +41,7 @@
          ("method" . "notification")))
       (url-request-data "{\"title\": \"Title from Emacs\", \"text\": \"Notification sent from Emacs via RPC\"}"))
   (switch-to-buffer (url-retrieve-synchronously
-                     "{{SERVER_PROTOCOL}}://{{SERVER_HOST}}:{{SERVER_PORT}}/rpc")))</code>
+                     "{{http/protocol}}://{{http/bindAddress}}:{{http/bindPort}}/rpc")))</code>
 
     <p>Additional resources: <a href="/lisp/">Lisp files</a>, <a href="/icons/">Application icons</a></p>
   </body>

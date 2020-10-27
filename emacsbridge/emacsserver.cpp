@@ -428,11 +428,10 @@ QHttpServerResponse EmacsServer::parseFile(const QString &fileName){
   QString fileContent=fileStream.readAll();
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
   // probably simple replace of some tokens is enough for what we're doing
-  fileContent.replace("{{SERVER_HOST}}",
-                      settings->value("http/bindAddress", "127.0.0.1").toString());
-  fileContent.replace("{{SERVER_PORT}}",
-                      settings->value("http/bindPort", 1616).toString());
-  fileContent.replace("{{SERVER_PROTOCOL}}", "http");
+  for (const auto& i: EmacsBridgeSettings::validKeys()){
+    fileContent.replace(QString("{{%1}}").arg(i),
+                        settings->value(i).toString());
+  }
   return fileContent;
 }
 
