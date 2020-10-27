@@ -16,6 +16,7 @@ class EmacsBridgeSettings: public QSettings{
 
   public:
     static EmacsBridgeSettings *instance();
+    static QStringList validKeys();
     void setValue(const QString &key, const QVariant &value);
 
   signals:

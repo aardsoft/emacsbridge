@@ -33,7 +33,7 @@ EmacsBridgeSettings::EmacsBridgeSettings():
 #else
     setValue("socketType", 0);
 #endif
-    setValue("version", 1);
+    setValue("version", 2);
     endGroup();
 
     beginGroup("localSocket");
@@ -77,4 +77,17 @@ void EmacsBridgeSettings::setValue(const QString &key, const QVariant &value){
     if (m_initialized)
       emit settingChanged(key);
   }
+}
+
+QStringList EmacsBridgeSettings::validKeys(){
+  return QStringList({
+      "core/socketType",
+      "localSocket/socketTemplate",
+      "http/bindAddress",
+      "http/bindPort",
+      "http/protocol",
+      "networkSocket/address",
+      "networkSocket/port",
+      "networkSocket/secret"
+    });
 }
