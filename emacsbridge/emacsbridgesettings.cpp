@@ -53,6 +53,26 @@ EmacsBridgeSettings::EmacsBridgeSettings():
     endGroup();
   }
 
+  if (settingsVersion<=2){
+    beginGroup("core");
+    //setValue("version", 3);
+    // set to 0 to disable
+    setValue("tempTokenValidity", 600);
+    endGroup();
+
+    beginGroup("emacs");
+    setValue("lispDirectory", "$HOME/.emacs.d/emacsbridge");
+    setValue("checkTimer", 0);
+#ifdef __ANDROID_API__
+    setValue("startScript", "");
+    // if empty, use the default termux intent
+    setValue("startIntent", "");
+#else
+    setValue("startScript", "systemctl --user start emacs.service");
+#endif
+    endGroup();
+  }
+
   if (value("core/auth-token", "").toString().isEmpty()){
     qDebug()<< "Missing UUID";
     QString uuid=QUuid::createUuid().toString();
@@ -82,6 +102,13 @@ void EmacsBridgeSettings::setValue(const QString &key, const QVariant &value){
 QStringList EmacsBridgeSettings::validKeys(){
   return QStringList({
       "core/socketType",
+      "core/tempTokenValidity",
+      "emacs/checkTimer",
+      "emacs/lispDirectory",
+#ifdef __ANDROID_API__
+      "emacs/startIntent",
+#endif
+      "emacs/startScript",
       "localSocket/socketTemplate",
       "http/bindAddress",
       "http/bindPort",
