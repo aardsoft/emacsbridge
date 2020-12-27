@@ -211,6 +211,9 @@ QHttpServerResponse EmacsServer::settingCall(const QString &setting, const QByte
   QString data=QString::fromUtf8(payload);
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
 
+  // server-key and server-socket are two special cases configurable with a mix
+  // of the key in the header, and the data without padding in POST to make
+  // things easier
   if (setting=="server-key"){
     if (data.length()==64){
       settings->setValue("networkSocket/secret", data);
@@ -228,6 +231,15 @@ QHttpServerResponse EmacsServer::settingCall(const QString &setting, const QByte
     return tr("Server socket is set to %1").arg(data);
   }
 
+  // if we got to this point we have a POST string with key-value pairs
+  // we need to parse.
+  qDebug()<<payload;
+  QString queryString=QString::fromUtf8(payload);
+  queryString.replace("+", " ");
+
+  QUrlQuery query;
+  query.setQuery(queryString);
+  qDebug()<<query.toString(QUrl::FullyDecoded);
   QString error=tr("Invalid or unknown setting %1").arg(setting);
   return QHttpServerResponse("text/plain",
                              error.toUtf8(),

@@ -9,6 +9,7 @@
         <file>icons/icon.png</file>
         <file>icons/icon_mini.png</file>
         <file>html/index.html</file>
+        <file>html/settings.html</file>
         <file>lisp/emacsbridge-rpc.el</file>
         <file>lisp/alert-emacsbridge.el</file>
         <file>icons/gallery/index.theme</file>
