@@ -10,7 +10,7 @@
 
     <p>First the emacsbridge-auth-key variable needs to be configured. The following snippets try to autofill it by either a dynamically generated server key, or a statically set one:</p>
 
-<code>(if (bound-and-true-p server-auth-key)
+<pre>(if (bound-and-true-p server-auth-key)
     (setq emacsbridge-auth-key server-auth-key)
   (progn
     (if (file-exists-p (concat server-auth-dir "/server"))
@@ -19,7 +19,7 @@
             (insert-file-contents (concat server-auth-dir "/server"))
             (setq emacsbridge-auth-key (cadr (split-string (buffer-string) "\n" t)))
             ))
-      (setq emacsbridge-auth-key nil))))</code>
+      (setq emacsbridge-auth-key nil))))</pre>
 
     <p>Next this key needs to be registered with the Android application:</p>
 
