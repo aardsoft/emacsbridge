@@ -1,1 +1,2 @@
+#+OPTIONS: broken-links:t
 * Emacsbridge user documentation                                      :TOC_4:

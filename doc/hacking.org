@@ -1,3 +1,4 @@
+#+OPTIONS: broken-links:t
 * Hacking on emacsbridge                                              :TOC_4:
   - [[#working-with-the-core][Working with the core]]
     - [[#qt-requirements][Qt requirements]]

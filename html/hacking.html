@@ -1,0 +1,824 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2020-12-27 Sun 23:50 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="Bernd Wachter" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2020 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org9a741bf">1. Hacking on emacsbridge&#xa0;&#xa0;&#xa0;<span class="tag"><span class="TOC_4">TOC_4</span></span></a>
+<ul>
+<li><a href="#orgccd5714">1.1. Working with the core</a>
+<ul>
+<li><a href="#orgbad6272">1.1.1. Qt requirements</a></li>
+<li><a href="#org6dee5bb">1.1.2. Preparing the sources</a></li>
+<li><a href="#org59e74c6">1.1.3. Build helper</a></li>
+<li><a href="#orgd057d28">1.1.4. Debugging</a></li>
+</ul>
+</li>
+<li><a href="#org98cd3fa">1.2. Architecture</a>
+<ul>
+<li><a href="#org32a6798">1.2.1. Connection setup</a></li>
+<li><a href="#org41fb99e">1.2.2. URLs</a></li>
+</ul>
+</li>
+<li><a href="#org492d8e9">1.3. Preparing the build environment</a>
+<ul>
+<li><a href="#orge1502b9">1.3.1. Android builds</a></li>
+<li><a href="#orgb992b4d">1.3.2. Windows builds</a></li>
+</ul>
+</li>
+<li><a href="#org8e76741">1.4. Resources</a>
+<ul>
+<li><a href="#orgaf255b5">1.4.1. Android</a></li>
+<li><a href="#org17e984a">1.4.2. Qt</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org9a741bf" class="outline-2">
+<h2 id="org9a741bf"><span class="section-number-2">1</span> Hacking on emacsbridge&#xa0;&#xa0;&#xa0;<span class="tag"><span class="TOC_4">TOC_4</span></span></h2>
+<div class="outline-text-2" id="text-1">
+<ul class="org-ul">
+<li><ul class="org-ul">
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul></li>
+<li><ul class="org-ul">
+<li></li>
+<li><ul class="org-ul">
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+<li></li>
+</ul></li>
+</ul></li>
+<li><ul class="org-ul">
+<li></li>
+<li></li>
+</ul></li>
+<li><ul class="org-ul">
+<li></li>
+<li></li>
+</ul></li>
+</ul>
+</div>
+
+<div id="outline-container-orgccd5714" class="outline-3">
+<h3 id="orgccd5714"><span class="section-number-3">1.1</span> Working with the core</h3>
+<div class="outline-text-3" id="text-1-1">
+</div>
+<div id="outline-container-orgbad6272" class="outline-4">
+<h4 id="orgbad6272"><span class="section-number-4">1.1.1</span> Qt requirements</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+The following table contains the Qt versions suitable for compiling emacsbridge:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">OS</th>
+<th scope="col" class="org-right">Version</th>
+<th scope="col" class="org-left">State</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Android</td>
+<td class="org-right">5.15.1</td>
+<td class="org-left">recommended</td>
+</tr>
+
+<tr>
+<td class="org-left">Android</td>
+<td class="org-right">5.15.0</td>
+<td class="org-left">minimum</td>
+</tr>
+
+<tr>
+<td class="org-left">PC</td>
+<td class="org-right">5.14.x</td>
+<td class="org-left">minimum</td>
+</tr>
+
+<tr>
+<td class="org-left">PC</td>
+<td class="org-right">5.15.x</td>
+<td class="org-left">recommended</td>
+</tr>
+
+<tr>
+<td class="org-left">PC</td>
+<td class="org-right">5.13.0</td>
+<td class="org-left">compiles, works mostly, but not recommended</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+For building on PC compiling Qt is straightforward, and your distribution might already have a correct version. The following packages should pull in all the other required dependencies for building:
+</p>
+
+<ul class="org-ul">
+<li>Qt5Quick</li>
+<li>Qt5QuickControls2</li>
+<li>Qt5WebSockets</li>
+<li>Qt5RemoteObjects</li>
+<li>Qt5Network</li>
+<li>Qt5Sensors</li>
+<li>libQt5Core-private-headers-devel</li>
+</ul>
+
+<p>
+The package names are for OpenSuSE, other distributions should have similar naming.
+</p>
+
+<p>
+To build for Android an Android development environment needs to be set up. It should work with Android Studio or similar, below is a summary on how to setup a non-GUI build environment.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6dee5bb" class="outline-4">
+<h4 id="org6dee5bb"><span class="section-number-4">1.1.2</span> Preparing the sources</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+Emacsbridge requires qthttpserver, which is included as a submodule. qthttpserver also has submodules. The following snippet clones the repository and initializes all submodules:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">$ git clone https://github.com/aardsoft/emacsbridge.git
+$ cd emacsbridge
+$ git submodule update --init --recursive qthttpserver
+</pre>
+</div>
+
+<p>
+Now the code can be configured for qmake - for Android the qmake from inside the Android Qt tree needs to be called.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org59e74c6" class="outline-4">
+<h4 id="org59e74c6"><span class="section-number-4">1.1.3</span> Build helper</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<p>
+The source repository contains a build helper (<code>build.sh</code>). Outside of simple Linux builds using that might be easiest.
+</p>
+
+<p>
+Variables controlling the build include:
+</p>
+<ul class="org-ul">
+<li>ANDROID<sub>ABIS</sub>: ABIs to build, default <code>arm64-v8a x86_64 armeabi-v7a</code></li>
+<li>ANDROID<sub>SDK</sub><sub>VERSION</sub>: Android SDK version to use, default <code>android-29</code>. When targetting Play store the version from the script generally is the one which has to be used.</li>
+<li>QT<sub>VERSION</sub>: The Qt version used for trying to find directories, default <code>5.15.1</code></li>
+<li>QT<sub>ANDROID</sub><sub>BIN</sub>: The bin directory inside of the Qt Android installation, defaulting to <code>$HOME/qt/qt${QT_VERSION}-${ANDROID_SDK_VERSION}/bin</code></li>
+<li>QT<sub>WINDOWS</sub><sub>BIN</sub>: The bin directory inside of the Windows Qt installation, defaulting to <code>$HOME/qt/qt${QT_VERSION}-mingw64/bin</code></li>
+<li>WIN32<sub>OBJDUMP</sub>: The name of the objdump binary for Windows, default <code>x86_64-w64-mingw32-objdump</code></li>
+<li>WIN32<sub>SYSROOT</sub>: Path to the mingw32 sysroot, default <code>/usr/x86_64-w64-mingw32/sys-root/mingw/bin</code></li>
+<li>WIN32<sub>PLUGINS</sub>: List of win32 plugins to use, default <code>platforms</code></li>
+<li>BUILD<sub>DIR</sub>: Name of the build directory, default <code>build</code></li>
+<li>QMAKE<sub>CXX</sub>: The C++ compiler to use for PC, default <code>clang++</code></li>
+<li>QMAKE<sub>LINK</sub>: The linker to use for PC, default <code>clang++</code></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-orgd057d28" class="outline-4">
+<h4 id="orgd057d28"><span class="section-number-4">1.1.4</span> Debugging</h4>
+<div class="outline-text-4" id="text-1-1-4">
+<p>
+To see what goes over the local socket, start socat and adjust socket address:
+</p>
+
+<p>
+while true; do echo "Restart."; socat -v GOPEN:/tmp/Emacs1000/server UNIX-LISTEN:/tmp/es; done
+</p>
+
+<p>
+Building for Android and Windows requires a proper cross-compiled toolchain,
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org98cd3fa" class="outline-3">
+<h3 id="org98cd3fa"><span class="section-number-3">1.2</span> Architecture</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+The application is separated into a client and a server part, communicating via <a href="https://doc.qt.io/qt-5/qtremoteobjects-index.html">Qt Remote Objects</a>
+</p>
+</div>
+<div id="outline-container-org32a6798" class="outline-4">
+<h4 id="org32a6798"><span class="section-number-4">1.2.1</span> Connection setup</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+Emacsbridge starts up with some open settings endpoints to make initial configuration easier. To set the connection up,
+</p>
+
+<ul class="org-ul">
+<li>Emacs provides information about its server connection</li>
+<li>Emacsbridge uses that to connect to Emacs. If that connection was successful it will disable the open endpoints, and make the RPC interface available.</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org41fb99e" class="outline-4">
+<h4 id="org41fb99e"><span class="section-number-4">1.2.2</span> URLs</h4>
+<div class="outline-text-4" id="text-1-2-2">
+</div>
+<ol class="org-ol">
+<li><a id="org2299141"></a>/icons<br />
+<div class="outline-text-5" id="text-1-2-2-1">
+<p>
+Icons bundled with the application. Served without modification, directory index is enabled. No authentication required.
+</p>
+</div>
+</li>
+<li><a id="orgeae49de"></a>/lisp<br />
+<div class="outline-text-5" id="text-1-2-2-2">
+<p>
+Lisp files bundled with the application. Served without modification, directory index is enabled. No authentication required.
+</p>
+</div>
+</li>
+<li><a id="orgf2be6a6"></a>/rpc<br />
+<div class="outline-text-5" id="text-1-2-2-3">
+<p>
+Expects JSON data in a POST request, with a valid auth token. The method for which JSON data is sent must be specified in the <code>method</code> header. Only available after initial setup has been completed. The following methods are available:
+</p>
+</div>
+<ol class="org-ol">
+<li><a id="org737730e"></a>addComponent<br />
+<div class="outline-text-6" id="text-1-2-2-3-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">name</th>
+<th scope="col" class="org-left">required</th>
+<th scope="col" class="org-left">default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">in-drawer</td>
+<td class="org-left">no</td>
+<td class="org-left">false</td>
+</tr>
+
+<tr>
+<td class="org-left">qmlData</td>
+<td class="org-left">yes</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">qmlFile</td>
+<td class="org-left">yes</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">title</td>
+<td class="org-left">no</td>
+<td class="org-left"><code>qmlFile</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li><a id="org9522b8d"></a>setData<br /></li>
+<li><a id="orgbb70813"></a>notification<br />
+<div class="outline-text-6" id="text-1-2-2-3-3">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">name</th>
+<th scope="col" class="org-left">required</th>
+<th scope="col" class="org-left">default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">title</td>
+<td class="org-left">no</td>
+<td class="org-left">"Missing notification title"</td>
+</tr>
+
+<tr>
+<td class="org-left">text</td>
+<td class="org-left">no</td>
+<td class="org-left">"Missing notification text"</td>
+</tr>
+</tbody>
+</table>
+</div>
+</li>
+<li><a id="org9f11613"></a>intent<br />
+<div class="outline-text-6" id="text-1-2-2-3-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">name</th>
+<th scope="col" class="org-left">required</th>
+<th scope="col" class="org-left">default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">action</td>
+<td class="org-left">no</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">data</td>
+<td class="org-left">no</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">package</td>
+<td class="org-left">no</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">class</td>
+<td class="org-left">no</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">extra</td>
+<td class="org-left">no</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">startType</td>
+<td class="org-left">no</td>
+<td class="org-left">"activity"</td>
+</tr>
+</tbody>
+</table>
+
+<div class="org-src-container">
+<pre class="src src-Emacs-lisp">(emacsbridge-post-json "intent" (json-encode `((:package . "com.termux")
+					       (:startType . "service")
+					       (:class . "com.termux.app.RunCommandService")
+					       (:extra . (((:type . "string")
+							   (:key . "com.termux.RUN_COMMAND_PATH")
+							   (:value . "/data/data/com.termux/files/usr/bin/ps"))
+							  ((:type . "stringarray")
+							   (:key . "com.termux.RUN_COMMAND_ARGUMENTS")
+							   (:value . (((:value . "a"))
+								      ((:value . "x")))))))
+					       (:action . "com.termux.RUN_COMMAND"))))
+</pre>
+</div>
+</div>
+</li>
+<li><a id="org6a3c54f"></a>sensor<br /></li>
+<li><a id="org63e9477"></a>removeComponent<br /></li>
+</ol>
+</li>
+<li><a id="org1a9baf8"></a>/scripts<br />
+<div class="outline-text-5" id="text-1-2-2-4">
+<p>
+Shell scripts bundled with the application. Served with simple template expansion, directory index is enabled.
+</p>
+</div>
+</li>
+<li><a id="org8f7e26e"></a>/settings<br /></li>
+<li><a id="org1dcc0a6"></a>/test<sub>connection</sub><br />
+<div class="outline-text-5" id="text-1-2-2-6">
+<p>
+Returns a page reporting the setup status of the connection to Emacs in human friendly text. No authentication required.
+</p>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-org492d8e9" class="outline-3">
+<h3 id="org492d8e9"><span class="section-number-3">1.3</span> Preparing the build environment</h3>
+<div class="outline-text-3" id="text-1-3">
+</div>
+<div id="outline-container-orge1502b9" class="outline-4">
+<h4 id="orge1502b9"><span class="section-number-4">1.3.1</span> Android builds</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<p>
+First the directory structure gets prepared, and some variables need to be set. The SDK directory used here is <code>~/.android/sdk</code>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">export ANDROID_SDK_ROOT=$HOME/.android/sdk
+export ANDROID_HOME=$HOME/.android/sdk
+mkdir -p $ANDROID_HOME
+</pre>
+</div>
+
+<p>
+Next the command line tools need to be downloaded from <a href="https://developer.android.com/studio#downloads">the Android SDK download page</a> in the 'Command line tools only' section, and extracted:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">unzip -d $ANDROID_HOME ~/Downloads/commandlinetools-linux-6858069_latest.zip
+export PATH=$PATH:$ANDROID_HOME/cmdline-tools/tools/bin
+</pre>
+</div>
+
+<p>
+Now sdkmanager can be used to initialize the SDK and download required packages:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">sdkmanager --verbose --licenses
+sdkmanager --update
+sdkmanager "platforms;android-29" "ndk-bundle" "build-tools;30.0.2" "platform-tools" "tools"
+</pre>
+</div>
+
+<p>
+Next Qt needs to be Downloaded (<a href="http://download.qt.io/official_releases/qt/5.15/5.15.1/single/qt-everywhere-src-5.15.1.tar.xz.mirrorlist">5.15.1 mirror list</a>), extracted and built:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">tar xf qt-everywhere-src-5.15.1.tar.xz
+cd qt-everywhere-src-5.15.1
+./configure -opensource -confirm-license -android-abis armeabi-v7a,arm64-v8a,x86_64 -xplatform android-clang --disable-rpath -nomake tests -nomake examples -no-warnings-are-errors -android-ndk $HOME/.android/sdk/ndk-bundle -android-sdk $HOME/.android/sdk/platforms -android-ndk-platform android-29 -prefix $HOME/qt/qt5.15.1-android-29
+make -j$(nproc)
+make -j$(nproc) install
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb992b4d" class="outline-4">
+<h4 id="orgb992b4d"><span class="section-number-4">1.3.2</span> Windows builds</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<p>
+The Windows version is highly experimental, seems to segfault due to issues with Qt remote objects, and probably won't see any work unless I'm very bored or somebody is interested in actually using it on Windows. Therefore the following just contains a few pointers for a chance to have a build environment.
+</p>
+
+<p>
+A Visual Studio build might have the best chances to actually work, but probably will require code changes. MinGW compiles without code changes. On OpenSuSE probably the following packages are required:
+</p>
+
+<ul class="org-ul">
+<li>mingw64-cross-pkgconf</li>
+<li>mingw64-libicu-devel</li>
+<li>mingw64-angleproject-devel</li>
+<li>mingw64-cross-binutils</li>
+<li>mingw64-cross-gcc</li>
+<li>mingw64-cross-gcc-c++</li>
+<li>mingw64-cross-pkg-config</li>
+<li>mingw64-dbus-1-devel</li>
+<li>mingw64-filesystem</li>
+<li>mingw64-libicu-devel</li>
+<li>mingw64-libjpeg-devel</li>
+<li>mingw64-libopenssl-devel</li>
+<li>mingw64-libpng-devel</li>
+<li>mingw64-libtiff-devel</li>
+<li>mingw64-mysql-connector-c-devel</li>
+<li>mingw64-pcre-devel</li>
+<li>mingw64-sqlite-devel</li>
+<li>mingw64-zlib-devel</li>
+<li>mingw64-libharfbuzz-devel</li>
+<li>mingw64-glib2-devel</li>
+<li>mingw64-libintl-devel</li>
+</ul>
+
+<p>
+With those installed this should provide a more or less working build of Qt for Windows:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">rm -Rf qtactiveqt
+./configure -opensource -confirm-license -xplatform win32-g++ -device-option CROSS_COMPILE=x86_64-w64-mingw32- -nomake examples -release -make tools -prefix $HOME/qt/qt5.15.0-mingw64 -opengl desktop -skip qtlocation -skip qtactiveqt
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org8e76741" class="outline-3">
+<h3 id="org8e76741"><span class="section-number-3">1.4</span> Resources</h3>
+<div class="outline-text-3" id="text-1-4">
+</div>
+<div id="outline-container-orgaf255b5" class="outline-4">
+<h4 id="orgaf255b5"><span class="section-number-4">1.4.1</span> Android</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<ul class="org-ul">
+<li><a href="https://developer.android.com/guide/topics/providers/contacts-provider">Android contacts provider</a></li>
+<li><a href="https://developers.google.com/maps/documentation/urls/guide">Google Maps URL schemes</a></li>
+</ul>
+</div>
+</div>
+<div id="outline-container-org17e984a" class="outline-4">
+<h4 id="org17e984a"><span class="section-number-4">1.4.2</span> Qt</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<ul class="org-ul">
+<li><a href="https://www.qt.io/blog/2019/01/25/introducing-qt-http-server">Qt Http Server announcement</a></li>
+<li><a href="https://bugreports.qt.io/browse/QTBUG-60105">QTBUG-60105 Lightweight HTTP server</a></li>
+<li><a href="https://doc.qt.io/qt-5/qtremoteobjects-index.html">Qt Remote objects</a></li>
+<li><a href="https://doc.qt.io/qt-5/android-services.html">Android services with Qt</a></li>
+<li><a href="https://doc.qt.io/qt-5/qtandroidextras-index.html">Android extras</a> <a href="https://raymii.org/s/articles/Get_Started_With_The_Nitrokey_HSM.html~/">(git)</a></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: Bernd Wachter</p>
+<p class="date">Created: 2020-12-27 Sun 23:50</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>

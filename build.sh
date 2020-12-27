@@ -189,7 +189,19 @@ deploy_windows(){
     cd $SOURCE_DIR
 }
 
+org_to_html(){
+    _org_files="hacking user"
+    for _file in $_org_files; do
+        echo "Building $_file"
+        emacs doc/$_file.org --batch -f org-html-export-to-html --kill
+        mv doc/$_file.html html/$_file.html
+    done
+}
+
 release(){
+  # Force documentation update on releases
+  org_to_html
+  git add html/*.html
   (( _total_commit_count=$GIT_TOTAL_COMMIT_COUNT+1 ))
   if [ -n "$1" ]; then
       _new_tag=$1
@@ -227,6 +239,9 @@ case "$1" in
         ;;
     "dev-rpm")
         build_dev_rpm
+        ;;
+    "html")
+        org_to_html
         ;;
     "pc")
         build_pc
