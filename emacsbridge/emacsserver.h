@@ -13,6 +13,11 @@
 #include <QJsonObject>
 
 #include <QAmbientLightSensor>
+#ifdef _WITH_PROXIMITY
+// proximit seems to be less useful than ambient, so make it a compile time flag
+// for now
+#include <QProximitySensor>
+#endif
 
 #include "emacsbridgetypes.h"
 #include "emacsbridgemorse.h"
@@ -59,6 +64,9 @@ class EmacsServer: public QObject{
     QHttpServerResponse setData(const QJsonObject &jsonObject, const QString &jsonString);
     // sensors
     QAmbientLightSensor *m_ambientLightSensor;
+#ifdef _WITH_PROXIMITY
+    QProximitySensor *m_proximitySensor;
+#endif
 
   private slots:
 

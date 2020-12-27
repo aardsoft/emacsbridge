@@ -36,6 +36,9 @@ EmacsServer::~EmacsServer(){
 void EmacsServer::startServer(){
   m_morseInterpreter=new EmacsBridgeMorse();
   m_ambientLightSensor=new QAmbientLightSensor(this);
+#ifdef _WITH_PROXIMITY
+  m_proximitySensor=new QProximitySensor(this);
+#endif
 
   connect(this, SIGNAL(parseMorse(int)),
           m_morseInterpreter, SLOT(stateChange(int)));
@@ -45,10 +48,21 @@ void EmacsServer::startServer(){
           [=](){m_morseInterpreter->
               stateChange(m_ambientLightSensor->
                           reading()->lightLevel());});
+#ifdef _WITH_PROXIMITY
+  connect(m_proximitySensor, &QProximitySensor::readingChanged,
+          this,
+          [=](){qDebug()<<"Proximity:" <<m_proximitySensor->reading()->close();
+            qDebug()<<"Proximity:" <<(m_proximitySensor->reading()->close()?1:3);
+          });
+#endif
 
   m_ambientLightSensor->setDataRate(1);
   m_ambientLightSensor->start();
 
+#ifdef _WITH_PROXIMITY
+  m_proximitySensor->setDataRate(1);
+  m_proximitySensor->start();
+#endif
   startHttpServer();
 }
 
