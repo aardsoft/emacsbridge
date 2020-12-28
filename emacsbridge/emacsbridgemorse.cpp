@@ -132,13 +132,13 @@ void EmacsBridgeMorse::timeoutHandler(){
   if (m_oldState==m_highState){
     if (m_dict.contains(currentInput)){
       EmacsClient *client=EmacsClient::instance();
-      qDebug()<<"Identified"<<m_dict[currentInput];
+      qInfo()<<"Identified"<<m_dict[currentInput];
       client->insertKeySequence(m_dict[currentInput]);
     } else {
-      qDebug()<<currentInput<<"not found in dict";
+      qInfo()<<currentInput<<"not found in dict";
     }
   } else {
-    qDebug()<<"Aborting invalid attempt";
+    qInfo()<<"Aborting invalid attempt";
   }
   currentInput="";
 }

@@ -63,6 +63,7 @@ windows {
 SOURCES += \
     main.cpp \
     emacsbridge.cpp \
+    emacsbridgelog.cpp \
     emacsbridgemorse.cpp \
     emacsbridgeremote.cpp \
     emacsbridgesettings.cpp \
@@ -75,6 +76,7 @@ RESOURCES += \
 
 HEADERS += \
     emacsbridge.h \
+    emacsbridgelog.h \
     emacsbridgemorse.h \
     emacsbridgesettings.h \
     emacsclient.h \

@@ -17,14 +17,16 @@
 #endif
 
 #include <QUuid>
-
 #include "emacsbridgesettings.h"
+#include "emacsbridgelog.h"
 
 EmacsBridge::EmacsBridge(QObject *parent)
     : QObject(parent){
   m_startupTime=QDateTime::currentDateTime();
 
   QSettings settings;
+  EmacsBridgeLog::setBufferSize(settings.value("logBufferSize", "200").toInt());
+
   if (settings.value("defaultPage", "").toString()=="")
     settings.setValue("defaultPage", "qrc:/qml/SetupPage.qml");
 
@@ -35,13 +37,13 @@ EmacsBridge::EmacsBridge(QObject *parent)
 
 #ifndef __ANDROID_API__
   if (!m_rep->waitForSource(1)){
-    qDebug()<< "Starting service process";
+    qInfo()<< "Starting service process";
     QStringList serviceArguments;
     serviceArguments << "-service";
     QProcess::startDetached(QCoreApplication::applicationFilePath(),
                             serviceArguments);
   }else{
-    qDebug()<< "Connected to existing process";
+    qInfo()<< "Connected to existing process";
   }
 #else
   QAndroidJniObject::callStaticMethod<void>(
@@ -212,9 +214,9 @@ void EmacsBridge::requestAndroidPermission(const QString &permissionName){
     QtAndroid::requestPermissionsSync(QStringList({permissionName}));
 
   if(resultHash[permissionName] == QtAndroid::PermissionResult::Denied)
-    qDebug()<<"UI: Permission denied for"<<permissionName;
+    qWarning()<<"UI: Permission denied for"<<permissionName;
   else
-    qDebug()<<"UI: Permission granted for"<<permissionName;
+    qInfo()<<"UI: Permission granted for"<<permissionName;
 }
 
 void EmacsBridge::setupTermux(){

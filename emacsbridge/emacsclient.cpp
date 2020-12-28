@@ -72,7 +72,7 @@ bool EmacsClient::isSetup(){
     qDebug()<< "Auth token query:" << authToken << "==" << stringResult;
     return true;
   } else {
-    qDebug()<< "Auth token query:" << stringResult;
+    qWarning()<< "Auth token query:" << stringResult;
     return false;
   }
 }
@@ -106,7 +106,7 @@ QString EmacsClient::query(const QString &queryKey, const QString &queryString, 
 
   socket.write(queryString.toLocal8Bit());
   if (!socket.waitForBytesWritten(100)){
-    qDebug()<< "Issue writing";
+    qCritical()<< "Issue writing";
     return "";
   }
 
@@ -177,7 +177,7 @@ QString EmacsClient::doQuery(const QString &queryKey, const QString &queryString
     socket.connectToServer(socketPath);
 
     if (!socket.isOpen()){
-      qDebug()<< "Problem opening socket " << socketPath;
+      qCritical()<< "Problem opening socket " << socketPath;
       emit queryError(queryKey, "Problem opening Emacs server connection");
       return "";
     }
@@ -197,7 +197,7 @@ QString EmacsClient::doQuery(const QString &queryKey, const QString &queryString
       settings->value("networkSocket/port", 60325).toInt());
 
     if(!socket.waitForConnected(5000)){
-      qDebug()<< "Error: " << socket.errorString();
+      qCritical()<< "Error: " << socket.errorString();
       emit queryError(queryKey, "Timeout waiting for Emacs server connection");
       return "";
     }

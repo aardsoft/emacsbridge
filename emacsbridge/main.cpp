@@ -22,8 +22,11 @@
 // from the same binary/so both are required here
 #include "emacsbridge.h"
 #include "emacsservice.h"
+#include "emacsbridgelog.h"
 
 const QString init(){
+  qInstallMessageHandler(EmacsBridgeLog::messageHandler);
+
   QCoreApplication::setOrganizationName("Aardsoft");
   QCoreApplication::setOrganizationDomain("aardsoft.fi");
   QCoreApplication::setApplicationName("emacsbridge");
@@ -32,15 +35,15 @@ const QString init(){
   QString dataPath=QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   QDir dir;
   if (!dir.mkpath(dataPath+"/qml"))
-    qDebug()<< "Creating storage in "
+    qCritical()<< "Creating storage in "
             << dataPath
             << " failed. Some things will not work.";
   if (!dir.mkpath(dataPath+"/qml-staging"))
-    qDebug()<< "Creating storage in "
+    qCritical()<< "Creating storage in "
             << dataPath
             << " failed. Some things will not work.";
 
-  qDebug()<< "Version" << QCoreApplication::applicationVersion() << "initializing";
+  qInfo()<< "Version" << QCoreApplication::applicationVersion() << "initializing";
   return dataPath;
 }
 
@@ -86,9 +89,9 @@ int main(int argc, char **argv){
 
     // Note: This doesn't allow updating the QML when it changes in qrc
     if (engine.rootObjects().isEmpty()){
-      qDebug()<<"First loading failed, making sure there's a good main.qml";
+      qInfo()<<"First loading failed, making sure there's a good main.qml";
       if (!QFile::remove(mainQML)){
-        qDebug()<<"Unable to remove old main.qml";
+        qWarning()<<"Unable to remove old main.qml";
       }
       engine.clearComponentCache();
 
@@ -98,7 +101,7 @@ int main(int argc, char **argv){
     }
 
     if (engine.rootObjects().isEmpty()){
-      qDebug()<<"Falling back to internal qml";
+      qInfo()<<"Falling back to internal qml";
       engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
       if (engine.rootObjects().isEmpty())
         return -1;
@@ -107,7 +110,7 @@ int main(int argc, char **argv){
     return app.exec();
   } else if (argc>1 && strcmp(argv[1], "-service")==0){
 #ifdef __ANDROID_API__
-    qDebug()<< "Service starting with from the same .so file";
+    qInfo()<< "Service starting with from the same .so file";
     QAndroidService app(argc, argv);
 #else
     QCoreApplication app(argc, argv);

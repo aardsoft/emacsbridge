@@ -74,7 +74,7 @@ EmacsBridgeSettings::EmacsBridgeSettings():
   }
 
   if (value("core/auth-token", "").toString().isEmpty()){
-    qDebug()<< "Missing UUID";
+    qInfo()<< "Missing UUID";
     QString uuid=QUuid::createUuid().toString();
     uuid.replace("-", "");
     setValue("core/auth-token", uuid);

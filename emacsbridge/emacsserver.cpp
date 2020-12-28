@@ -20,7 +20,7 @@
 #include "emacsbridge.h"
 
 EmacsServer::EmacsServer(): QObject(){
-  qDebug()<< "Emacs server starting up.";
+  qInfo()<< "Emacs server starting up.";
   m_startupTime=QDateTime::currentDateTime();
   m_dataPath=QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   m_htmlTemplate="<!DOCTYPE html>\n<html><head><title>%1</title></head><body><h1>%1</h1>%2</body></html>";
@@ -159,7 +159,7 @@ void EmacsServer::startHttpServer(){
 
   m_server->listen(QHostAddress(settings->value("http/bindAddress", "127.0.0.1").toString()),
                   settings->value("http/bindPort", 1616).toInt());
-  qDebug()<<"HTTP server initialized at"
+  qInfo()<<"HTTP server initialized at"
           <<settings->value("http/bindAddress", "127.0.0.1").toString()
           <<"port"
           <<settings->value("http/bindPort", 1616).toInt();
@@ -167,7 +167,7 @@ void EmacsServer::startHttpServer(){
 }
 
 void EmacsServer::restartServer(){
-  qDebug()<< "Restarting HTTP server";
+  qInfo()<< "Restarting HTTP server";
   delete m_server;
   startHttpServer();
 }
@@ -312,12 +312,12 @@ QHttpServerResponse EmacsServer::addComponent(const QJsonObject &jsonObject){
   engine.rootContext()->setContextProperty("emacsBridge", &emacsBridge);
   QQmlComponent component(&engine, QUrl::fromLocalFile(stagingFile.fileName()));
   if (component.isError()){
-    qDebug()<<"Component load error";
+    qWarning()<<"Component load error";
     QList<QQmlError> qmlErrors=component.errors();
     QList<QQmlError>::const_iterator i;
     QString errors="Unable to push QML file:\n\n";
     for (i=qmlErrors.constBegin(); i!=qmlErrors.constEnd(); ++i){
-      qDebug()<<(*i).toString();
+      qWarning()<<(*i).toString();
       errors+=(*i).toString();
     }
     return QHttpServerResponse("text/plain",
@@ -331,7 +331,7 @@ QHttpServerResponse EmacsServer::addComponent(const QJsonObject &jsonObject){
 
     if (!dir.rename(stagingFile.fileName(),
                     file.fileName())){
-      qDebug()<< "Rename failed.";
+      qWarning()<< "Rename failed.";
       return QHttpServerResponse("text/plain",
                                  tr("Unable to rename uploaded file").toUtf8(),
                                  QHttpServerResponder::StatusCode::BadRequest);
@@ -494,7 +494,7 @@ QHttpServerResponse EmacsServer::setData(const QJsonObject &jsonObject, const QS
   // just check if there's a requesterId, and then throw it up the stack to have
   // the UI deal with it.
   if (jsonContainer.requesterId.isEmpty()){
-    qDebug()<< "Invalid data:" << jsonContainer.requesterId << jsonString;
+    qWarning()<< "Invalid data:" << jsonContainer.requesterId << jsonString;
     return QHttpServerResponse("text/plain",
                                tr("Requester ID missing in setData request").toUtf8(),
                                QHttpServerResponder::StatusCode::BadRequest);
@@ -510,10 +510,10 @@ quint16 EmacsServer::activeServerPort(){
   QVector<quint16> serverPorts=m_server->serverPorts();
 
   if (serverPorts.count() <= 0){
-    qDebug()<< "HTTP server not listening on any port";
+    qCritical()<< "HTTP server not listening on any port";
     return 0;
   } else if (serverPorts.count() > 1){
-    qDebug()<< "HTTP server listening to wrong number of ports" << serverPorts;
+    qCritical()<< "HTTP server listening to wrong number of ports" << serverPorts;
   }
 
   return serverPorts.at(0);

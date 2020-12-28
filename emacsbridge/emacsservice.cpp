@@ -102,26 +102,26 @@ void EmacsService::settingChanged(const QString &key){
     }
   }
   if (key.startsWith("http/")){
-    qDebug()<<"Triggering server restart";
+    qInfo()<<"Triggering server restart";
     emit restartServer();
   }
 }
 
 void EmacsService::changeServerListenPort(const quint16 serverPort){
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
-  qDebug()<<"Server port changed to" << serverPort;
+  qInfo()<<"Server port changed to" << serverPort;
   settings->setValue("http/bindPort", serverPort);
 }
 
 void EmacsService::changeServerListenAddress(const QString &serverAddress){
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
-  qDebug()<<"Server address changed to" << serverAddress;
+  qInfo()<<"Server address changed to" << serverAddress;
   settings->setValue("http/bindAddress", serverAddress);
 }
 
 #ifdef __ANDROID_API__
 void EmacsService::triggerTermuxSetup(){
-  qDebug()<<"Triggering termux setup";
+  qInfo()<<"Triggering termux setup";
 
   if (m_server->checkPermissions("com.termux.app.RunCommandService")!="")
     return;
