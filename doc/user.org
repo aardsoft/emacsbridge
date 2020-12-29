@@ -1,2 +1,3 @@
 #+OPTIONS: broken-links:t
-* Emacsbridge user documentation                                      :TOC_4:
+#+OPTIONS: ^:nil
+* Emacsbridge user documentation

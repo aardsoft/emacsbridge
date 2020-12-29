@@ -1,14 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<!-- 2020-12-27 Sun 23:50 -->
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>&lrm;</title>
-<meta name="generator" content="Org mode" />
-<meta name="author" content="Bernd Wachter" />
+<!-- 2020-12-29 Tue 14:22 -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Hacking on emacsbridge</title>
+<meta name="generator" content="Org mode">
+<meta name="author" content="Bernd Wachter">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
   .title  { text-align: center;
@@ -242,36 +240,37 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
+<h1 class="title">Hacking on emacsbridge</h1>
 <div id="table-of-contents">
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org9a741bf">1. Hacking on emacsbridge&#xa0;&#xa0;&#xa0;<span class="tag"><span class="TOC_4">TOC_4</span></span></a>
+<li><a href="#org685157b">1. Hacking on emacsbridge</a>
 <ul>
-<li><a href="#orgccd5714">1.1. Working with the core</a>
+<li><a href="#org2c28103">1.1. Working with the core</a>
 <ul>
-<li><a href="#orgbad6272">1.1.1. Qt requirements</a></li>
-<li><a href="#org6dee5bb">1.1.2. Preparing the sources</a></li>
-<li><a href="#org59e74c6">1.1.3. Build helper</a></li>
-<li><a href="#orgd057d28">1.1.4. Debugging</a></li>
+<li><a href="#org80478f9">1.1.1. Qt requirements</a></li>
+<li><a href="#org4dea797">1.1.2. Preparing the sources</a></li>
+<li><a href="#orgdc5465e">1.1.3. Build helper</a></li>
+<li><a href="#orgd3ea5ec">1.1.4. Debugging</a></li>
 </ul>
 </li>
-<li><a href="#org98cd3fa">1.2. Architecture</a>
+<li><a href="#org49e6a9b">1.2. Architecture</a>
 <ul>
-<li><a href="#org32a6798">1.2.1. Connection setup</a></li>
-<li><a href="#org41fb99e">1.2.2. URLs</a></li>
+<li><a href="#orgbaeab5c">1.2.1. Connection setup</a></li>
+<li><a href="#org3b50e1e">1.2.2. URLs</a></li>
 </ul>
 </li>
-<li><a href="#org492d8e9">1.3. Preparing the build environment</a>
+<li><a href="#orgda4366f">1.3. Preparing the build environment</a>
 <ul>
-<li><a href="#orge1502b9">1.3.1. Android builds</a></li>
-<li><a href="#orgb992b4d">1.3.2. Windows builds</a></li>
+<li><a href="#orgd15d56a">1.3.1. Android builds</a></li>
+<li><a href="#orgf3f1f75">1.3.2. Windows builds</a></li>
 </ul>
 </li>
-<li><a href="#org8e76741">1.4. Resources</a>
+<li><a href="#org10f4803">1.4. Resources</a>
 <ul>
-<li><a href="#orgaf255b5">1.4.1. Android</a></li>
-<li><a href="#org17e984a">1.4.2. Qt</a></li>
+<li><a href="#orgc9b74d7">1.4.1. Android</a></li>
+<li><a href="#org8b6d22d">1.4.2. Qt</a></li>
 </ul>
 </li>
 </ul>
@@ -279,58 +278,30 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-org9a741bf" class="outline-2">
-<h2 id="org9a741bf"><span class="section-number-2">1</span> Hacking on emacsbridge&#xa0;&#xa0;&#xa0;<span class="tag"><span class="TOC_4">TOC_4</span></span></h2>
+<div id="outline-container-org685157b" class="outline-2">
+<h2 id="org685157b"><span class="section-number-2">1</span> Hacking on emacsbridge</h2>
 <div class="outline-text-2" id="text-1">
-<ul class="org-ul">
-<li><ul class="org-ul">
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-</ul></li>
-<li><ul class="org-ul">
-<li></li>
-<li><ul class="org-ul">
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-<li></li>
-</ul></li>
-</ul></li>
-<li><ul class="org-ul">
-<li></li>
-<li></li>
-</ul></li>
-<li><ul class="org-ul">
-<li></li>
-<li></li>
-</ul></li>
-</ul>
 </div>
-
-<div id="outline-container-orgccd5714" class="outline-3">
-<h3 id="orgccd5714"><span class="section-number-3">1.1</span> Working with the core</h3>
+<div id="outline-container-org2c28103" class="outline-3">
+<h3 id="org2c28103"><span class="section-number-3">1.1</span> Working with the core</h3>
 <div class="outline-text-3" id="text-1-1">
 </div>
-<div id="outline-container-orgbad6272" class="outline-4">
-<h4 id="orgbad6272"><span class="section-number-4">1.1.1</span> Qt requirements</h4>
+<div id="outline-container-org80478f9" class="outline-4">
+<h4 id="org80478f9"><span class="section-number-4">1.1.1</span> Qt requirements</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 The following table contains the Qt versions suitable for compiling emacsbridge:
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-right" />
+<col  class="org-right">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -371,7 +342,6 @@ The following table contains the Qt versions suitable for compiling emacsbridge:
 </tr>
 </tbody>
 </table>
-
 <p>
 For building on PC compiling Qt is straightforward, and your distribution might already have a correct version. The following packages should pull in all the other required dependencies for building:
 </p>
@@ -396,8 +366,8 @@ To build for Android an Android development environment needs to be set up. It s
 </div>
 </div>
 
-<div id="outline-container-org6dee5bb" class="outline-4">
-<h4 id="org6dee5bb"><span class="section-number-4">1.1.2</span> Preparing the sources</h4>
+<div id="outline-container-org4dea797" class="outline-4">
+<h4 id="org4dea797"><span class="section-number-4">1.1.2</span> Preparing the sources</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
 Emacsbridge requires qthttpserver, which is included as a submodule. qthttpserver also has submodules. The following snippet clones the repository and initializes all submodules:
@@ -416,8 +386,8 @@ Now the code can be configured for qmake - for Android the qmake from inside the
 </div>
 </div>
 
-<div id="outline-container-org59e74c6" class="outline-4">
-<h4 id="org59e74c6"><span class="section-number-4">1.1.3</span> Build helper</h4>
+<div id="outline-container-orgdc5465e" class="outline-4">
+<h4 id="orgdc5465e"><span class="section-number-4">1.1.3</span> Build helper</h4>
 <div class="outline-text-4" id="text-1-1-3">
 <p>
 The source repository contains a build helper (<code>build.sh</code>). Outside of simple Linux builds using that might be easiest.
@@ -427,23 +397,23 @@ The source repository contains a build helper (<code>build.sh</code>). Outside o
 Variables controlling the build include:
 </p>
 <ul class="org-ul">
-<li>ANDROID<sub>ABIS</sub>: ABIs to build, default <code>arm64-v8a x86_64 armeabi-v7a</code></li>
-<li>ANDROID<sub>SDK</sub><sub>VERSION</sub>: Android SDK version to use, default <code>android-29</code>. When targetting Play store the version from the script generally is the one which has to be used.</li>
-<li>QT<sub>VERSION</sub>: The Qt version used for trying to find directories, default <code>5.15.1</code></li>
-<li>QT<sub>ANDROID</sub><sub>BIN</sub>: The bin directory inside of the Qt Android installation, defaulting to <code>$HOME/qt/qt${QT_VERSION}-${ANDROID_SDK_VERSION}/bin</code></li>
-<li>QT<sub>WINDOWS</sub><sub>BIN</sub>: The bin directory inside of the Windows Qt installation, defaulting to <code>$HOME/qt/qt${QT_VERSION}-mingw64/bin</code></li>
-<li>WIN32<sub>OBJDUMP</sub>: The name of the objdump binary for Windows, default <code>x86_64-w64-mingw32-objdump</code></li>
-<li>WIN32<sub>SYSROOT</sub>: Path to the mingw32 sysroot, default <code>/usr/x86_64-w64-mingw32/sys-root/mingw/bin</code></li>
-<li>WIN32<sub>PLUGINS</sub>: List of win32 plugins to use, default <code>platforms</code></li>
-<li>BUILD<sub>DIR</sub>: Name of the build directory, default <code>build</code></li>
-<li>QMAKE<sub>CXX</sub>: The C++ compiler to use for PC, default <code>clang++</code></li>
-<li>QMAKE<sub>LINK</sub>: The linker to use for PC, default <code>clang++</code></li>
+<li>ANDROID_ABIS: ABIs to build, default <code>arm64-v8a x86_64 armeabi-v7a</code></li>
+<li>ANDROID_SDK_VERSION: Android SDK version to use, default <code>android-29</code>. When targetting Play store the version from the script generally is the one which has to be used.</li>
+<li>QT_VERSION: The Qt version used for trying to find directories, default <code>5.15.1</code></li>
+<li>QT_ANDROID_BIN: The bin directory inside of the Qt Android installation, defaulting to <code>$HOME/qt/qt${QT_VERSION}-${ANDROID_SDK_VERSION}/bin</code></li>
+<li>QT_WINDOWS_BIN: The bin directory inside of the Windows Qt installation, defaulting to <code>$HOME/qt/qt${QT_VERSION}-mingw64/bin</code></li>
+<li>WIN32_OBJDUMP: The name of the objdump binary for Windows, default <code>x86_64-w64-mingw32-objdump</code></li>
+<li>WIN32_SYSROOT: Path to the mingw32 sysroot, default <code>/usr/x86_64-w64-mingw32/sys-root/mingw/bin</code></li>
+<li>WIN32_PLUGINS: List of win32 plugins to use, default <code>platforms</code></li>
+<li>BUILD_DIR: Name of the build directory, default <code>build</code></li>
+<li>QMAKE_CXX: The C++ compiler to use for PC, default <code>clang++</code></li>
+<li>QMAKE_LINK: The linker to use for PC, default <code>clang++</code></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-orgd057d28" class="outline-4">
-<h4 id="orgd057d28"><span class="section-number-4">1.1.4</span> Debugging</h4>
+<div id="outline-container-orgd3ea5ec" class="outline-4">
+<h4 id="orgd3ea5ec"><span class="section-number-4">1.1.4</span> Debugging</h4>
 <div class="outline-text-4" id="text-1-1-4">
 <p>
 To see what goes over the local socket, start socat and adjust socket address:
@@ -460,15 +430,15 @@ Building for Android and Windows requires a proper cross-compiled toolchain,
 </div>
 </div>
 
-<div id="outline-container-org98cd3fa" class="outline-3">
-<h3 id="org98cd3fa"><span class="section-number-3">1.2</span> Architecture</h3>
+<div id="outline-container-org49e6a9b" class="outline-3">
+<h3 id="org49e6a9b"><span class="section-number-3">1.2</span> Architecture</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 The application is separated into a client and a server part, communicating via <a href="https://doc.qt.io/qt-5/qtremoteobjects-index.html">Qt Remote Objects</a>
 </p>
 </div>
-<div id="outline-container-org32a6798" class="outline-4">
-<h4 id="org32a6798"><span class="section-number-4">1.2.1</span> Connection setup</h4>
+<div id="outline-container-orgbaeab5c" class="outline-4">
+<h4 id="orgbaeab5c"><span class="section-number-4">1.2.1</span> Connection setup</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 Emacsbridge starts up with some open settings endpoints to make initial configuration easier. To set the connection up,
@@ -480,43 +450,43 @@ Emacsbridge starts up with some open settings endpoints to make initial configur
 </ul>
 </div>
 </div>
-<div id="outline-container-org41fb99e" class="outline-4">
-<h4 id="org41fb99e"><span class="section-number-4">1.2.2</span> URLs</h4>
+<div id="outline-container-org3b50e1e" class="outline-4">
+<h4 id="org3b50e1e"><span class="section-number-4">1.2.2</span> URLs</h4>
 <div class="outline-text-4" id="text-1-2-2">
 </div>
 <ol class="org-ol">
-<li><a id="org2299141"></a>/icons<br />
+<li><a id="orga621195"></a>/icons<br>
 <div class="outline-text-5" id="text-1-2-2-1">
 <p>
 Icons bundled with the application. Served without modification, directory index is enabled. No authentication required.
 </p>
 </div>
 </li>
-<li><a id="orgeae49de"></a>/lisp<br />
+<li><a id="org8e7fbfa"></a>/lisp<br>
 <div class="outline-text-5" id="text-1-2-2-2">
 <p>
 Lisp files bundled with the application. Served without modification, directory index is enabled. No authentication required.
 </p>
 </div>
 </li>
-<li><a id="orgf2be6a6"></a>/rpc<br />
+<li><a id="orgb32e46a"></a>/rpc<br>
 <div class="outline-text-5" id="text-1-2-2-3">
 <p>
 Expects JSON data in a POST request, with a valid auth token. The method for which JSON data is sent must be specified in the <code>method</code> header. Only available after initial setup has been completed. The following methods are available:
 </p>
 </div>
 <ol class="org-ol">
-<li><a id="org737730e"></a>addComponent<br />
+<li><a id="orgcc14117"></a>addComponent<br>
 <div class="outline-text-6" id="text-1-2-2-3-1">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -553,18 +523,18 @@ Expects JSON data in a POST request, with a valid auth token. The method for whi
 </table>
 </div>
 </li>
-<li><a id="org9522b8d"></a>setData<br /></li>
-<li><a id="orgbb70813"></a>notification<br />
+<li><a id="org1883949"></a>setData<br></li>
+<li><a id="org77a9fc2"></a>notification<br>
 <div class="outline-text-6" id="text-1-2-2-3-3">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -589,17 +559,17 @@ Expects JSON data in a POST request, with a valid auth token. The method for whi
 </table>
 </div>
 </li>
-<li><a id="org9f11613"></a>intent<br />
+<li><a id="orgadeae66"></a>intent<br>
 <div class="outline-text-6" id="text-1-2-2-3-4">
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -663,19 +633,19 @@ Expects JSON data in a POST request, with a valid auth token. The method for whi
 </div>
 </div>
 </li>
-<li><a id="org6a3c54f"></a>sensor<br /></li>
-<li><a id="org63e9477"></a>removeComponent<br /></li>
+<li><a id="org7e6b0fc"></a>sensor<br></li>
+<li><a id="orga8fd9d9"></a>removeComponent<br></li>
 </ol>
 </li>
-<li><a id="org1a9baf8"></a>/scripts<br />
+<li><a id="org9a6f0cf"></a>/scripts<br>
 <div class="outline-text-5" id="text-1-2-2-4">
 <p>
 Shell scripts bundled with the application. Served with simple template expansion, directory index is enabled.
 </p>
 </div>
 </li>
-<li><a id="org8f7e26e"></a>/settings<br /></li>
-<li><a id="org1dcc0a6"></a>/test<sub>connection</sub><br />
+<li><a id="orgcfb267b"></a>/settings<br></li>
+<li><a id="orgef9f337"></a>/test_connection<br>
 <div class="outline-text-5" id="text-1-2-2-6">
 <p>
 Returns a page reporting the setup status of the connection to Emacs in human friendly text. No authentication required.
@@ -685,21 +655,21 @@ Returns a page reporting the setup status of the connection to Emacs in human fr
 </ol>
 </div>
 </div>
-<div id="outline-container-org492d8e9" class="outline-3">
-<h3 id="org492d8e9"><span class="section-number-3">1.3</span> Preparing the build environment</h3>
+<div id="outline-container-orgda4366f" class="outline-3">
+<h3 id="orgda4366f"><span class="section-number-3">1.3</span> Preparing the build environment</h3>
 <div class="outline-text-3" id="text-1-3">
 </div>
-<div id="outline-container-orge1502b9" class="outline-4">
-<h4 id="orge1502b9"><span class="section-number-4">1.3.1</span> Android builds</h4>
+<div id="outline-container-orgd15d56a" class="outline-4">
+<h4 id="orgd15d56a"><span class="section-number-4">1.3.1</span> Android builds</h4>
 <div class="outline-text-4" id="text-1-3-1">
 <p>
 First the directory structure gets prepared, and some variables need to be set. The SDK directory used here is <code>~/.android/sdk</code>:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">export ANDROID_SDK_ROOT=$HOME/.android/sdk
-export ANDROID_HOME=$HOME/.android/sdk
-mkdir -p $ANDROID_HOME
+<pre class="src src-shell"><span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">ANDROID_SDK_ROOT</span>=$<span style="font-weight: bold; font-style: italic;">HOME</span>/.android/sdk
+<span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">ANDROID_HOME</span>=$<span style="font-weight: bold; font-style: italic;">HOME</span>/.android/sdk
+mkdir -p $<span style="font-weight: bold; font-style: italic;">ANDROID_HOME</span>
 </pre>
 </div>
 
@@ -708,8 +678,8 @@ Next the command line tools need to be downloaded from <a href="https://develope
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">unzip -d $ANDROID_HOME ~/Downloads/commandlinetools-linux-6858069_latest.zip
-export PATH=$PATH:$ANDROID_HOME/cmdline-tools/tools/bin
+<pre class="src src-shell">unzip -d $<span style="font-weight: bold; font-style: italic;">ANDROID_HOME</span> ~/Downloads/commandlinetools-linux-6858069_latest.zip
+<span style="font-weight: bold;">export</span> <span style="font-weight: bold; font-style: italic;">PATH</span>=$<span style="font-weight: bold; font-style: italic;">PATH</span>:$<span style="font-weight: bold; font-style: italic;">ANDROID_HOME</span>/cmdline-tools/tools/bin
 </pre>
 </div>
 
@@ -720,7 +690,7 @@ Now sdkmanager can be used to initialize the SDK and download required packages:
 <div class="org-src-container">
 <pre class="src src-shell">sdkmanager --verbose --licenses
 sdkmanager --update
-sdkmanager "platforms;android-29" "ndk-bundle" "build-tools;30.0.2" "platform-tools" "tools"
+sdkmanager <span style="font-style: italic;">"platforms;android-29"</span> <span style="font-style: italic;">"ndk-bundle"</span> <span style="font-style: italic;">"build-tools;30.0.2"</span> <span style="font-style: italic;">"platform-tools"</span> <span style="font-style: italic;">"tools"</span>
 </pre>
 </div>
 
@@ -730,17 +700,17 @@ Next Qt needs to be Downloaded (<a href="http://download.qt.io/official_releases
 
 <div class="org-src-container">
 <pre class="src src-shell">tar xf qt-everywhere-src-5.15.1.tar.xz
-cd qt-everywhere-src-5.15.1
-./configure -opensource -confirm-license -android-abis armeabi-v7a,arm64-v8a,x86_64 -xplatform android-clang --disable-rpath -nomake tests -nomake examples -no-warnings-are-errors -android-ndk $HOME/.android/sdk/ndk-bundle -android-sdk $HOME/.android/sdk/platforms -android-ndk-platform android-29 -prefix $HOME/qt/qt5.15.1-android-29
-make -j$(nproc)
-make -j$(nproc) install
+<span style="font-weight: bold;">cd</span> qt-everywhere-src-5.15.1
+./configure -opensource -confirm-license -android-abis armeabi-v7a,arm64-v8a,x86_64 -xplatform android-clang --disable-rpath -nomake tests -nomake examples -no-warnings-are-errors -android-ndk $<span style="font-weight: bold; font-style: italic;">HOME</span>/.android/sdk/ndk-bundle -android-sdk $<span style="font-weight: bold; font-style: italic;">HOME</span>/.android/sdk/platforms -android-ndk-platform android-29 -prefix $<span style="font-weight: bold; font-style: italic;">HOME</span>/qt/qt5.15.1-android-29
+make -j$(<span style="font-weight: bold;">nproc</span>)
+make -j$(<span style="font-weight: bold;">nproc</span>) install
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgb992b4d" class="outline-4">
-<h4 id="orgb992b4d"><span class="section-number-4">1.3.2</span> Windows builds</h4>
+<div id="outline-container-orgf3f1f75" class="outline-4">
+<h4 id="orgf3f1f75"><span class="section-number-4">1.3.2</span> Windows builds</h4>
 <div class="outline-text-4" id="text-1-3-2">
 <p>
 The Windows version is highly experimental, seems to segfault due to issues with Qt remote objects, and probably won't see any work unless I'm very bored or somebody is interested in actually using it on Windows. Therefore the following just contains a few pointers for a chance to have a build environment.
@@ -780,19 +750,19 @@ With those installed this should provide a more or less working build of Qt for 
 
 <div class="org-src-container">
 <pre class="src src-shell">rm -Rf qtactiveqt
-./configure -opensource -confirm-license -xplatform win32-g++ -device-option CROSS_COMPILE=x86_64-w64-mingw32- -nomake examples -release -make tools -prefix $HOME/qt/qt5.15.0-mingw64 -opengl desktop -skip qtlocation -skip qtactiveqt
+./configure -opensource -confirm-license -xplatform win32-g++ -device-option <span style="font-weight: bold; font-style: italic;">CROSS_COMPILE</span>=x86_64-w64-mingw32- -nomake examples -release -make tools -prefix $<span style="font-weight: bold; font-style: italic;">HOME</span>/qt/qt5.15.0-mingw64 -opengl desktop -skip qtlocation -skip qtactiveqt
 </pre>
 </div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org8e76741" class="outline-3">
-<h3 id="org8e76741"><span class="section-number-3">1.4</span> Resources</h3>
+<div id="outline-container-org10f4803" class="outline-3">
+<h3 id="org10f4803"><span class="section-number-3">1.4</span> Resources</h3>
 <div class="outline-text-3" id="text-1-4">
 </div>
-<div id="outline-container-orgaf255b5" class="outline-4">
-<h4 id="orgaf255b5"><span class="section-number-4">1.4.1</span> Android</h4>
+<div id="outline-container-orgc9b74d7" class="outline-4">
+<h4 id="orgc9b74d7"><span class="section-number-4">1.4.1</span> Android</h4>
 <div class="outline-text-4" id="text-1-4-1">
 <ul class="org-ul">
 <li><a href="https://developer.android.com/guide/topics/providers/contacts-provider">Android contacts provider</a></li>
@@ -800,8 +770,8 @@ With those installed this should provide a more or less working build of Qt for 
 </ul>
 </div>
 </div>
-<div id="outline-container-org17e984a" class="outline-4">
-<h4 id="org17e984a"><span class="section-number-4">1.4.2</span> Qt</h4>
+<div id="outline-container-org8b6d22d" class="outline-4">
+<h4 id="org8b6d22d"><span class="section-number-4">1.4.2</span> Qt</h4>
 <div class="outline-text-4" id="text-1-4-2">
 <ul class="org-ul">
 <li><a href="https://www.qt.io/blog/2019/01/25/introducing-qt-http-server">Qt Http Server announcement</a></li>
@@ -817,7 +787,7 @@ With those installed this should provide a more or less working build of Qt for 
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Bernd Wachter</p>
-<p class="date">Created: 2020-12-27 Sun 23:50</p>
+<p class="date">Created: 2020-12-29 Tue 14:22</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

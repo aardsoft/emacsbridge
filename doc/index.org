@@ -1,0 +1,55 @@
+#+OPTIONS: broken-links:t
+#+OPTIONS: ^:nil
+#+TITLE: Emacs bridge
+* Emacs Bridge
+** Setup
+This is the [[https://github.com/aardsoft/emacsbridge][Emacs bridge]] default site. If the Emacs connection is currently not configured please follow the steps below. Note that the links only work until the initial configuration is finished. If you want to redo the steps you first need to enable this in the Android application.
+
+For the basic configuration open this page in eww (M-x eww {{http/bindAddress}}:{{http/bindPort}}), scroll through the page, and evaluate (C-x e) all lisp snippets relevant to your setup.
+
+First the emacsbridge-auth-key variable needs to be configured. The following snippets try to autofill it by either a dynamically generated server key, or a statically set one:
+
+#+BEGIN_SRC lisp
+(if (bound-and-true-p server-auth-key)
+    (setq emacsbridge-auth-key server-auth-key)
+  (progn
+    (if (file-exists-p (concat server-auth-dir "/server"))
+        (progn
+          (with-temp-buffer
+            (insert-file-contents (concat server-auth-dir "/server"))
+            (setq emacsbridge-auth-key (cadr (split-string (buffer-string) "\n" t)))
+            ))
+      (setq emacsbridge-auth-key nil))))
+#+END_SRC
+
+Next this key needs to be registered with the Android application:
+
+#+BEGIN_SRC lisp
+(let ((url-request-method "POST")
+  (url-request-extra-headers
+  '(("Content-Type" ."application/x-www-form-urlencoded")
+  ("setting" . "server-key")))
+  (url-request-data emacsbridge-auth-key)) (switch-to-buffer (url-retrieve-synchronously
+  "{{http/protocol}}://{{http/bindAddress}}:{{http/bindPort}}/settings")))
+#+END_SRC
+
+For a dynamic key this needs to be repeated on every start of Emacs. After the initial configuration the http auth key is required for that. Code to handle that (including re-trying if the application is not available on emacs startup) will be part of the support libraries.
+
+If the above steps finished without error it should now be possible to trigger notifications via RPC:
+
+#+BEGIN_SRC lisp
+(let ((url-request-method "POST")
+      (url-request-extra-headers
+       `(("Content-Type" ."application/json")
+         ("auth-token" . ,emacsbridge-auth-token)
+         ("method" . "notification")))
+      (url-request-data "{\"title\": \"Title from Emacs\", \"text\": \"Notification sent from Emacs via RPC\"}"))
+  (switch-to-buffer (url-retrieve-synchronously
+                     "{{http/protocol}}://{{http/bindAddress}}:{{http/bindPort}}/rpc")))
+#+END_SRC
+
+** Additional resources
+- [[export:/html/user.html][User manual]]
+- [[export:/html/hacking.html][Developer manual]]
+- [[export:/lisp/][Lisp files]]
+- [[export:/icons/][Application icons]]

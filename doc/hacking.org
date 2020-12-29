@@ -1,26 +1,7 @@
 #+OPTIONS: broken-links:t
-* Hacking on emacsbridge                                              :TOC_4:
-  - [[#working-with-the-core][Working with the core]]
-    - [[#qt-requirements][Qt requirements]]
-    - [[#preparing-the-sources][Preparing the sources]]
-    - [[#build-helper][Build helper]]
-    - [[#debugging][Debugging]]
-  - [[#architecture][Architecture]]
-    - [[#connection-setup][Connection setup]]
-    - [[#urls][URLs]]
-      - [[#icons][/icons]]
-      - [[#lisp][/lisp]]
-      - [[#rpc][/rpc]]
-      - [[#scripts][/scripts]]
-      - [[#settings][/settings]]
-      - [[#test_connection][/test_connection]]
-  - [[#preparing-the-build-environment][Preparing the build environment]]
-    - [[#android-builds][Android builds]]
-    - [[#windows-builds][Windows builds]]
-  - [[#resources][Resources]]
-    - [[#android][Android]]
-    - [[#qt][Qt]]
-
+#+OPTIONS: ^:nil
+#+TITLE: Hacking on emacsbridge
+* Hacking on emacsbridge
 ** Working with the core
 *** Qt requirements
 The following table contains the Qt versions suitable for compiling emacsbridge:
@@ -32,6 +13,7 @@ The following table contains the Qt versions suitable for compiling emacsbridge:
 | PC      |  5.14.x | minimum                                     |
 | PC      |  5.15.x | recommended                                 |
 | PC      |  5.13.0 | compiles, works mostly, but not recommended |
+#+ATTR_HTML: :border 2 :rules all :frame border
 
 For building on PC compiling Qt is straightforward, and your distribution might already have a correct version. The following packages should pull in all the other required dependencies for building:
 

@@ -106,6 +106,9 @@ build_pc_icons(){
 }
 
 build_dev_rpm(){
+    # calling release here makes sure metadata for the binary is updated
+    release y
+    rm -rf ${BUILD_DIR}
     if [ $IS_GITDIR -eq 0 ]; then
         if [ $IS_GITDIRTY -eq 0 ]; then
             _release="dirty"
@@ -190,35 +193,43 @@ deploy_windows(){
 }
 
 org_to_html(){
-    _org_files="hacking user"
+    if ! [ -f ${BUILD_DIR}/htmlize.el ]; then
+        wget --compression=none -O ${BUILD_DIR}/htmlize.el https://raw.githubusercontent.com/hniksic/emacs-htmlize/master/htmlize.el
+    fi
+    _org_files="index hacking user"
     for _file in $_org_files; do
         echo "Building $_file"
-        emacs doc/$_file.org --batch -f org-html-export-to-html --kill
+        emacs doc/$_file.org -L ${BUILD_DIR} --batch --eval '(load-file "export-html.lisp")' -f org-html-export-to-html --kill
         mv doc/$_file.html html/$_file.html
     done
 }
 
 release(){
-  # Force documentation update on releases
-  org_to_html
-  git add html/*.html
-  (( _total_commit_count=$GIT_TOTAL_COMMIT_COUNT+1 ))
-  if [ -n "$1" ]; then
-      _new_tag=$1
-  else
-      _newest_tag_minor=${GIT_NEWEST_TAG//*./}
-      _newest_tag_major=${GIT_NEWEST_TAG//.*/}
-      (( _newest_tag_minor=_newest_tag_minor+1 ))
-      _new_tag=$_newest_tag_major.$_newest_tag_minor
-  fi
-  cat >release_version.pri <<-EOF
+    _tar_only="$1"
+    _custom_tag="$2"
+    # Force documentation update on releases
+    org_to_html
+    (( _total_commit_count=$GIT_TOTAL_COMMIT_COUNT+1 ))
+    if [ -n "$_custom_tag" ]; then
+        _new_tag=$_custom_tag
+    else
+        _newest_tag_minor=${GIT_NEWEST_TAG//*./}
+        _newest_tag_major=${GIT_NEWEST_TAG//.*/}
+        (( _newest_tag_minor=_newest_tag_minor+1 ))
+        _new_tag=$_newest_tag_major.$_newest_tag_minor
+    fi
+    cat >release_version.pri <<-EOF
 NEWEST_TAG = $_new_tag
 COMMIT_COUNT = 0
 TOTAL_COMMIT_COUNT = $_total_commit_count
 EOF
-  git add release_version.pri
-  git commit -m "Release $_new_tag"
-  git tag $_new_tag
+    if [ -z "$_tar_only" ] || [ "$_tar_only" = "n" ]; then
+        echo "Comitting and tagging release files"
+        git add html/*.html
+        git add release_version.pri
+        git commit -m "Release $_new_tag"
+        git tag $_new_tag
+    fi
 }
 
 mkdir -p $BUILD_DIR
@@ -247,7 +258,8 @@ case "$1" in
         build_pc
         ;;
     "release")
-        release "$2"
+        echo "$1,$2,$3"
+        release "$2" "$3"
         ;;
     "run")
         if [ -z "$2" ]; then
