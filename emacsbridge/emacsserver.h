@@ -47,6 +47,7 @@ class EmacsServer: public QObject{
     QString m_dataPath;
     EmacsBridgeMorse *m_morseInterpreter;
 
+    bool validAuthToken(const QString &token);
     void startHttpServer();
     QString listDirectory(const QString &directory);
     QHttpServerResponse methodCall(const QString &method, const QByteArray &payload);

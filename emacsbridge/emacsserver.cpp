@@ -66,6 +66,14 @@ void EmacsServer::startServer(){
   startHttpServer();
 }
 
+bool EmacsServer::validAuthToken(const QString &token){
+  if (token=="")
+    return false;
+  if (token==EmacsBridgeSettings::setting("core/auth-token").toString())
+    return true;
+  return false;
+}
+
 void EmacsServer::startHttpServer(){
   qDebug()<<"startServer" << QThread::currentThreadId();
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
@@ -121,7 +129,7 @@ void EmacsServer::startHttpServer(){
                                                 QHttpServerResponder::StatusCode::Forbidden);
                    }
                    QString authHeader=request.headers()["auth-token"].toString();
-                   if (authHeader=="" || authHeader!=settings->value("core/auth-token").toString()){
+                   if (validAuthToken(authHeader)==false){
                      QString error=
                        tr("Invalid or missing auth token (%1). RPC API requires an auth token for access.")
                        .arg(authHeader);
@@ -141,7 +149,7 @@ void EmacsServer::startHttpServer(){
                      QString authHeader=request.headers()["auth-token"].toString();
                      // once initial configuration is done re-configuration requires
                      // a valid auth token
-                     if (authHeader=="" || authHeader!=settings->value("core/auth-token").toString()){
+                     if (validAuthToken(authHeader)==false){
                        QString error=
                          tr("Invalid or missing auth token (%1). This instance is configured, and requires an auth token for further changes.")
                          .arg(authHeader);
