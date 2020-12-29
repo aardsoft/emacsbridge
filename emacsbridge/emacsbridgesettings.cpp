@@ -83,6 +83,16 @@ EmacsBridgeSettings::EmacsBridgeSettings():
   m_initialized=true;
 }
 
+QVariant EmacsBridgeSettings::setting(const QString &key, const QVariant &defaultValue){
+  EmacsBridgeSettings *_instance=EmacsBridgeSettings::instance();
+  return _instance->value(key, defaultValue);
+}
+
+void EmacsBridgeSettings::setSetting(const QString &key, const QVariant &value){
+  EmacsBridgeSettings *_instance=EmacsBridgeSettings::instance();
+  _instance->setValue(key, value);
+}
+
 void EmacsBridgeSettings::setValue(const QString &key, const QVariant &value){
   if (QSettings::value(key) == QVariant()){
     qDebug()<< "setting initial value on " << key;
