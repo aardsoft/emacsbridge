@@ -16,6 +16,10 @@
 #include <QCoreApplication>
 #endif
 
+// required for clipboard
+#include <QGuiApplication>
+#include <QClipboard>
+
 #include <QUuid>
 #include "emacsbridgesettings.h"
 #include "emacsbridgelog.h"
@@ -144,6 +148,11 @@ void EmacsBridge::callIntent(const QString &iAction, const QString &iData,
 }
 #endif
 
+void EmacsBridge::copyToClipboard(const QString &text){
+  QClipboard *clipboard=QGuiApplication::clipboard();
+  clipboard->setText(text);
+}
+
 QString EmacsBridge::defaultPage() const{
   QSettings settings;
   return(settings.value("defaultPage")).toString();
@@ -190,6 +199,12 @@ void EmacsBridge::openAppSettings(){
     QtAndroid::androidActivity().object());
 }
 #endif
+
+void EmacsBridge::copyServerProperty(const QString &key){
+  QVariant result=serverProperty(key);
+  QClipboard *clipboard=QGuiApplication::clipboard();
+  clipboard->setText(result.toString());
+}
 
 QVariant EmacsBridge::serverProperty(const QString &key){
   QRemoteObjectPendingReply<QVariant> reply;

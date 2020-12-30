@@ -33,9 +33,11 @@ class EmacsBridge: public QObject{
     explicit EmacsBridge(const QString &dummy, QObject *parent=0){m_isDummy=true;};
     ~EmacsBridge();
 
+    Q_INVOKABLE void copyToClipboard(const QString &text);
     Q_INVOKABLE void runQuery(const QString &queryKey, const QString &query);
     Q_INVOKABLE void initDrawer();
     Q_INVOKABLE QVariant serverProperty(const QString &key);
+    Q_INVOKABLE void copyServerProperty(const QString &key);
 #ifdef __ANDROID_API__
     Q_INVOKABLE void openAppSettings();
     Q_INVOKABLE void callIntent(const QString &iAction, const QString &iData="",

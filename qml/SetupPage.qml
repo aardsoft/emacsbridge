@@ -12,15 +12,24 @@ Page {
     clip: true
 
     GridLayout {
-        anchors.fill: parent
-        columns: 2
+      id: l
+      anchors.fill: parent
+      columns: 2
+
+      function copyOrOpenUrl(url){
+        if (copyUrlBox.checked){
+          EmacsBridge.copyToClipboard(url);
+        } else {
+          Qt.openUrlExternally(url);
+        }
+      }
 
       Label {
         text: "This page displays the status of the Emacs bridge server and allows changing listen address and port. For the Emacs side of the setup check the <a href=\""+EmacsBridge.serverProperty('htmlUrl')+"\">setup documentation.</a>"
         Layout.columnSpan: 2
         Layout.fillWidth: true
         wrapMode: Text.WordWrap
-        onLinkActivated: Qt.openUrlExternally(link)
+        onLinkActivated: l.copyOrOpenUrl(link)
       }
       Label {
         text: "Server listen address: "
@@ -52,6 +61,13 @@ Page {
             EmacsBridge.serverListenPort = listenPortField.text;
           }
         }
+      }
+      Label {}
+      CheckBox {
+        id: copyUrlBox
+        text: "Copy URLs instead of opening"
+        checked: false
+        Layout.fillWidth: true
       }
       Label {
         text: "Active server port: "
@@ -86,6 +102,17 @@ Page {
       }
       Label { text: EmacsBridge.serviceStartupTime }
       Button {
+        text: "Open server settings"
+        onClicked: {
+          l.copyOrOpenUrl(EmacsBridge.serverProperty('settingsUrl'))
+        }
+      }
+      Label {
+        text: "Open the server settings page in the web browser"
+        Layout.fillWidth: true
+        wrapMode: Text.WordWrap
+      }
+      Button {
         visible: EmacsBridge.mobile
         text: "Open app settings"
         onClicked: {
@@ -104,7 +131,8 @@ Page {
         Layout.fillHeight: true
       }
       Label {
-        text: "Read the termux specific setup instructions before.."
+        visible: EmacsBridge.mobile
+        text: "Please read the <a href=\""+EmacsBridge.serverProperty('termuxManualUrl')+"\">termux specific documentation</a> before clicking on the buttons below."
         Layout.columnSpan: 2
         Layout.fillWidth: true
         wrapMode: Text.WordWrap
@@ -117,8 +145,38 @@ Page {
           EmacsBridge.setupTermux()
         }
       }
-      Label { visible: EmacsBridge.mobile }
-
+      Label {
+        visible: EmacsBridge.mobile
+        text: "Run Termux configuration script. This requires Termux to be configured for external app access"
+        Layout.fillWidth: true
+        wrapMode: Text.WordWrap
+      }
+      Button {
+        visible: EmacsBridge.mobile
+        text: "Copy access script"
+        onClicked: {
+          EmacsBridge.copyServerProperty('termuxAccessScript')
+        }
+      }
+      Label {
+        visible: EmacsBridge.mobile
+        text: "Copy the script to setup Termux app permissions to clipboard"
+        Layout.fillWidth: true
+        wrapMode: Text.WordWrap
+      }
+      Button {
+        visible: !EmacsBridge.mobile
+        text: "Copy access script"
+        onClicked: {
+          EmacsBridge.copyServerProperty('pcSetupScript')
+        }
+      }
+      Label {
+        visible: !EmacsBridge.mobile
+        text: "Copy the script to setup PC access to clipboard"
+        Layout.fillWidth: true
+        wrapMode: Text.WordWrap
+      }
     }
   }
 }

@@ -3,7 +3,7 @@ include(../build_info.pri)
 # main every time to make sure the version is correct
 REBUILD = $$system(touch main.cpp)
 
-QT += quick quickcontrols2 websockets remoteobjects sensors
+QT += quick quickcontrols2 websockets remoteobjects sensors gui
 CONFIG += qmltypes
 QML_IMPORT_NAME = fi.aardsoft.emacsbridge
 QML_IMPORT_MAJOR_VERSION = 1
