@@ -8,6 +8,7 @@ class EmacsBridgeRemote{
     PROP(quint16 activeServerListenPort SOURCEONLYSETTER);
     PROP(quint16 serverListenPort);
     PROP(QString serverListenAddress);
+    SLOT(QVariant serverProperty(const QString &key));
     SLOT(void setQuery(const QString &queryKey, const QString &query));
     SLOT(void setupTermux());
     SLOT(void requestAndroidPermission(const QString &permissionName));

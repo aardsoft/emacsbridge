@@ -48,6 +48,10 @@ void EmacsBridgeRemote::displayNotification(const QString &title, const QString 
   emit notificationAdded(title, message);
 }
 
+QVariant EmacsBridgeRemote::serverProperty(const QString &key){
+  return EmacsBridgeSettings::serverProperty(key);
+}
+
 void EmacsBridgeRemote::setData(const JsonDataContainer &jsonContainer){
   emit dataSet(jsonContainer);
 }

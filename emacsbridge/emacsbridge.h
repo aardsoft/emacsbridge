@@ -35,6 +35,7 @@ class EmacsBridge: public QObject{
 
     Q_INVOKABLE void runQuery(const QString &queryKey, const QString &query);
     Q_INVOKABLE void initDrawer();
+    Q_INVOKABLE QVariant serverProperty(const QString &key);
 #ifdef __ANDROID_API__
     Q_INVOKABLE void openAppSettings();
     Q_INVOKABLE void callIntent(const QString &iAction, const QString &iData="",

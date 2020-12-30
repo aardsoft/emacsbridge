@@ -191,6 +191,14 @@ void EmacsBridge::openAppSettings(){
 }
 #endif
 
+QVariant EmacsBridge::serverProperty(const QString &key){
+  QRemoteObjectPendingReply<QVariant> reply;
+
+  reply=m_rep->serverProperty(key);
+  reply.waitForFinished();
+  return reply.returnValue();
+}
+
 void EmacsBridge::setData(const JsonDataContainer &jsonContainer){
   Q_ASSERT(qmlEngine(this));
   const auto& global = qmlEngine(this)->globalObject();

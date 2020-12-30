@@ -20,6 +20,7 @@ class EmacsBridgeSettings: public QSettings{
     void setValue(const QString &key, const QVariant &value);
     static void setSetting(const QString &key, const QVariant &value);
     static QVariant setting(const QString &key, const QVariant &defaultValue=QVariant());
+    static QVariant serverProperty(const QString &key);
 
   signals:
     void settingChanged(const QString &key);

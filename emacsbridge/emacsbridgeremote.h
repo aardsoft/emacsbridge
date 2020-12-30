@@ -20,9 +20,10 @@ class EmacsBridgeRemote : public EmacsBridgeRemoteSimpleSource{
     void displayNotification(const QString &title, const QString &message);
     void addComponent(const QmlFileContainer &qmlFile);
     void removeComponent(const QString &qmlFile);
+    QVariant serverProperty(const QString &key) override;
     void setData(const JsonDataContainer &jsonContainer);
-    void setupTermux();
-    void requestAndroidPermission(const QString &permissionName);
+    void setupTermux() override;
+    void requestAndroidPermission(const QString &permissionName) override;
   private slots:
     void clientQueryFinished(const QString &queryKey, const QString &queryResult);
     void clientQueryError(const QString &queryKey, const QString &error);

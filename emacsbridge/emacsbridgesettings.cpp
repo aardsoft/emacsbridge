@@ -83,6 +83,27 @@ EmacsBridgeSettings::EmacsBridgeSettings():
   m_initialized=true;
 }
 
+QVariant EmacsBridgeSettings::serverProperty(const QString &key){
+  // this should also generate stuff like temporary auth tokens
+  EmacsBridgeSettings *_instance=EmacsBridgeSettings::instance();
+
+  QString baseUrl=QString("%1://%2:%3")
+    .arg(_instance->value("http/protocol").toString())
+    .arg(_instance->value("http/bindAddress").toString())
+    .arg(_instance->value("http/bindPort").toString());
+  if (key=="url"){
+    return baseUrl;
+  } else if (key=="htmlUrl"){
+    return baseUrl+"/html/";
+  } else if (key=="manualUrl"){
+    return baseUrl+"/html/user.html";
+  } else if (key=="developerManualUrl"){
+    return baseUrl+"/html/hacking.html";
+  }
+
+  return(QVariant());
+}
+
 QVariant EmacsBridgeSettings::setting(const QString &key, const QVariant &defaultValue){
   EmacsBridgeSettings *_instance=EmacsBridgeSettings::instance();
   return _instance->value(key, defaultValue);
