@@ -57,7 +57,9 @@ void EmacsServer::startServer(){
 #endif
 
   m_ambientLightSensor->setDataRate(1);
-  m_ambientLightSensor->start();
+
+  if (EmacsBridgeSettings::setting("core/morse-enabled").toBool()==true)
+    m_ambientLightSensor->start();
 
 #ifdef _WITH_PROXIMITY
   m_proximitySensor->setDataRate(1);
