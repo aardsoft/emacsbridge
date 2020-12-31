@@ -14,6 +14,9 @@
 
 #ifdef __ANDROID_API__
 #include <QAndroidService>
+#include <QAndroidJniEnvironment>
+#include <QAndroidJniObject>
+#include <jni.h>
 #else
 #include <QApplication>
 #endif
@@ -24,6 +27,24 @@
 #include "emacsservice.h"
 #include "emacsbridgelog.h"
 
+#ifdef __ANDROID_API__
+static void jCritical(JNIEnv *env, jobject obj, jstring msg){
+  qCritical()<<"[j]"<<env->GetStringUTFChars(msg, 0);
+}
+
+static void jDebug(JNIEnv *env, jobject obj, jstring msg){
+  qDebug()<<"[j]"<<env->GetStringUTFChars(msg, 0);
+}
+
+static void jInfo(JNIEnv *env, jobject obj, jstring msg){
+  qInfo()<<"[j]"<<env->GetStringUTFChars(msg, 0);
+}
+
+static void jWarning(JNIEnv *env, jobject obj, jstring msg){
+  qWarning()<<"[j]"<<env->GetStringUTFChars(msg, 0);
+}
+#endif
+
 const QString init(){
   qInstallMessageHandler(EmacsBridgeLog::messageHandler);
 
@@ -31,6 +52,23 @@ const QString init(){
   QCoreApplication::setOrganizationDomain("aardsoft.fi");
   QCoreApplication::setApplicationName("emacsbridge");
   QCoreApplication::setApplicationVersion(VERSION);
+
+#ifdef __ANDROID_API__
+  static JNINativeMethod methods[]={
+    {"jCritical", "(Ljava/lang/String;)V", (void *)jCritical},
+    {"jDebug", "(Ljava/lang/String;)V", (void *)jDebug},
+    {"jInfo", "(Ljava/lang/String;)V", (void *)jInfo},
+    {"jWarning", "(Ljava/lang/String;)V", (void *)jWarning},
+  };
+
+  QAndroidJniObject jClass("fi/aardsoft/emacsbridge/EmacsBridgeLog");
+  QAndroidJniEnvironment env;
+  jclass objectClass = env->GetObjectClass(jClass.object<jobject>());
+  env->RegisterNatives(objectClass,
+                       methods,
+                       sizeof(methods) / sizeof(methods[0]));
+  env->DeleteLocalRef(objectClass);
+#endif
 
   QString dataPath=QStandardPaths::writableLocation(QStandardPaths::AppDataLocation);
   QDir dir;

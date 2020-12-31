@@ -10,7 +10,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.util.Log;
 import java.util.ArrayList;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -18,20 +17,19 @@ import org.json.JSONException;
 import org.qtproject.qt5.android.bindings.QtService;
 
 public class EmacsBridgeService extends QtService {
-    private static final String TAG = "EmacsBridgeService";
     private static NotificationManager m_notificationManager;
     private static Notification.Builder m_builder;
 
     @Override
     public void onCreate() {
       super.onCreate();
-      Log.i(TAG, "Creating Service");
+      EmacsBridgeLog.jInfo("Creating Service");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        Log.i(TAG, "Destroying Service");
+        EmacsBridgeLog.jInfo("Destroying Service");
     }
 
     @Override
@@ -136,7 +134,7 @@ public class EmacsBridgeService extends QtService {
                 JSONArray value = e.getJSONArray("value");
                 String[] valueArray = new String[value.length()];
                 for(int j=0;j<value.length();j++){
-                  Log.i(TAG, "Adding " + value.getJSONObject(j).getString("value")
+                  EmacsBridgeLog.jInfo("Adding " + value.getJSONObject(j).getString("value")
                         + " for key " + key);
                   valueArray[j] = value.getJSONObject(j).getString("value");
                 }
@@ -145,7 +143,7 @@ public class EmacsBridgeService extends QtService {
                 JSONArray value = e.getJSONArray("value");
                 ArrayList<String> valueList = new ArrayList<String>();
                 for(int j=0;j<value.length();j++){
-                  Log.i(TAG, "Adding " + value.getJSONObject(j).getString("value")
+                  EmacsBridgeLog.jInfo("Adding " + value.getJSONObject(j).getString("value")
                         + " for key " + key);
                   valueList.add(value.getJSONObject(j).getString("value"));
                 }
@@ -166,13 +164,13 @@ public class EmacsBridgeService extends QtService {
         if (!json.isNull("startType")){
           String startType = json.getString("startType");
           if (startType.equals("activity")){
-            Log.i(TAG, "Starting intent as activity");
+            EmacsBridgeLog.jInfo("Starting intent as activity");
             context.startActivity(intent);
           } else if (startType.equals("service")){
-            Log.i(TAG, "Starting intent as service");
+            EmacsBridgeLog.jInfo("Starting intent as service");
             context.startService(intent);
           } else {
-            Log.i(TAG, "Unhandled start type: " + startType);
+            EmacsBridgeLog.jWarning("Unhandled start type: " + startType);
           }
         } else
           context.startActivity(intent);

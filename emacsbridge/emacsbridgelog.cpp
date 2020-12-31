@@ -8,6 +8,11 @@
 #include <syslog.h>
 #include "emacsbridgelog.h"
 
+#ifdef __ANDROID_API__
+#include <android/log.h>
+const char* appname="emacsbridge";
+#endif
+
 EmacsBridgeLog *EmacsBridgeLog::emacsBridgeLog=0;
 
 EmacsBridgeLog *EmacsBridgeLog::instance(){
@@ -112,6 +117,9 @@ void EmacsBridgeLog::messageHandler(QtMsgType type,
         sd_journal_print(LOG_DEBUG, "%s", localMsg.constData());
         if (_instance->m_consoleLogging>=2)
 #endif
+#ifdef __ANDROID_API__
+          __android_log_write(ANDROID_LOG_DEBUG,appname,localMsg.constData());
+#endif
           fprintf(stdout, "[DEBUG] %s\n", localMsg.constData());
       }
       break;
@@ -120,6 +128,9 @@ void EmacsBridgeLog::messageHandler(QtMsgType type,
 #ifdef HAS_SYSTEMD
         sd_journal_print(LOG_WARNING, "%s", localMsg.constData());
         if (_instance->m_consoleLogging>=1)
+#endif
+#ifdef __ANDROID_API__
+          __android_log_write(ANDROID_LOG_WARN,appname,localMsg.constData());
 #endif
           fprintf(stdout, "[WARN] %s\n", localMsg.constData());
       }
@@ -131,6 +142,9 @@ void EmacsBridgeLog::messageHandler(QtMsgType type,
         sd_journal_print(LOG_CRIT, "%s", localMsg.constData());
         if (_instance->m_consoleLogging>=0)
 #endif
+#ifdef __ANDROID_API__
+          __android_log_write(ANDROID_LOG_ERROR,appname,localMsg.constData());
+#endif
           fprintf(stderr, "[CRIT] %s\n", localMsg.constData());
       }
       break;
@@ -140,6 +154,9 @@ void EmacsBridgeLog::messageHandler(QtMsgType type,
         sd_journal_print(LOG_EMERG, "%s", localMsg.constData());
         if (_instance->m_consoleLogging>=0)
 #endif
+#ifdef __ANDROID_API__
+          __android_log_write(ANDROID_LOG_ERROR,appname,localMsg.constData());
+#endif
           fprintf(stderr, "[FATAL] %s\n", localMsg.constData());
       }
       break;
@@ -148,6 +165,9 @@ void EmacsBridgeLog::messageHandler(QtMsgType type,
 #ifdef HAS_SYSTEMD
         sd_journal_print(LOG_INFO, "%s", localMsg.constData());
         if (_instance->m_consoleLogging>=1)
+#endif
+#ifdef __ANDROID_API__
+          __android_log_write(ANDROID_LOG_INFO,appname,localMsg.constData());
 #endif
           fprintf(stdout, "[INFO] %s\n", localMsg.constData());
       }
