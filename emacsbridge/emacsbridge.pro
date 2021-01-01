@@ -68,6 +68,7 @@ SOURCES += \
     emacsbridgeremote.cpp \
     emacsbridgesettings.cpp \
     emacsclient.cpp \
+    emacslogger.cpp \
     emacsserver.cpp \
     emacsservice.cpp
 
@@ -80,6 +81,7 @@ HEADERS += \
     emacsbridgemorse.h \
     emacsbridgesettings.h \
     emacsclient.h \
+    emacslogger.h \
     emacsserver.h \
     emacsservice.h \
     emacsbridgeremote.h \

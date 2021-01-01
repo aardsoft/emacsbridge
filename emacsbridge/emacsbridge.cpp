@@ -30,6 +30,7 @@ EmacsBridge::EmacsBridge(QObject *parent)
 
   QSettings settings;
   EmacsBridgeLog::setBufferSize(settings.value("logBufferSize", "200").toInt());
+  EmacsBridgeLog::setLogPrefix("[c]");
 
   if (settings.value("defaultPage", "").toString()=="")
     settings.setValue("defaultPage", "qrc:/qml/SetupPage.qml");
@@ -89,6 +90,12 @@ EmacsBridge::EmacsBridge(QObject *parent)
           this, SLOT(setData(JsonDataContainer)));
   connect(m_rep.data(), SIGNAL(activeServerListenPortChanged(quint16)),
           this, SIGNAL(activeServerListenPortChanged(quint16)));
+
+  // with logging disabled the logger emits log entries in the rawLogAdded
+  // signal, which can be connected to the remote object to log into the server
+  connect(EmacsBridgeLog::instance(), SIGNAL(rawLogAdded(QHash<QString, QVariant>)),
+          m_rep.data(), SLOT(addLogEntry(QHash<QString, QVariant>)));
+  EmacsBridgeLog::setLogging(false);
 }
 
 EmacsBridge::~EmacsBridge(){

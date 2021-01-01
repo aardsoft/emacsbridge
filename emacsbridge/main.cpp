@@ -26,6 +26,7 @@
 #include "emacsbridge.h"
 #include "emacsservice.h"
 #include "emacsbridgelog.h"
+#include "emacslogger.h"
 
 #ifdef __ANDROID_API__
 static void jCritical(JNIEnv *env, jobject obj, jstring msg){
@@ -45,13 +46,17 @@ static void jWarning(JNIEnv *env, jobject obj, jstring msg){
 }
 #endif
 
-const QString init(){
-  qInstallMessageHandler(EmacsBridgeLog::messageHandler);
-
+void initAppData(){
   QCoreApplication::setOrganizationName("Aardsoft");
   QCoreApplication::setOrganizationDomain("aardsoft.fi");
   QCoreApplication::setApplicationName("emacsbridge");
   QCoreApplication::setApplicationVersion(VERSION);
+}
+
+const QString init(){
+  qInstallMessageHandler(EmacsBridgeLog::messageHandler);
+
+  initAppData();
 
 #ifdef __ANDROID_API__
   static JNINativeMethod methods[]={
@@ -155,6 +160,26 @@ int main(int argc, char **argv){
 #endif
     init();
     EmacsService service;
+
+    return app.exec();
+  } else if (argc>1 && strcmp(argv[1], "-log")==0){
+#ifdef __ANDROID_API__
+    //TODO
+    QCoreApplication app(argc, argv);
+#else
+    QCoreApplication app(argc, argv);
+#endif
+    initAppData();
+
+    QStringList argumentList;
+
+    if (argc>2)
+      for (int i=2;i<argc;i++){
+        argumentList.append(argv[i]);
+      }
+    EmacsLogger log;
+    log.setArgumentList(argumentList);
+    QTimer::singleShot(0, &log, SLOT(run()));
 
     return app.exec();
   } else {

@@ -262,10 +262,11 @@ case "$1" in
         release "$2" "$3"
         ;;
     "run")
-        if [ -z "$2" ]; then
+        shift
+        if [ -z "$1" ]; then
             LD_LIBRARY_PATH=$BUILD_DIR/pc/qthttpserver/lib $BUILD_DIR/pc/emacsbridge/emacsbridge
-        elif [ "$2" = "-service" ]; then
-            LD_LIBRARY_PATH=$BUILD_DIR/pc/qthttpserver/lib $BUILD_DIR/pc/emacsbridge/emacsbridge
+        else
+            LD_LIBRARY_PATH=$BUILD_DIR/pc/qthttpserver/lib $BUILD_DIR/pc/emacsbridge/emacsbridge $@
         fi
         ;;
     "windows")

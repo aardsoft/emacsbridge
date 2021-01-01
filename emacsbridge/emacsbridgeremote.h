@@ -19,7 +19,10 @@ class EmacsBridgeRemote : public EmacsBridgeRemoteSimpleSource{
     void setQuery(const QString &queryKey, const QString &query) override;
     void displayNotification(const QString &title, const QString &message);
     void addComponent(const QmlFileContainer &qmlFile);
+    void addLog(const QString &message);
+    void addLogEntry(const QHash<QString, QVariant> entry) override;
     void removeComponent(const QString &qmlFile);
+    QStringList logBuffer() override;
     QVariant serverProperty(const QString &key) override;
     void setData(const JsonDataContainer &jsonContainer);
     void setupTermux() override;

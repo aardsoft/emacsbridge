@@ -11,9 +11,11 @@
 
 #include "emacsservice.h"
 #include "emacsbridgesettings.h"
+#include "emacsbridgelog.h"
 
 EmacsService::EmacsService(): QObject(){
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
+  EmacsBridgeLog::setBufferSize(settings->value("logBufferSize", "200").toInt());
 
   m_remote.setServerListenPort(settings->value("http/bindPort", 1616).toInt());
   m_remote.setServerListenAddress(settings->value("http/bindAddress", "127.0.0.1").toString());
@@ -34,6 +36,8 @@ EmacsService::EmacsService(): QObject(){
 
   connect(settings, SIGNAL(settingChanged(QString)), this, SLOT(settingChanged(QString)));
 
+  connect(EmacsBridgeLog::instance(), SIGNAL(logAdded(QString)),
+          &m_remote, SLOT(addLog(QString)));
   // on Android the notification needs to come from the service, while on PC
   // it comes from the GUI process, making this a bit complicated.
 #ifdef __ANDROID_API__

@@ -86,6 +86,26 @@
       <meta-data android:name="android.app.extract_android_style" android:value="default"/>
       <!-- extract android style -->
     </activity>
+    <activity android:exported="true" android:process=":custom_activity" android:name=".LogReader" android:label="-- %%INSERT_APP_NAME%% --" android:theme="@android:style/Theme.Translucent.NoTitleBar">
+      <!-- android:process=":qt" is needed to force the service to run on a separate process than the Activity -->
+      <meta-data android:name="android.app.lib_name" android:value="-- %%INSERT_APP_LIB_NAME%% --"/>
+      <meta-data android:name="android.app.qt_sources_resource_id" android:resource="@array/qt_sources"/>
+      <meta-data android:name="android.app.repository" android:value="default"/>
+      <meta-data android:name="android.app.qt_libs_resource_id" android:resource="@array/qt_libs"/>
+      <meta-data android:name="android.app.bundled_libs_resource_id" android:resource="@array/bundled_libs"/>
+      <meta-data android:name="android.app.arguments" android:value="-log"/>
+      <!-- ministro service crap probably is because all the shit with qt libraries as in the service below is missing here -->
+
+      <!-- Deploy Qt libs as part of package -->
+      <meta-data android:name="android.app.bundle_local_qt_libs" android:value="-- %%BUNDLE_LOCAL_QT_LIBS%% --"/>
+
+      <!-- Run with local libs -->
+      <meta-data android:name="android.app.use_local_qt_libs" android:value="-- %%USE_LOCAL_QT_LIBS%% --"/>
+      <meta-data android:name="android.app.libs_prefix" android:value="/data/local/tmp/qt/"/>
+      <meta-data android:name="android.app.load_local_libs_resource_id" android:resource="@array/load_local_libs"/>
+      <meta-data android:name="android.app.load_local_jars" android:value="-- %%INSERT_LOCAL_JARS%% --"/>
+      <meta-data android:name="android.app.static_init_classes" android:value="-- %%INSERT_INIT_CLASSES%% --"/>
+    </activity>
 
     <!-- For adding service(s) please check: https://wiki.qt.io/AndroidServices -->
     <service android:process=":qt_service" android:name=".EmacsBridgeService">

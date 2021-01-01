@@ -6,6 +6,8 @@
  */
 
 #include "emacsbridgeremote.h"
+#include "emacsbridgesettings.h"
+#include "emacsbridgelog.h"
 
 // currently that's not doing much other than just passing on signals (i.e.,
 // could be done with less monkey work), but I like the option of filtering,
@@ -25,13 +27,20 @@ void EmacsBridgeRemote::setQuery(const QString &queryKey, const QString &query){
   m_client->queryAgent(queryKey, query);
 }
 
-
 void EmacsBridgeRemote::addComponent(const QmlFileContainer &qmlFile){
   emit componentAdded(qmlFile);
 }
 
 void EmacsBridgeRemote::removeComponent(const QString &qmlFile){
   emit componentRemoved(qmlFile);
+}
+
+void EmacsBridgeRemote::addLog(const QString &message){
+  emit logAdded(message);
+}
+
+void EmacsBridgeRemote::addLogEntry(const QHash<QString, QVariant> entry){
+  EmacsBridgeLog::injectLogEntry(entry);
 }
 
 void EmacsBridgeRemote::clientQueryError(const QString &queryKey, const QString &error){
@@ -46,6 +55,10 @@ void EmacsBridgeRemote::clientQueryFinished(const QString &queryKey, const QStri
 
 void EmacsBridgeRemote::displayNotification(const QString &title, const QString &message){
   emit notificationAdded(title, message);
+}
+
+QStringList EmacsBridgeRemote::logBuffer(){
+  return EmacsBridgeLog::logBuffer();
 }
 
 QVariant EmacsBridgeRemote::serverProperty(const QString &key){

@@ -1,5 +1,4 @@
 #include <QDateTime>
-#include "emacsbridgesettings.h"
 #include "emacsbridgetypes.h"
 
 class EmacsBridgeRemote{
@@ -8,6 +7,8 @@ class EmacsBridgeRemote{
     PROP(quint16 activeServerListenPort SOURCEONLYSETTER);
     PROP(quint16 serverListenPort);
     PROP(QString serverListenAddress);
+    SLOT(QStringList logBuffer());
+    SLOT(void addLogEntry(const QHash<QString, QVariant> entry));
     SLOT(QVariant serverProperty(const QString &key));
     SLOT(void setQuery(const QString &queryKey, const QString &query));
     SLOT(void setupTermux());
@@ -18,6 +19,7 @@ class EmacsBridgeRemote{
     SIGNAL(componentAdded(const QmlFileContainer &qmlFile));
     SIGNAL(componentRemoved(const QString &qmlFile));
     SIGNAL(dataSet(const JsonDataContainer &dataContainer));
+    SIGNAL(logAdded(const QString &message));
     SIGNAL(termuxSetupRequested());
     SIGNAL(androidPermissionRequested(const QString &permissionName));
 }
