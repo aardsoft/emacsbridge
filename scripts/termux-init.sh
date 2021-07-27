@@ -101,6 +101,7 @@ fi
 # - add endpoint to check rpc file version, and use that for rpc auto-update
 # - emacsclient to load the rpc file
 # - add init code to the rpc file, and then just execute that with emacs client
+# - add support to load overrides from termux home dir or emacs dir
 
 _emacs_initdir=`dirname $_emacs_initfile`
 green "init file is $_emacs_initfile"

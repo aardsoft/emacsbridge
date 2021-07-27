@@ -99,6 +99,15 @@ QVariant EmacsBridgeSettings::serverProperty(const QString &key){
     return baseUrl+"/html/user.html";
   } else if (key=="developerManualUrl"){
     return baseUrl+"/html/hacking.html";
+  } else if (key=="termuxManualUrl"){
+    return baseUrl+"/html/user.html#termux";
+  } else if (key=="settingsUrl"){
+    //TODO: create and add temporary token
+    return baseUrl+"/html/settings.html?token=";
+  } else if (key=="pcSetupScript"){
+    return "curl "+baseUrl+"/scripts/pc-init.sh|bash";
+  } else if (key=="termuxAccessScript"){
+    return "curl "+baseUrl+"/scripts/termux-access.sh|bash";
   }
 
   return(QVariant());

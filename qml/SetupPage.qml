@@ -155,6 +155,19 @@ Page {
         visible: EmacsBridge.mobile
         text: "Copy access script"
         onClicked: {
+          EmacsBridge.copyServerProperty('termuxSetupScript')
+        }
+      }
+      Label {
+        visible: EmacsBridge.mobile
+        text: "Copy the script to setup Termux without app permissions"
+        Layout.fillWidth: true
+        wrapMode: Text.WordWrap
+      }
+      Button {
+        visible: EmacsBridge.mobile
+        text: "Copy access script"
+        onClicked: {
           EmacsBridge.copyServerProperty('termuxAccessScript')
         }
       }

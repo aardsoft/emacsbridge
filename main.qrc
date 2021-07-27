@@ -30,5 +30,6 @@
         <file>json/termux-setup.json</file>
         <file>scripts/pc-init.sh</file>
         <file>scripts/termux-init.sh</file>
+        <file>scripts/termux-access.sh</file>
     </qresource>
 </RCC>
