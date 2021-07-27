@@ -19,6 +19,12 @@
 #include "emacsbridgetypes.h"
 #include "rep_emacsbridgeremote_replica.h"
 
+/**
+ * This is the main class for the service process. Per default it sets up
+ * a connection to the service using Qt remote objects, and exposes select
+ * service APIs to QML. It is also possible to use the dummy constructor to
+ * test loading of QML components without providing the full backend logic.
+ */
 class EmacsBridge: public QObject{
     Q_OBJECT
     Q_PROPERTY(bool mobile READ mobile CONSTANT)
@@ -30,15 +36,21 @@ class EmacsBridge: public QObject{
     Q_PROPERTY(QString defaultPage READ defaultPage WRITE setDefaultPage NOTIFY defaultPageChanged)
   public:
     explicit EmacsBridge(QObject *parent=0);
-    explicit EmacsBridge(const QString &dummy, QObject *parent=0){m_isDummy=true;};
+    explicit EmacsBridge(const QString &dummy, QObject *parent=0){(void)dummy; (void)parent; m_isDummy=true;};
     ~EmacsBridge();
 
+    /**
+     * Copies @a text to the systems clipboard
+     */
     Q_INVOKABLE void copyToClipboard(const QString &text);
     Q_INVOKABLE void runQuery(const QString &queryKey, const QString &query);
     Q_INVOKABLE void initDrawer();
     Q_INVOKABLE QVariant serverProperty(const QString &key);
     Q_INVOKABLE void copyServerProperty(const QString &key);
 #ifdef __ANDROID_API__
+    /**
+     * Open the Android application settings
+     */
     Q_INVOKABLE void openAppSettings();
     Q_INVOKABLE void callIntent(const QString &iAction, const QString &iData="",
                                 const QString &iPackage="", const QString &iClass="");
@@ -54,6 +66,11 @@ class EmacsBridge: public QObject{
     void setServerListenAddress(const QString &serverAddress) const;
     quint16 serverListenPort() const;
     void setServerListenPort(const quint16 serverPort) const;
+    /**
+     * Check if the application is running on a mobile device
+     * @return true on Android
+     * @return false on any other platform
+     */
     bool mobile() const{
 #ifdef __ANDROID_API__
       return true;
@@ -83,6 +100,7 @@ class EmacsBridge: public QObject{
     void setData(const JsonDataContainer &jsonContainer);
 
   private:
+    /// The startup time of the UI part
     QDateTime m_startupTime;
 #ifndef __ANDROID_API__
     QSystemTrayIcon *m_trayIcon;

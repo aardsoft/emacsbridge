@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-12-29 Tue 14:22 -->
+<!-- 2020-12-30 Wed 09:09 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hacking on emacsbridge</title>
@@ -245,32 +245,32 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org685157b">1. Hacking on emacsbridge</a>
+<li><a href="#org509f12d">1. Hacking on emacsbridge</a>
 <ul>
-<li><a href="#org2c28103">1.1. Working with the core</a>
+<li><a href="#orgfaefbae">1.1. Working with the core</a>
 <ul>
-<li><a href="#org80478f9">1.1.1. Qt requirements</a></li>
-<li><a href="#org4dea797">1.1.2. Preparing the sources</a></li>
-<li><a href="#orgdc5465e">1.1.3. Build helper</a></li>
-<li><a href="#orgd3ea5ec">1.1.4. Debugging</a></li>
+<li><a href="#orgdec4e1d">1.1.1. Qt requirements</a></li>
+<li><a href="#org253a7ca">1.1.2. Preparing the sources</a></li>
+<li><a href="#orgbb3a229">1.1.3. Build helper</a></li>
+<li><a href="#org23ad4a1">1.1.4. Debugging</a></li>
 </ul>
 </li>
-<li><a href="#org49e6a9b">1.2. Architecture</a>
+<li><a href="#org9701619">1.2. Architecture</a>
 <ul>
-<li><a href="#orgbaeab5c">1.2.1. Connection setup</a></li>
-<li><a href="#org3b50e1e">1.2.2. URLs</a></li>
+<li><a href="#org44ac508">1.2.1. Connection setup</a></li>
+<li><a href="#orgef4692d">1.2.2. URLs</a></li>
 </ul>
 </li>
-<li><a href="#orgda4366f">1.3. Preparing the build environment</a>
+<li><a href="#org8c47031">1.3. Preparing the build environment</a>
 <ul>
-<li><a href="#orgd15d56a">1.3.1. Android builds</a></li>
-<li><a href="#orgf3f1f75">1.3.2. Windows builds</a></li>
+<li><a href="#org2bba257">1.3.1. Android builds</a></li>
+<li><a href="#org7586da4">1.3.2. Windows builds</a></li>
 </ul>
 </li>
-<li><a href="#org10f4803">1.4. Resources</a>
+<li><a href="#orgeb55f24">1.4. Resources</a>
 <ul>
-<li><a href="#orgc9b74d7">1.4.1. Android</a></li>
-<li><a href="#org8b6d22d">1.4.2. Qt</a></li>
+<li><a href="#orge041b18">1.4.1. Android</a></li>
+<li><a href="#orgb9a3b32">1.4.2. Qt</a></li>
 </ul>
 </li>
 </ul>
@@ -278,16 +278,16 @@ for the JavaScript code in this tag.
 </ul>
 </div>
 </div>
-<div id="outline-container-org685157b" class="outline-2">
-<h2 id="org685157b"><span class="section-number-2">1</span> Hacking on emacsbridge</h2>
+<div id="outline-container-org509f12d" class="outline-2">
+<h2 id="org509f12d"><span class="section-number-2">1</span> Hacking on emacsbridge</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org2c28103" class="outline-3">
-<h3 id="org2c28103"><span class="section-number-3">1.1</span> Working with the core</h3>
+<div id="outline-container-orgfaefbae" class="outline-3">
+<h3 id="orgfaefbae"><span class="section-number-3">1.1</span> Working with the core</h3>
 <div class="outline-text-3" id="text-1-1">
 </div>
-<div id="outline-container-org80478f9" class="outline-4">
-<h4 id="org80478f9"><span class="section-number-4">1.1.1</span> Qt requirements</h4>
+<div id="outline-container-orgdec4e1d" class="outline-4">
+<h4 id="orgdec4e1d"><span class="section-number-4">1.1.1</span> Qt requirements</h4>
 <div class="outline-text-4" id="text-1-1-1">
 <p>
 The following table contains the Qt versions suitable for compiling emacsbridge:
@@ -366,8 +366,8 @@ To build for Android an Android development environment needs to be set up. It s
 </div>
 </div>
 
-<div id="outline-container-org4dea797" class="outline-4">
-<h4 id="org4dea797"><span class="section-number-4">1.1.2</span> Preparing the sources</h4>
+<div id="outline-container-org253a7ca" class="outline-4">
+<h4 id="org253a7ca"><span class="section-number-4">1.1.2</span> Preparing the sources</h4>
 <div class="outline-text-4" id="text-1-1-2">
 <p>
 Emacsbridge requires qthttpserver, which is included as a submodule. qthttpserver also has submodules. The following snippet clones the repository and initializes all submodules:
@@ -386,8 +386,8 @@ Now the code can be configured for qmake - for Android the qmake from inside the
 </div>
 </div>
 
-<div id="outline-container-orgdc5465e" class="outline-4">
-<h4 id="orgdc5465e"><span class="section-number-4">1.1.3</span> Build helper</h4>
+<div id="outline-container-orgbb3a229" class="outline-4">
+<h4 id="orgbb3a229"><span class="section-number-4">1.1.3</span> Build helper</h4>
 <div class="outline-text-4" id="text-1-1-3">
 <p>
 The source repository contains a build helper (<code>build.sh</code>). Outside of simple Linux builds using that might be easiest.
@@ -412,8 +412,8 @@ Variables controlling the build include:
 </div>
 </div>
 
-<div id="outline-container-orgd3ea5ec" class="outline-4">
-<h4 id="orgd3ea5ec"><span class="section-number-4">1.1.4</span> Debugging</h4>
+<div id="outline-container-org23ad4a1" class="outline-4">
+<h4 id="org23ad4a1"><span class="section-number-4">1.1.4</span> Debugging</h4>
 <div class="outline-text-4" id="text-1-1-4">
 <p>
 To see what goes over the local socket, start socat and adjust socket address:
@@ -430,15 +430,15 @@ Building for Android and Windows requires a proper cross-compiled toolchain,
 </div>
 </div>
 
-<div id="outline-container-org49e6a9b" class="outline-3">
-<h3 id="org49e6a9b"><span class="section-number-3">1.2</span> Architecture</h3>
+<div id="outline-container-org9701619" class="outline-3">
+<h3 id="org9701619"><span class="section-number-3">1.2</span> Architecture</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 The application is separated into a client and a server part, communicating via <a href="https://doc.qt.io/qt-5/qtremoteobjects-index.html">Qt Remote Objects</a>
 </p>
 </div>
-<div id="outline-container-orgbaeab5c" class="outline-4">
-<h4 id="orgbaeab5c"><span class="section-number-4">1.2.1</span> Connection setup</h4>
+<div id="outline-container-org44ac508" class="outline-4">
+<h4 id="org44ac508"><span class="section-number-4">1.2.1</span> Connection setup</h4>
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 Emacsbridge starts up with some open settings endpoints to make initial configuration easier. To set the connection up,
@@ -450,33 +450,33 @@ Emacsbridge starts up with some open settings endpoints to make initial configur
 </ul>
 </div>
 </div>
-<div id="outline-container-org3b50e1e" class="outline-4">
-<h4 id="org3b50e1e"><span class="section-number-4">1.2.2</span> URLs</h4>
+<div id="outline-container-orgef4692d" class="outline-4">
+<h4 id="orgef4692d"><span class="section-number-4">1.2.2</span> URLs</h4>
 <div class="outline-text-4" id="text-1-2-2">
 </div>
 <ol class="org-ol">
-<li><a id="orga621195"></a>/icons<br>
+<li><a id="org21c5ea3"></a>/icons<br>
 <div class="outline-text-5" id="text-1-2-2-1">
 <p>
 Icons bundled with the application. Served without modification, directory index is enabled. No authentication required.
 </p>
 </div>
 </li>
-<li><a id="org8e7fbfa"></a>/lisp<br>
+<li><a id="org9f00460"></a>/lisp<br>
 <div class="outline-text-5" id="text-1-2-2-2">
 <p>
 Lisp files bundled with the application. Served without modification, directory index is enabled. No authentication required.
 </p>
 </div>
 </li>
-<li><a id="orgb32e46a"></a>/rpc<br>
+<li><a id="orga81b24a"></a>/rpc<br>
 <div class="outline-text-5" id="text-1-2-2-3">
 <p>
 Expects JSON data in a POST request, with a valid auth token. The method for which JSON data is sent must be specified in the <code>method</code> header. Only available after initial setup has been completed. The following methods are available:
 </p>
 </div>
 <ol class="org-ol">
-<li><a id="orgcc14117"></a>addComponent<br>
+<li><a id="orgd578548"></a>addComponent<br>
 <div class="outline-text-6" id="text-1-2-2-3-1">
 <table>
 
@@ -523,8 +523,8 @@ Expects JSON data in a POST request, with a valid auth token. The method for whi
 </table>
 </div>
 </li>
-<li><a id="org1883949"></a>setData<br></li>
-<li><a id="org77a9fc2"></a>notification<br>
+<li><a id="orgf450b8e"></a>setData<br></li>
+<li><a id="orge48d4c4"></a>notification<br>
 <div class="outline-text-6" id="text-1-2-2-3-3">
 <table>
 
@@ -559,7 +559,7 @@ Expects JSON data in a POST request, with a valid auth token. The method for whi
 </table>
 </div>
 </li>
-<li><a id="orgadeae66"></a>intent<br>
+<li><a id="orgad4779f"></a>intent<br>
 <div class="outline-text-6" id="text-1-2-2-3-4">
 <table>
 
@@ -633,19 +633,19 @@ Expects JSON data in a POST request, with a valid auth token. The method for whi
 </div>
 </div>
 </li>
-<li><a id="org7e6b0fc"></a>sensor<br></li>
-<li><a id="orga8fd9d9"></a>removeComponent<br></li>
+<li><a id="org7546574"></a>sensor<br></li>
+<li><a id="org7c2102b"></a>removeComponent<br></li>
 </ol>
 </li>
-<li><a id="org9a6f0cf"></a>/scripts<br>
+<li><a id="orgebcce0d"></a>/scripts<br>
 <div class="outline-text-5" id="text-1-2-2-4">
 <p>
 Shell scripts bundled with the application. Served with simple template expansion, directory index is enabled.
 </p>
 </div>
 </li>
-<li><a id="orgcfb267b"></a>/settings<br></li>
-<li><a id="orgef9f337"></a>/test_connection<br>
+<li><a id="org696e1d6"></a>/settings<br></li>
+<li><a id="orgb3391aa"></a>/test_connection<br>
 <div class="outline-text-5" id="text-1-2-2-6">
 <p>
 Returns a page reporting the setup status of the connection to Emacs in human friendly text. No authentication required.
@@ -655,12 +655,12 @@ Returns a page reporting the setup status of the connection to Emacs in human fr
 </ol>
 </div>
 </div>
-<div id="outline-container-orgda4366f" class="outline-3">
-<h3 id="orgda4366f"><span class="section-number-3">1.3</span> Preparing the build environment</h3>
+<div id="outline-container-org8c47031" class="outline-3">
+<h3 id="org8c47031"><span class="section-number-3">1.3</span> Preparing the build environment</h3>
 <div class="outline-text-3" id="text-1-3">
 </div>
-<div id="outline-container-orgd15d56a" class="outline-4">
-<h4 id="orgd15d56a"><span class="section-number-4">1.3.1</span> Android builds</h4>
+<div id="outline-container-org2bba257" class="outline-4">
+<h4 id="org2bba257"><span class="section-number-4">1.3.1</span> Android builds</h4>
 <div class="outline-text-4" id="text-1-3-1">
 <p>
 First the directory structure gets prepared, and some variables need to be set. The SDK directory used here is <code>~/.android/sdk</code>:
@@ -709,8 +709,8 @@ make -j$(<span style="font-weight: bold;">nproc</span>) install
 </div>
 </div>
 
-<div id="outline-container-orgf3f1f75" class="outline-4">
-<h4 id="orgf3f1f75"><span class="section-number-4">1.3.2</span> Windows builds</h4>
+<div id="outline-container-org7586da4" class="outline-4">
+<h4 id="org7586da4"><span class="section-number-4">1.3.2</span> Windows builds</h4>
 <div class="outline-text-4" id="text-1-3-2">
 <p>
 The Windows version is highly experimental, seems to segfault due to issues with Qt remote objects, and probably won't see any work unless I'm very bored or somebody is interested in actually using it on Windows. Therefore the following just contains a few pointers for a chance to have a build environment.
@@ -757,12 +757,12 @@ With those installed this should provide a more or less working build of Qt for 
 </div>
 </div>
 
-<div id="outline-container-org10f4803" class="outline-3">
-<h3 id="org10f4803"><span class="section-number-3">1.4</span> Resources</h3>
+<div id="outline-container-orgeb55f24" class="outline-3">
+<h3 id="orgeb55f24"><span class="section-number-3">1.4</span> Resources</h3>
 <div class="outline-text-3" id="text-1-4">
 </div>
-<div id="outline-container-orgc9b74d7" class="outline-4">
-<h4 id="orgc9b74d7"><span class="section-number-4">1.4.1</span> Android</h4>
+<div id="outline-container-orge041b18" class="outline-4">
+<h4 id="orge041b18"><span class="section-number-4">1.4.1</span> Android</h4>
 <div class="outline-text-4" id="text-1-4-1">
 <ul class="org-ul">
 <li><a href="https://developer.android.com/guide/topics/providers/contacts-provider">Android contacts provider</a></li>
@@ -770,8 +770,8 @@ With those installed this should provide a more or less working build of Qt for 
 </ul>
 </div>
 </div>
-<div id="outline-container-org8b6d22d" class="outline-4">
-<h4 id="org8b6d22d"><span class="section-number-4">1.4.2</span> Qt</h4>
+<div id="outline-container-orgb9a3b32" class="outline-4">
+<h4 id="orgb9a3b32"><span class="section-number-4">1.4.2</span> Qt</h4>
 <div class="outline-text-4" id="text-1-4-2">
 <ul class="org-ul">
 <li><a href="https://www.qt.io/blog/2019/01/25/introducing-qt-http-server">Qt Http Server announcement</a></li>
@@ -787,7 +787,7 @@ With those installed this should provide a more or less working build of Qt for 
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Bernd Wachter</p>
-<p class="date">Created: 2020-12-29 Tue 14:22</p>
+<p class="date">Created: 2020-12-30 Wed 09:09</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

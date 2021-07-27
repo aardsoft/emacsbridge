@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2020-12-29 Tue 14:22 -->
+<!-- 2020-12-30 Wed 09:09 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Emacs bridge</title>
+<title>Emacs bridge quick start</title>
 <meta name="generator" content="Org mode">
 <meta name="author" content="Bernd Wachter">
 <style type="text/css">
@@ -240,33 +240,13 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Emacs bridge</h1>
-<div id="table-of-contents">
-<h2>Table of Contents</h2>
-<div id="text-table-of-contents">
-<ul>
-<li><a href="#org1ee2f6b">1. Emacs Bridge</a>
-<ul>
-<li><a href="#org5cf00a4">1.1. Setup</a></li>
-<li><a href="#orgd8f5b8d">1.2. Additional resources</a></li>
-</ul>
-</li>
-</ul>
-</div>
-</div>
-<div id="outline-container-org1ee2f6b" class="outline-2">
-<h2 id="org1ee2f6b"><span class="section-number-2">1</span> Emacs Bridge</h2>
-<div class="outline-text-2" id="text-1">
-</div>
-<div id="outline-container-org5cf00a4" class="outline-3">
-<h3 id="org5cf00a4"><span class="section-number-3">1.1</span> Setup</h3>
-<div class="outline-text-3" id="text-1-1">
+<h1 class="title">Emacs bridge quick start</h1>
 <p>
-This is the <a href="https://github.com/aardsoft/emacsbridge">Emacs bridge</a> default site. If the Emacs connection is currently not configured please follow the steps below. Note that the links only work until the initial configuration is finished. If you want to redo the steps you first need to enable this in the Android application.
+This page contains the generic quick start instruction for <a href="https://github.com/aardsoft/emacsbridge">Emacs bridge</a>. You also may want to check out the <a href="/html/user.html">user manual</a> for device specific setup options and other useful information.
 </p>
 
 <p>
-For the basic configuration open this page in eww (M-x eww {{http/bindAddress}}:{{http/bindPort}}), scroll through the page, and evaluate (C-x e) all lisp snippets relevant to your setup.
+For the basic configuration open this page in eww (M-x eww {{http/bindAddress}}:{{http/bindPort}}), scroll through the page, and evaluate (C-x e) all lisp snippets relevant to your setup. If you want to redo the initial setup you'll first need to clear the application data to enable access without auth token.
 </p>
 
 <p>
@@ -277,13 +257,16 @@ First the emacsbridge-auth-key variable needs to be configured. The following sn
 <pre class="src src-lisp">(<span style="font-weight: bold;">if</span> (bound-and-true-p server-auth-key)
     (setq emacsbridge-auth-key server-auth-key)
   (<span style="font-weight: bold;">progn</span>
-    (<span style="font-weight: bold;">if</span> (file-exists-p (concat server-auth-dir <span style="font-style: italic;">"/server"</span>))
+    (<span style="font-weight: bold;">if</span> (file-exists-p
+         (concat server-auth-dir <span style="font-style: italic;">"/server"</span>))
         (<span style="font-weight: bold;">progn</span>
           (<span style="font-weight: bold;">with-temp-buffer</span>
-            (insert-file-contents (concat server-auth-dir <span style="font-style: italic;">"/server"</span>))
-            (setq emacsbridge-auth-key (cadr (split-string (buffer-string) <span style="font-style: italic;">"\n"</span> t)))
-            ))
-      (setq emacsbridge-auth-key nil))))
+            (insert-file-contents
+             (concat server-auth-dir <span style="font-style: italic;">"/server"</span>))
+            (setq emacsbridge-auth-key
+                  (cadr (split-string
+                         (buffer-string) <span style="font-style: italic;">"\n"</span> t)))))
+        (setq emacsbridge-auth-key nil))))
 </pre>
 </div>
 
@@ -296,8 +279,10 @@ Next this key needs to be registered with the Android application:
   (url-request-extra-headers
   '((<span style="font-style: italic;">"Content-Type"</span> .<span style="font-style: italic;">"application/x-www-form-urlencoded"</span>)
   (<span style="font-style: italic;">"setting"</span> . <span style="font-style: italic;">"server-key"</span>)))
-  (url-request-data emacsbridge-auth-key)) <span style="font-weight: bold;">(switch-to-buffer (url-retrieve-synchronously</span>
-  <span style="font-style: italic;">"{{http/protocol}}://{{http/bindAddress}}:{{http/bindPort}}/settings"</span>)))
+  (url-request-data emacsbridge-auth-key))
+  (switch-to-buffer
+   (url-retrieve-synchronously
+    <span style="font-style: italic;">"{{http/protocol}}://{{http/bindAddress}}:{{http/bindPort}}/settings"</span>)))
 </pre>
 </div>
 
@@ -315,30 +300,18 @@ If the above steps finished without error it should now be possible to trigger n
        `((<span style="font-style: italic;">"Content-Type"</span> .<span style="font-style: italic;">"application/json"</span>)
          (<span style="font-style: italic;">"auth-token"</span> . ,emacsbridge-auth-token)
          (<span style="font-style: italic;">"method"</span> . <span style="font-style: italic;">"notification"</span>)))
-      (url-request-data <span style="font-style: italic;">"{\"title\": \"Title from Emacs\", \"text\": \"Notification sent from Emacs via RPC\"}"</span>))
-  (switch-to-buffer (url-retrieve-synchronously
-                     <span style="font-style: italic;">"{{http/protocol}}://{{http/bindAddress}}:{{http/bindPort}}/rpc"</span>)))
+      (url-request-data
+       <span style="font-style: italic;">"{\"title\": \"Title from Emacs\",</span>
+<span style="font-style: italic;">\"text\": \"Notification sent from Emacs via RPC\"}"</span>))
+  (switch-to-buffer
+   (url-retrieve-synchronously
+    <span style="font-style: italic;">"{{http/protocol}}://{{http/bindAddress}}:{{http/bindPort}}/rpc"</span>)))
 </pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-orgd8f5b8d" class="outline-3">
-<h3 id="orgd8f5b8d"><span class="section-number-3">1.2</span> Additional resources</h3>
-<div class="outline-text-3" id="text-1-2">
-<ul class="org-ul">
-<li><a href="/html/user.html">User manual</a></li>
-<li><a href="/html/hacking.html">Developer manual</a></li>
-<li><a href="/lisp/">Lisp files</a></li>
-<li><a href="/icons/">Application icons</a></li>
-</ul>
-</div>
-</div>
 </div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Bernd Wachter</p>
-<p class="date">Created: 2020-12-29 Tue 14:22</p>
+<p class="date">Created: 2020-12-30 Wed 09:09</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

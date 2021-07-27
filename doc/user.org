@@ -1,3 +1,18 @@
 #+OPTIONS: broken-links:t
 #+OPTIONS: ^:nil
 * Emacsbridge user documentation
+
+{{NOTE: This file is designed to have templates like this expanded by the Emacsbridge webserver. When using this page from other sources those templates need to be manually expanded}}
+
+This manual covers using Emacs bridge, including using its high level Lisp APIs. For lower level details or to work on the application core see the [[export:/html/hacking.html][developer manual]].
+
+ [[export:/lisp/][Lisp files]]
+** Setup
+*** <<manual>>Manual setup
+*** <<termux>>Termux setup
+*** <<pc>>PC setup
+
+#+BEGIN_SRC bash
+scripts/pc-init.sh
+#+END_SRC
+** The user interface

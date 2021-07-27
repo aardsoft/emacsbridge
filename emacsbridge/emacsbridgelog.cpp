@@ -20,8 +20,7 @@ EmacsBridgeLog *EmacsBridgeLog::instance(){
     emacsBridgeLog=new EmacsBridgeLog();
     // set sensible buffer size to capture early log messages
     emacsBridgeLog->m_logBuffer.setCapacity(50);
-    //emacsBridgeLog->m_logLevel=LOG_INFO;
-    emacsBridgeLog->m_logLevel=LOG_DEBUG;
+    emacsBridgeLog->m_logLevel=LOG_INFO;
     emacsBridgeLog->m_consoleLogging=2;
     emacsBridgeLog->m_ringBufferLogging=2;
     emacsBridgeLog->m_logState=true;
@@ -167,6 +166,7 @@ void EmacsBridgeLog::messageHandler(QtMsgType type,
     .arg(function);
   logEntry.insert("message", msgWithFile);
 #else
+  (void)context;
   logEntry.insert("message", msg);
 #endif
 

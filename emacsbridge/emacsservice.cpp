@@ -9,6 +9,8 @@
 #include <QtAndroid>
 #endif
 
+#include <syslog.h>
+
 #include "emacsservice.h"
 #include "emacsbridgesettings.h"
 #include "emacsbridgelog.h"
@@ -16,6 +18,7 @@
 EmacsService::EmacsService(): QObject(){
   EmacsBridgeSettings *settings=EmacsBridgeSettings::instance();
   EmacsBridgeLog::setBufferSize(settings->value("logBufferSize", "200").toInt());
+  EmacsBridgeLog::setPriority(LOG_DEBUG);
 
   m_remote.setServerListenPort(settings->value("http/bindPort", 1616).toInt());
   m_remote.setServerListenAddress(settings->value("http/bindAddress", "127.0.0.1").toString());
@@ -93,6 +96,9 @@ void EmacsService::displayNotification(const QString &title, const QString &mess
     QtAndroid::androidContext().object(),
     javaNotification.object<jstring>(),
     jNotificationTitle.object<jstring>());
+#else
+  (void)title;
+  (void)message;
 #endif
 }
 

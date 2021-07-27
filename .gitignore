@@ -1,3 +1,5 @@
 build/
 .scrap
 .local
+doc/html/
+doc/latex/

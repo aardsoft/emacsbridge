@@ -195,6 +195,8 @@ rm -Rf qtactiveqt
 *** Android
 - [[https://developer.android.com/guide/topics/providers/contacts-provider][Android contacts provider]]
 - [[https://developers.google.com/maps/documentation/urls/guide][Google Maps URL schemes]]
+- [[https://developer.android.com/training/sync-adapters][Android sync adapters]]
+- [[https://developer.android.com/guide/topics/providers/content-providers][Android content providers]]
 *** Qt
 - [[https://www.qt.io/blog/2019/01/25/introducing-qt-http-server][Qt Http Server announcement]]
 - [[https://bugreports.qt.io/browse/QTBUG-60105][QTBUG-60105 Lightweight HTTP server]]

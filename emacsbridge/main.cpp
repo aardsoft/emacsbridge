@@ -28,7 +28,11 @@
 #include "emacsbridgelog.h"
 #include "emacslogger.h"
 
+
 #ifdef __ANDROID_API__
+/**
+ * critical binding for android
+ */
 static void jCritical(JNIEnv *env, jobject obj, jstring msg){
   qCritical()<<"[j]"<<env->GetStringUTFChars(msg, 0);
 }
@@ -98,6 +102,9 @@ static QJSValue bridgeSingletonProvider(QQmlEngine *engine, QJSEngine *scriptEng
   return scriptEngine->newQObject(bridgeInstance);
 }
 
+/**
+ * Blabla foo main entry
+ */
 int main(int argc, char **argv){
   if (argc<=1){
 #ifdef __ANDROID_API__

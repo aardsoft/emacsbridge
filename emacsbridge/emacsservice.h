@@ -14,6 +14,9 @@
 #include "emacsclient.h"
 #include "emacsbridgeremote.h"
 
+/**
+ * This is the main class for the service process.
+ */
 class EmacsService: public QObject{
     Q_OBJECT
     QThread serverThread;
