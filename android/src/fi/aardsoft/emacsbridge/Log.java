@@ -1,6 +1,6 @@
 package fi.aardsoft.emacsbridge;
 
-class EmacsBridgeLog {
+class Log {
     public static native void jDebug(String message);
     public static native void jInfo(String message);
     public static native void jWarning(String message);

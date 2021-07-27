@@ -23,13 +23,13 @@ public class EmacsBridgeService extends QtService {
     @Override
     public void onCreate() {
       super.onCreate();
-      EmacsBridgeLog.jInfo("Creating Service");
+      Log.jInfo("Creating Service");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        EmacsBridgeLog.jInfo("Destroying Service");
+        Log.jInfo("Destroying Service");
     }
 
     @Override
@@ -134,7 +134,7 @@ public class EmacsBridgeService extends QtService {
                 JSONArray value = e.getJSONArray("value");
                 String[] valueArray = new String[value.length()];
                 for(int j=0;j<value.length();j++){
-                  EmacsBridgeLog.jInfo("Adding " + value.getJSONObject(j).getString("value")
+                  Log.jInfo("Adding " + value.getJSONObject(j).getString("value")
                         + " for key " + key);
                   valueArray[j] = value.getJSONObject(j).getString("value");
                 }
@@ -143,7 +143,7 @@ public class EmacsBridgeService extends QtService {
                 JSONArray value = e.getJSONArray("value");
                 ArrayList<String> valueList = new ArrayList<String>();
                 for(int j=0;j<value.length();j++){
-                  EmacsBridgeLog.jInfo("Adding " + value.getJSONObject(j).getString("value")
+                  Log.jInfo("Adding " + value.getJSONObject(j).getString("value")
                         + " for key " + key);
                   valueList.add(value.getJSONObject(j).getString("value"));
                 }
@@ -164,13 +164,13 @@ public class EmacsBridgeService extends QtService {
         if (!json.isNull("startType")){
           String startType = json.getString("startType");
           if (startType.equals("activity")){
-            EmacsBridgeLog.jInfo("Starting intent as activity");
+            Log.jInfo("Starting intent as activity");
             context.startActivity(intent);
           } else if (startType.equals("service")){
-            EmacsBridgeLog.jInfo("Starting intent as service");
+            Log.jInfo("Starting intent as service");
             context.startService(intent);
           } else {
-            EmacsBridgeLog.jWarning("Unhandled start type: " + startType);
+            Log.jWarning("Unhandled start type: " + startType);
           }
         } else
           context.startActivity(intent);
@@ -179,6 +179,9 @@ public class EmacsBridgeService extends QtService {
       }
     }
 
+    /**
+     * Convenience function for calling an Android intent from UI code
+     */
     // If intentData is present it needs to be a valid string representation of
     // a URI, so possible something like package: needs to be pre-pended
     // this is a convenience function for calling simple intents from the UI
