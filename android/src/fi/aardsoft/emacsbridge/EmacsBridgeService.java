@@ -1,5 +1,7 @@
 package fi.aardsoft.emacsbridge;
 
+import android.accounts.Account;
+import android.accounts.AccountManager;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -19,11 +21,16 @@ import org.qtproject.qt5.android.bindings.QtService;
 public class EmacsBridgeService extends QtService {
     private static NotificationManager m_notificationManager;
     private static Notification.Builder m_builder;
+    public static final String ACCOUNT_TYPE = "emacsbridge";
+    public static final String ACCOUNT = "placeholderaccount";
+    Account m_account;
 
     @Override
     public void onCreate() {
       super.onCreate();
       Log.jInfo("Creating Service");
+
+      m_account = CreateSyncAccount(this);
     }
 
     @Override
@@ -214,5 +221,28 @@ public class EmacsBridgeService extends QtService {
                  android.provider.Settings.ACTION_APPLICATION_DETAILS_SETTINGS,
                  "package:" + context.getPackageName(),
                  "", "");
+    }
+
+    public static Account CreateSyncAccount(Context context){
+      Account newAccount = new Account(ACCOUNT, ACCOUNT_TYPE);
+      AccountManager accountManager =
+        (AccountManager) context.getSystemService(ACCOUNT_SERVICE);
+        /*
+         * Add the account and account type, no password or user data
+         * If successful, return the Account object, otherwise report an error.
+         */
+      if (accountManager.addAccountExplicitly(newAccount, null, null)) {
+        Log.jInfo("Account created.");
+        /*
+         * If you don't set android:syncable="true" in
+         * in your <provider> element in the manifest,
+         * then call context.setIsSyncable(account, AUTHORITY, 1)
+         * here.
+         */
+      } else {
+        // TODO: figure out if proper error handling makes sense
+        Log.jWarning("Unable to add account");
+      }
+      return newAccount;
     }
 }

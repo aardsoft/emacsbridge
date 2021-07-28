@@ -3,6 +3,9 @@
   <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
   <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
   <uses-permission android:name="com.termux.permission.RUN_COMMAND" />
+  <uses-permission android:name="android.permission.READ_SYNC_SETTINGS"/>
+  <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
+  <uses-permission android:name="android.permission.AUTHENTICATE_ACCOUNTS"/>
 
   <!-- The following comment will be replaced upon deployment with default permissions based on the dependencies of the application.
        Remove the comment if you do not require these default permissions. -->
@@ -131,7 +134,30 @@
       <meta-data android:name="android.app.background_running" android:value="true"/>
       <!-- Background running -->
     </service>
-
+    <service
+            android:name="fi.aardsoft.emacsbridge.AuthenticatorService">
+        <intent-filter>
+            <action android:name="android.accounts.AccountAuthenticator"/>
+        </intent-filter>
+        <meta-data
+            android:name="android.accounts.AccountAuthenticator"
+            android:resource="@xml/authenticator" />
+    </service>
+    <service
+        android:name="fi.aardsoft.emacsbridge.SyncService"
+        android:exported="true"
+        android:process=":sync">
+      <intent-filter>
+        <action android:name="android.content.SyncAdapter"/>
+      </intent-filter>
+      <meta-data android:name="android.content.SyncAdapter"
+                 android:resource="@xml/syncadapter" />
+    </service>
+    <provider
+        android:name="fi.aardsoft.emacsbridge.SyncProvider"
+        android:authorities="fi.aardsoft.emacsbridge"
+        android:exported="false"
+        android:syncable="true"/>
   </application>
 
 </manifest>

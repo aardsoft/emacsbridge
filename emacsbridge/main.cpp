@@ -70,7 +70,7 @@ const QString init(){
     {"jWarning", "(Ljava/lang/String;)V", (void *)jWarning},
   };
 
-  QAndroidJniObject jClass("fi/aardsoft/emacsbridge/EmacsBridgeLog");
+  QAndroidJniObject jClass("fi/aardsoft/emacsbridge/Log");
   QAndroidJniEnvironment env;
   jclass objectClass = env->GetObjectClass(jClass.object<jobject>());
   env->RegisterNatives(objectClass,
