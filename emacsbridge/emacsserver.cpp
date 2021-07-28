@@ -448,7 +448,7 @@ QHttpServerResponse EmacsServer::handleIntent(const QJsonObject &jsonObject,
  */
 QHttpServerResponse EmacsServer::handleSensorCall(const QJsonObject &jsonObject){
   QString sensorName=jsonObject["sensor"].toString("");
-
+  return("OK");
 }
 
 QHttpServerResponse EmacsServer::parseFile(const QString &fileName){
