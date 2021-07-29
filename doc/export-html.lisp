@@ -1,5 +1,6 @@
 (progn
   (setq org-html-doctype "html5")
+  (setq org-html-validation-link nil)
   (eval-after-load "org"
                    '(org-link-set-parameters "export"
                      :follow #'browse-url

@@ -33,7 +33,7 @@ Page {
         visible: !EmacsBridge.configured && EmacsBridge.mobile
       }
       Label {
-        text: "On a desktop the recommended way of connecting to Emacs bridge is through the local socket. To set that up click on the 'Copy the script to setup PC access to clipboard' button below, and paste the text into a terminal.<br/><br/>If you prefer manual configuration follow the <a href=\""+EmacsBridge.serverProperty('htmlUrl')+"\">quick setup documentation.</a>.<br/><br/>If you don't want Emacs bridge to load the lisp files from the included server please read the <a href=\""+EmacsBridge.serverProperty('manualUrl')+"\">user manual</a> for information on how to set this up."
+        text: "On a desktop the recommended way of connecting to Emacs bridge is through the local socket. To set that up click on the 'Copy access script' button below, and paste the text into a terminal.<br/><br/>If you prefer manual configuration follow the <a href=\""+EmacsBridge.serverProperty('htmlUrl')+"\">quick setup documentation.</a>.<br/><br/>If you don't want Emacs bridge to load the lisp files from the included server please read the <a href=\""+EmacsBridge.serverProperty('manualUrl')+"\">user manual</a> for information on how to set this up."
         Layout.columnSpan: 2
         Layout.fillWidth: true
         wrapMode: Text.WordWrap

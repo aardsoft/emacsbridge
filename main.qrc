@@ -12,7 +12,11 @@
         <file>html/settings.html</file>
         <file>html/hacking.html</file>
         <file>html/user.html</file>
+        <file>lisp/emacsbridge.el</file>
         <file>lisp/emacsbridge-rpc.el</file>
+        <file>lisp/emacsbridge-qml.el</file>
+        <file>lisp/emacsbridge-bbdb.el</file>
+        <file>lisp/emacsbridge-settings.el</file>
         <file>lisp/alert-emacsbridge.el</file>
         <file>icons/gallery/index.theme</file>
         <file>icons/gallery/20x20/back.png</file>
@@ -28,6 +32,8 @@
         <file>icons/gallery/20x20@4/drawer.png</file>
         <file>icons/gallery/20x20@4/menu.png</file>
         <file>json/termux-setup.json</file>
+        <file>scripts/emacs-init.el</file>
+        <file>scripts/emacs-init.sh</file>
         <file>scripts/pc-init.sh</file>
         <file>scripts/termux-init.sh</file>
         <file>scripts/termux-access.sh</file>

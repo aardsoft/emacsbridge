@@ -1,6 +1,7 @@
 #+OPTIONS: broken-links:t
 #+OPTIONS: ^:nil
 #+OPTIONS: toc:nil
+#+OPTIONS: author:nil date:nil timestamp:nil
 #+TITLE: Emacs bridge quick start
 
 This page contains the generic quick start instruction for [[https://github.com/aardsoft/emacsbridge][Emacs bridge]]. You also may want to check out the [[export:../html/user.html][user manual]] for device specific setup options and other useful information.

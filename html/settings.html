@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Emacs bridge quick start</title>
+<title>&lrm;</title>
 <meta name="generator" content="Org mode">
 <style type="text/css">
  <!--/*--><![CDATA[/*><!--*/
@@ -238,73 +238,25 @@ for the JavaScript code in this tag.
 </head>
 <body>
 <div id="content">
-<h1 class="title">Emacs bridge quick start</h1>
-<p>
-This page contains the generic quick start instruction for <a href="https://github.com/aardsoft/emacsbridge">Emacs bridge</a>. You also may want to check out the <a href="../html/user.html">user manual</a> for device specific setup options and other useful information.
-</p>
-
-<p>
-For the basic configuration open this page in eww (M-x eww {{http/bindAddress}}:{{http/bindPort}}), scroll through the page, and evaluate (C-x e) all lisp snippets relevant to your setup. If you want to redo the initial setup you'll first need to clear the application data to enable access without auth token.
-</p>
-
-<p>
-First the emacsbridge-auth-key variable needs to be configured. The following snippets try to autofill it by either a dynamically generated server key, or a statically set one:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-lisp">(<span style="font-weight: bold;">if</span> (bound-and-true-p server-auth-key)
-    (setq emacsbridge-auth-key server-auth-key)
-  (<span style="font-weight: bold;">progn</span>
-    (<span style="font-weight: bold;">if</span> (file-exists-p
-         (concat server-auth-dir <span style="font-style: italic;">"/server"</span>))
-        (<span style="font-weight: bold;">progn</span>
-          (<span style="font-weight: bold;">with-temp-buffer</span>
-            (insert-file-contents
-             (concat server-auth-dir <span style="font-style: italic;">"/server"</span>))
-            (setq emacsbridge-auth-key
-                  (cadr (split-string
-                         (buffer-string) <span style="font-style: italic;">"\n"</span> t)))))
-        (setq emacsbridge-auth-key nil))))
-</pre>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#orgd8a2f82">1. Emacsbridge Settings</a></li>
+</ul>
 </div>
-
-<p>
-Next this key needs to be registered with Emacs bridge:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-lisp">(<span style="font-weight: bold;">let</span> ((url-request-method <span style="font-style: italic;">"POST"</span>)
-  (url-request-extra-headers
-  '((<span style="font-style: italic;">"Content-Type"</span> .<span style="font-style: italic;">"application/x-www-form-urlencoded"</span>)
-  (<span style="font-style: italic;">"setting"</span> . <span style="font-style: italic;">"server-key"</span>)))
-  (url-request-data emacsbridge-auth-key))
-  (switch-to-buffer
-   (url-retrieve-synchronously
-    <span style="font-style: italic;">"{{http/protocol}}://{{http/bindAddress}}:{{http/bindPort}}/settings"</span>)))
-</pre>
 </div>
-
-<p>
-For a dynamic key this needs to be repeated on every start of Emacs. After the initial configuration the http auth key is required for that. Code to handle that (including re-trying if the application is not available on emacs startup) will be part of the support libraries.
-</p>
-
-<p>
-If the above steps finished without error it should now be possible to trigger notifications via RPC:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-lisp">(<span style="font-weight: bold;">let</span> ((url-request-method <span style="font-style: italic;">"POST"</span>)
-      (url-request-extra-headers
-       `((<span style="font-style: italic;">"Content-Type"</span> .<span style="font-style: italic;">"application/json"</span>)
-         (<span style="font-style: italic;">"auth-token"</span> . ,emacsbridge-auth-token)
-         (<span style="font-style: italic;">"method"</span> . <span style="font-style: italic;">"notification"</span>)))
-      (url-request-data
-       <span style="font-style: italic;">"{\"title\": \"Title from Emacs\",</span>
-<span style="font-style: italic;">\"text\": \"Notification sent from Emacs via RPC\"}"</span>))
-  (switch-to-buffer
-   (url-retrieve-synchronously
-    <span style="font-style: italic;">"{{http/protocol}}://{{http/bindAddress}}:{{http/bindPort}}/rpc"</span>)))
-</pre>
+<div id="outline-container-orgd8a2f82" class="outline-2">
+<h2 id="orgd8a2f82"><span class="section-number-2">1</span> Emacsbridge Settings</h2>
+<div class="outline-text-2" id="text-1">
+<form action="/settings" method="post">
+  <label for="fname">First name:</label>
+  <input type="text" id="fname" name="networkSocket/address"><br><br>
+  <label for="lname">Last name:</label>
+  <input type="text" id="lname" name="networkSocket/port"><br><br>
+  <input type="submit" value="Submit">
+</form>
+</div>
 </div>
 </div>
 </body>

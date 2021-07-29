@@ -1,5 +1,6 @@
 #+OPTIONS: broken-links:t
 #+OPTIONS: ^:nil
+#+OPTIONS: author:nil date:nil timestamp:nil
 #+TITLE: Hacking on emacsbridge
 * Hacking on emacsbridge
 

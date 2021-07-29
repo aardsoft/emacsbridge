@@ -194,7 +194,7 @@ deploy_windows(){
 
 org_to_html(){
     if ! [ -f ${BUILD_DIR}/htmlize.el ]; then
-        wget --compression=none -O ${BUILD_DIR}/htmlize.el https://raw.githubusercontent.com/hniksic/emacs-htmlize/master/htmlize.el
+        wget --compression=auto -O ${BUILD_DIR}/htmlize.el https://raw.githubusercontent.com/hniksic/emacs-htmlize/master/htmlize.el
     fi
     _org_files="index hacking user settings"
     for _file in $_org_files; do

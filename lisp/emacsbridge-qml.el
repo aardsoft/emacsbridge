@@ -58,3 +58,5 @@ relative to the library location."
           (json-encode
            `((:file-name . ,qml-file)))))
     (emacsbridge-post-json "removeComponent" json-str)))
+
+(provide 'emacsbridge-qml)

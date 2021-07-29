@@ -1,5 +1,6 @@
 #+OPTIONS: broken-links:t
 #+OPTIONS: ^:nil
+#+OPTIONS: author:nil date:nil timestamp:nil
 * Emacsbridge Settings
 
 #+BEGIN_EXPORT html

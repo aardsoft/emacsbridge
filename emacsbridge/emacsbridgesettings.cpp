@@ -61,14 +61,17 @@ EmacsBridgeSettings::EmacsBridgeSettings():
     endGroup();
 
     beginGroup("emacs");
-    setValue("lispDirectory", "$HOME/.emacs.d/emacsbridge");
+    setValue("initDirectory", "$HOME/.config/emacs");
+    setValue("lispDirectory", "$HOME/.config/emacs/emacsbridge");
     setValue("checkTimer", 0);
 #ifdef __ANDROID_API__
     setValue("startScript", "");
     // if empty, use the default termux intent
     setValue("startIntent", "");
+    setValue("serverUseTCP", "t");
 #else
     setValue("startScript", "systemctl --user start emacs.service");
+    setValue("serverUseTCP", "nil");
 #endif
     endGroup();
   }
@@ -149,6 +152,7 @@ QStringList EmacsBridgeSettings::validKeys(){
       "emacs/startIntent",
 #endif
       "emacs/startScript",
+      "emacs/serverPort",
       "localSocket/socketTemplate",
       "http/bindAddress",
       "http/bindPort",
