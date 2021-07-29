@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- 2021-07-29 Thu 12:56 -->
+<!-- 2021-07-29 Thu 13:04 -->
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>&lrm;</title>
@@ -230,17 +230,17 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1ef7087">1. emacsbridge</a>
+<li><a href="#org6845a72">1. emacsbridge</a>
 <ul>
-<li><a href="#orgb1ca903">1.1. Getting started</a></li>
-<li><a href="#orgcb8b748">1.2. Additional configuration</a></li>
+<li><a href="#org65a83bf">1.1. Getting started</a></li>
+<li><a href="#orge17c6a4">1.2. Additional configuration</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org1ef7087" class="outline-2">
-<h2 id="org1ef7087"><span class="section-number-2">1</span> emacsbridge</h2>
+<div id="outline-container-org6845a72" class="outline-2">
+<h2 id="org6845a72"><span class="section-number-2">1</span> emacsbridge</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Emacsbridge is a tool to bridge some activities between the Emacs and Android world. It expects an Emacs daemon running and listening to TCP, typically in <a href="https://termux.com/">Termux</a>. On Android side a foreground service is running to receive messages from Emacs.
@@ -255,8 +255,8 @@ Join the <a href="https://t.me/joinchat/LKbFBxtp5cY6wj8xdNse4w">emacsbridge Tele
 </p>
 </div>
 
-<div id="outline-container-orgb1ca903" class="outline-3">
-<h3 id="orgb1ca903"><span class="section-number-3">1.1</span> Getting started</h3>
+<div id="outline-container-org65a83bf" class="outline-3">
+<h3 id="org65a83bf"><span class="section-number-3">1.1</span> Getting started</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 On Android access to Emacs' server socket is not available due to Androids security policies. Therefore Emacs needs to be configured to <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/TCP-Emacs-server.html">use the TCP server</a>. Host and port should be manually set - the host to avoid having the server listening on anything but localhost, the port as it needs to be configured in the Android application.
@@ -332,8 +332,8 @@ When developing on the PC the socket connection can be used. Running the <code>p
 </div>
 </div>
 
-<div id="outline-container-orgcb8b748" class="outline-3">
-<h3 id="orgcb8b748"><span class="section-number-3">1.2</span> Additional configuration</h3>
+<div id="outline-container-orge17c6a4" class="outline-3">
+<h3 id="orge17c6a4"><span class="section-number-3">1.2</span> Additional configuration</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 To interface with the RPC interface loading the <code>emacsbridge-rpc</code> library is recommended. It also is available <a href="http://localhost:1616/emacsbridge-rpc.el">through the embedded web server.</a>
@@ -380,7 +380,7 @@ Other applications capable of using alert.el can make use of it. This shows a <a
 </div>
 </div>
 <div id="postamble" class="status">
-<p class="date">Created: 2021-07-29 Thu 12:56</p>
+<p class="date">Created: 2021-07-29 Thu 13:04</p>
 <p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
