@@ -230,152 +230,58 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org1ef7087">1. emacsbridge</a>
+<li><a href="#orgc5e6fca">1. Emacsbridge user documentation</a>
 <ul>
-<li><a href="#orgb1ca903">1.1. Getting started</a></li>
-<li><a href="#orgcb8b748">1.2. Additional configuration</a></li>
+<li><a href="#org5d144f7">1.1. Setup</a>
+<ul>
+<li><a href="#org6e07682">1.1.1. Manual setup</a></li>
+<li><a href="#orgc493833">1.1.2. Termux setup</a></li>
+<li><a href="#org830f8ef">1.1.3. PC setup</a></li>
+</ul>
+</li>
+<li><a href="#orgda4856e">1.2. The user interface</a></li>
 </ul>
 </li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org1ef7087" class="outline-2">
-<h2 id="org1ef7087"><span class="section-number-2">1</span> emacsbridge</h2>
+<div id="outline-container-orgc5e6fca" class="outline-2">
+<h2 id="orgc5e6fca"><span class="section-number-2">1</span> Emacsbridge user documentation</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-Emacsbridge is a tool to bridge some activities between the Emacs and Android world. It expects an Emacs daemon running and listening to TCP, typically in <a href="https://termux.com/">Termux</a>. On Android side a foreground service is running to receive messages from Emacs.
+{{NOTE: This file is designed to have templates like this expanded by the Emacsbridge webserver. When using this page from other sources those templates need to be manually expanded}}
 </p>
 
 <p>
-Actions from Android side are sent as Lisp to be evaluated in Emacs through the Emacs daemon. Actions from Emacs are sent as JSON over HTTP.
+This manual covers using Emacs bridge, including using its high level Lisp APIs. For lower level details or to work on the application core see the <a href="/html/hacking.html">developer manual</a>.
 </p>
 
 <p>
-Join the <a href="https://t.me/joinchat/LKbFBxtp5cY6wj8xdNse4w">emacsbridge Telegram group</a> to discuss emacsbridge, or read the <a href="https://aardsoft.github.io/emacsbridge/html/">on-device</a> or <a href="https://aardsoft.github.io/emacsbridge/doxygen/html/">Doxygen</a> documentation.
+<a href="/lisp/">Lisp files</a>
 </p>
 </div>
-
-<div id="outline-container-orgb1ca903" class="outline-3">
-<h3 id="orgb1ca903"><span class="section-number-3">1.1</span> Getting started</h3>
+<div id="outline-container-org5d144f7" class="outline-3">
+<h3 id="org5d144f7"><span class="section-number-3">1.1</span> Setup</h3>
 <div class="outline-text-3" id="text-1-1">
-<p>
-On Android access to Emacs' server socket is not available due to Androids security policies. Therefore Emacs needs to be configured to <a href="https://www.gnu.org/software/emacs/manual/html_node/emacs/TCP-Emacs-server.html">use the TCP server</a>. Host and port should be manually set - the host to avoid having the server listening on anything but localhost, the port as it needs to be configured in the Android application.
-</p>
-
-<p>
-Setting <code>server-auth-key</code> prevents the key from changing every emacs restart, but tends to cause interesting problems. A better approach is to use the dynamic key generation, and call <code>emacsbridge-push-auth-key</code> on every start, making sure the call succeeds (i.e., Android application is running).
-</p>
-
+</div>
+<div id="outline-container-org6e07682" class="outline-4">
+<h4 id="org6e07682"><span class="section-number-4">1.1.1</span> <a id="org9d79cdb"></a>Manual setup</h4>
+</div>
+<div id="outline-container-orgc493833" class="outline-4">
+<h4 id="orgc493833"><span class="section-number-4">1.1.2</span> <a id="orgf0f1da0"></a>Termux setup</h4>
+</div>
+<div id="outline-container-org830f8ef" class="outline-4">
+<h4 id="org830f8ef"><span class="section-number-4">1.1.3</span> <a id="org85d1490"></a>PC setup</h4>
+<div class="outline-text-4" id="text-1-1-3">
 <div class="org-src-container">
-<pre class="src src-Emacs-lisp">(setq server-use-tcp 1
-      server-host "127.0.0.1"
-      server-port 60325)
-</pre>
-</div>
-
-<p>
-Once Emacs is started with the TCP server the connection to the Android application needs to be set up. The easiest way for this is opening eww in Emacs, navigating to <a href="http://localhost:1616/">http://localhost:1616/</a> and evaluating the three lisp snippets there:
-</p>
-
-
-<div class="figure">
-<p><img src="./doc/setup_page.png" alt="setup_page.png" style="max-width:100%">
-</p>
-<p><span class="figure-number">Figure 1: </span>Setup page in eww</p>
-</div>
-
-<p>
-Doing so will first set the current server key in the Android application:
-</p>
-
-
-<div class="figure">
-<p><img src="./doc/setup_auth_key.png" alt="setup_auth_key.png" style="max-width:100%">
-</p>
-<p><span class="figure-number">Figure 2: </span>Confirmation of server key change</p>
-</div>
-
-<p>
-Then have the Android application test the connectivity, which sets <code>emacsbridge-auth-token</code> as custom variable (i.e, persistent), and marks the Android application as fully configured, which causes the RPC interfaces to required the auth token for reconfiguration. Pay attention to the status code and messages:
-</p>
-
-
-<div class="figure">
-<p><img src="./doc/setup_OK_status.png" alt="setup_OK_status.png" style="max-width:100%">
-</p>
-<p><span class="figure-number">Figure 3: </span>Successful initialisation</p>
-</div>
-
-<p>
-With that part of the setup completed a test notification can be triggered:
-</p>
-
-
-<div class="figure">
-<p><img src="./doc/setup_notification.png" alt="setup_notification.png" style="max-width:100%">
-</p>
-<p><span class="figure-number">Figure 4: </span>Test notification</p>
-</div>
-
-<p>
-To work correctly the Android application needs to run a foreground service. The UI can be closed at any time without impacting operation. The notification about the background service does nothing useful, and can be ignored by long-pressing on it.
-</p>
-
-<p>
-When developing on the PC the socket connection can be used. Running the <code>pc-init.sh</code> script sets sane values (assuming an Emacs with a server is running locally). It can be downloaded from the integrated web server, adjusting address and port as needed:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-bash">curl -l localhost:1616/scripts/pc-init.sh|bash
+<pre class="src src-bash">scripts/pc-init.sh
 </pre>
 </div>
 </div>
 </div>
-
-<div id="outline-container-orgcb8b748" class="outline-3">
-<h3 id="orgcb8b748"><span class="section-number-3">1.2</span> Additional configuration</h3>
-<div class="outline-text-3" id="text-1-2">
-<p>
-To interface with the RPC interface loading the <code>emacsbridge-rpc</code> library is recommended. It also is available <a href="http://localhost:1616/emacsbridge-rpc.el">through the embedded web server.</a>
-</p>
-
-<p>
-For notifications <code>emacsbridge-rpc.el</code> provides a backend to <a href="https://github.com/jwiegley/alert">alert.el</a> (<a href="http://localhost:1616/lisp/alert-emacsbridge.el">local server</a>). To use it as default backend configure <code>alert-default-style</code>, through customisation or directly:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-Emacs-lisp">(require 'alert-emacsbridge)
-(setq alert-default-style 'emacsbridge)
-</pre>
 </div>
-
-<p>
-With this configured the following should trigger a notification on Android side:
-</p>
-
-<div class="org-src-container">
-<pre class="src src-Emacs-lisp">(alert "Test")
-</pre>
-</div>
-
-
-<div class="figure">
-<p><img src="./doc/test_from_scratch.png" alt="test_from_scratch.png" style="max-width:100%">
-</p>
-<p><span class="figure-number">Figure 5: </span>Test notification from scratch</p>
-</div>
-
-<p>
-Other applications capable of using alert.el can make use of it. This shows a <a href="https://github.com/zevlg/telega.el">telega</a> query notification:
-</p>
-
-
-<div class="figure">
-<p><img src="./doc/telega_notification.png" alt="telega_notification.png" style="max-width:100%">
-</p>
-<p><span class="figure-number">Figure 6: </span>Notification from telega</p>
-</div>
-</div>
+<div id="outline-container-orgda4856e" class="outline-3">
+<h3 id="orgda4856e"><span class="section-number-3">1.2</span> The user interface</h3>
 </div>
 </div>
 </div>

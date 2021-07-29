@@ -1,0 +1,74 @@
+\hypertarget{main_8cpp}{}\doxysection{/home/runner/work/emacsbridge/emacsbridge/emacsbridge/main.cpp File Reference}
+\label{main_8cpp}\index{/home/runner/work/emacsbridge/emacsbridge/emacsbridge/main.cpp@{/home/runner/work/emacsbridge/emacsbridge/emacsbridge/main.cpp}}
+{\ttfamily \#include $<$Qt\+Gui$>$}\newline
+{\ttfamily \#include $<$Qt\+Quick$>$}\newline
+{\ttfamily \#include $<$Q\+Qml\+Application\+Engine$>$}\newline
+{\ttfamily \#include $<$Q\+Quick\+Style$>$}\newline
+{\ttfamily \#include $<$Q\+Icon$>$}\newline
+{\ttfamily \#include $<$Q\+Android\+Service$>$}\newline
+{\ttfamily \#include $<$Q\+Android\+Jni\+Environment$>$}\newline
+{\ttfamily \#include $<$Q\+Android\+Jni\+Object$>$}\newline
+{\ttfamily \#include $<$jni.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}emacsbridge.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}emacsservice.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}emacsbridgelog.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}emacslogger.\+h\char`\"{}}\newline
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \mbox{\hyperlink{main_8cpp_af3c8befab3f021635e20aee3c524c11f}{j\+Critical}} (J\+N\+I\+Env $\ast$env, jobject obj, jstring msg)
+\item 
+\mbox{\Hypertarget{main_8cpp_a154462dda2a7e8c0a4d59efa731bf0f5}\label{main_8cpp_a154462dda2a7e8c0a4d59efa731bf0f5}} 
+static void {\bfseries j\+Debug} (J\+N\+I\+Env $\ast$env, jobject obj, jstring msg)
+\item 
+\mbox{\Hypertarget{main_8cpp_aa2c260a25710f0c0ed998cfb13775271}\label{main_8cpp_aa2c260a25710f0c0ed998cfb13775271}} 
+static void {\bfseries j\+Info} (J\+N\+I\+Env $\ast$env, jobject obj, jstring msg)
+\item 
+\mbox{\Hypertarget{main_8cpp_ade622716252dbb135875ca5de563693d}\label{main_8cpp_ade622716252dbb135875ca5de563693d}} 
+static void {\bfseries j\+Warning} (J\+N\+I\+Env $\ast$env, jobject obj, jstring msg)
+\item 
+\mbox{\Hypertarget{main_8cpp_aeff02cb290dac540dd3b622665fb1b24}\label{main_8cpp_aeff02cb290dac540dd3b622665fb1b24}} 
+void {\bfseries init\+App\+Data} ()
+\item 
+\mbox{\Hypertarget{main_8cpp_ac4cd7079aca0e40ec25527a550ba9c67}\label{main_8cpp_ac4cd7079aca0e40ec25527a550ba9c67}} 
+const Q\+String {\bfseries init} ()
+\item 
+\mbox{\Hypertarget{main_8cpp_ac69214487a7733445e5a7c3acad62399}\label{main_8cpp_ac69214487a7733445e5a7c3acad62399}} 
+static Q\+J\+S\+Value {\bfseries bridge\+Singleton\+Provider} (Q\+Qml\+Engine $\ast$engine, Q\+J\+S\+Engine $\ast$script\+Engine)
+\item 
+int \mbox{\hyperlink{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main}} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8cpp_a9566c4b1f14ebdab0cf7d3f431ff8a16}\label{main_8cpp_a9566c4b1f14ebdab0cf7d3f431ff8a16}} 
+static \mbox{\hyperlink{classEmacsBridge}{Emacs\+Bridge}} $\ast$ {\bfseries bridge\+Instance}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyCopyright}{Copyright}
+2020 Aardsoft Oy 
+\end{DoxyCopyright}
+\begin{DoxyAuthor}{Author}
+Bernd Wachter \href{mailto:bwachter@aardsoft.fi}{\texttt{ bwachter@aardsoft.\+fi}} 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+2020 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8cpp_af3c8befab3f021635e20aee3c524c11f}\label{main_8cpp_af3c8befab3f021635e20aee3c524c11f}} 
+\index{main.cpp@{main.cpp}!jCritical@{jCritical}}
+\index{jCritical@{jCritical}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{jCritical()}{jCritical()}}
+{\footnotesize\ttfamily static void j\+Critical (\begin{DoxyParamCaption}\item[{J\+N\+I\+Env $\ast$}]{env,  }\item[{jobject}]{obj,  }\item[{jstring}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+critical binding for android \mbox{\Hypertarget{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{main_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{main.cpp@{main.cpp}!main@{main}}
+\index{main@{main}!main.cpp@{main.cpp}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+Blabla foo main entry 

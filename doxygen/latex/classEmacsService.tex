@@ -1,0 +1,72 @@
+\hypertarget{classEmacsService}{}\doxysection{Emacs\+Service Class Reference}
+\label{classEmacsService}\index{EmacsService@{EmacsService}}
+
+
+{\ttfamily \#include $<$emacsservice.\+h$>$}
+
+Inheritance diagram for Emacs\+Service\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classEmacsService}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsService_a39e175f8310558e5463bf9cbaa2ce27b}\label{classEmacsService_a39e175f8310558e5463bf9cbaa2ce27b}} 
+void {\bfseries notification\+Added} (const Q\+String \&title, const Q\+String \&message)
+\item 
+\mbox{\Hypertarget{classEmacsService_a9ebbb59c17a2b4a9c540cf06092b6cec}\label{classEmacsService_a9ebbb59c17a2b4a9c540cf06092b6cec}} 
+void {\bfseries start\+Server} ()
+\item 
+\mbox{\Hypertarget{classEmacsService_aa3b710df142cdf8ab11a981e8f25bbf8}\label{classEmacsService_aa3b710df142cdf8ab11a981e8f25bbf8}} 
+void {\bfseries restart\+Server} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsService_ade4c4195a8189442a4ed257ff189ecdf}\label{classEmacsService_ade4c4195a8189442a4ed257ff189ecdf}} 
+void {\bfseries setting\+Changed} (const Q\+String \&key)
+\item 
+\mbox{\Hypertarget{classEmacsService_a159e0b285798b0e9de0257c7c0db0f4b}\label{classEmacsService_a159e0b285798b0e9de0257c7c0db0f4b}} 
+void {\bfseries display\+Notification} (const Q\+String \&title, const Q\+String \&message)
+\item 
+\mbox{\Hypertarget{classEmacsService_a74e97e31e9a5e9b6c340dda4601d4dee}\label{classEmacsService_a74e97e31e9a5e9b6c340dda4601d4dee}} 
+void {\bfseries change\+Server\+Listen\+Port} (const quint16 server\+Port)
+\item 
+\mbox{\Hypertarget{classEmacsService_a5d32bec5aa3584a9180622c0098d005e}\label{classEmacsService_a5d32bec5aa3584a9180622c0098d005e}} 
+void {\bfseries change\+Server\+Listen\+Address} (const Q\+String \&server\+Address)
+\item 
+\mbox{\Hypertarget{classEmacsService_a30622f2c86b4df5632173020f62bb8be}\label{classEmacsService_a30622f2c86b4df5632173020f62bb8be}} 
+void {\bfseries trigger\+Termux\+Setup} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsService_a39ce365c5ec27bd63f8e1dc6aa227207}\label{classEmacsService_a39ce365c5ec27bd63f8e1dc6aa227207}} 
+Q\+Thread {\bfseries server\+Thread}
+\item 
+\mbox{\Hypertarget{classEmacsService_a993d566ab23fe10e65c37bae35ea5d87}\label{classEmacsService_a993d566ab23fe10e65c37bae35ea5d87}} 
+Q\+Remote\+Object\+Host {\bfseries m\+\_\+src\+Node}
+\item 
+\mbox{\Hypertarget{classEmacsService_a5ec34954e8cec996c22e49461fdc9091}\label{classEmacsService_a5ec34954e8cec996c22e49461fdc9091}} 
+\mbox{\hyperlink{classEmacsBridgeRemote}{Emacs\+Bridge\+Remote}} {\bfseries m\+\_\+remote}
+\item 
+\mbox{\Hypertarget{classEmacsService_a57423a6e3c739aad1f5e08095b0c7c69}\label{classEmacsService_a57423a6e3c739aad1f5e08095b0c7c69}} 
+Q\+Date\+Time {\bfseries m\+\_\+startup\+Time}
+\item 
+\mbox{\Hypertarget{classEmacsService_a8210c5bb75446c5caddfcef5c98fe492}\label{classEmacsService_a8210c5bb75446c5caddfcef5c98fe492}} 
+\mbox{\hyperlink{classEmacsClient}{Emacs\+Client}} $\ast$ {\bfseries m\+\_\+client}
+\item 
+\mbox{\Hypertarget{classEmacsService_a4f790ff65249bda50aefa3ff3fe8327f}\label{classEmacsService_a4f790ff65249bda50aefa3ff3fe8327f}} 
+\mbox{\hyperlink{classEmacsServer}{Emacs\+Server}} $\ast$ {\bfseries m\+\_\+server}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This is the main class for the service process. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsservice_8h}{emacsservice.\+h}}\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsservice_8cpp}{emacsservice.\+cpp}}\end{DoxyCompactItemize}

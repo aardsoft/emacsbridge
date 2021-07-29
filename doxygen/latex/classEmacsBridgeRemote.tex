@@ -1,0 +1,71 @@
+\hypertarget{classEmacsBridgeRemote}{}\doxysection{Emacs\+Bridge\+Remote Class Reference}
+\label{classEmacsBridgeRemote}\index{EmacsBridgeRemote@{EmacsBridgeRemote}}
+Inheritance diagram for Emacs\+Bridge\+Remote\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classEmacsBridgeRemote}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_ad6125de19f799f3334360515387dff52}\label{classEmacsBridgeRemote_ad6125de19f799f3334360515387dff52}} 
+void {\bfseries set\+Query} (const Q\+String \&query\+Key, const Q\+String \&query) override
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_a81add856ebfe39648e73b73946a6ba60}\label{classEmacsBridgeRemote_a81add856ebfe39648e73b73946a6ba60}} 
+void {\bfseries display\+Notification} (const Q\+String \&title, const Q\+String \&message)
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_ad067c39aebf3a677e1ef296bdea47054}\label{classEmacsBridgeRemote_ad067c39aebf3a677e1ef296bdea47054}} 
+void {\bfseries add\+Component} (const \mbox{\hyperlink{structQmlFileContainer}{Qml\+File\+Container}} \&qml\+File)
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_ad0f90c029ca3d09d4807a006ad5c9b72}\label{classEmacsBridgeRemote_ad0f90c029ca3d09d4807a006ad5c9b72}} 
+void {\bfseries add\+Log} (const Q\+String \&message)
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_ab37a9e1304a22833aa978e7788d49e83}\label{classEmacsBridgeRemote_ab37a9e1304a22833aa978e7788d49e83}} 
+void {\bfseries add\+Log\+Entry} (const Q\+Hash$<$ Q\+String, Q\+Variant $>$ entry) override
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_ac34c73dda4ccf8aa0fe2901481d3d628}\label{classEmacsBridgeRemote_ac34c73dda4ccf8aa0fe2901481d3d628}} 
+void {\bfseries remove\+Component} (const Q\+String \&qml\+File)
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_a30d09269f170d1650e71595a218021fd}\label{classEmacsBridgeRemote_a30d09269f170d1650e71595a218021fd}} 
+Q\+String\+List {\bfseries log\+Buffer} () override
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_abe2c2fa35888f46ff409a1014977e92b}\label{classEmacsBridgeRemote_abe2c2fa35888f46ff409a1014977e92b}} 
+Q\+Variant {\bfseries server\+Property} (const Q\+String \&key) override
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_aa768fbf6264220d786083db20645501c}\label{classEmacsBridgeRemote_aa768fbf6264220d786083db20645501c}} 
+void {\bfseries set\+Data} (const \mbox{\hyperlink{structJsonDataContainer}{Json\+Data\+Container}} \&json\+Container)
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_ac6494542d64d2c6d636dea740a7df242}\label{classEmacsBridgeRemote_ac6494542d64d2c6d636dea740a7df242}} 
+void {\bfseries setup\+Termux} () override
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_a3d61530ba2d427bfc468100ff5951a0c}\label{classEmacsBridgeRemote_a3d61530ba2d427bfc468100ff5951a0c}} 
+void {\bfseries request\+Android\+Permission} (const Q\+String \&permission\+Name) override
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_a2671ae66dbb2ce04539ea625eb0d2e1f}\label{classEmacsBridgeRemote_a2671ae66dbb2ce04539ea625eb0d2e1f}} 
+{\bfseries Emacs\+Bridge\+Remote} (Q\+Object $\ast$parent=nullptr)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_aae9e69692f4dc9c2fe779b326cd65e60}\label{classEmacsBridgeRemote_aae9e69692f4dc9c2fe779b326cd65e60}} 
+void {\bfseries client\+Query\+Finished} (const Q\+String \&query\+Key, const Q\+String \&query\+Result)
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_a4ad220d827aa887c0b37ad9c0d959904}\label{classEmacsBridgeRemote_a4ad220d827aa887c0b37ad9c0d959904}} 
+void {\bfseries client\+Query\+Error} (const Q\+String \&query\+Key, const Q\+String \&error)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeRemote_a250026dbfe65889e8b26b78d453e0d39}\label{classEmacsBridgeRemote_a250026dbfe65889e8b26b78d453e0d39}} 
+\mbox{\hyperlink{classEmacsClient}{Emacs\+Client}} $\ast$ {\bfseries m\+\_\+client}
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsbridgeremote_8h}{emacsbridgeremote.\+h}}\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsbridgeremote_8cpp}{emacsbridgeremote.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,71 @@
+\hypertarget{classEmacsBridgeMorse}{}\doxysection{Emacs\+Bridge\+Morse Class Reference}
+\label{classEmacsBridgeMorse}\index{EmacsBridgeMorse@{EmacsBridgeMorse}}
+Inheritance diagram for Emacs\+Bridge\+Morse\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classEmacsBridgeMorse}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_a76646983e1c3b9aadda9eeed315f9b27}\label{classEmacsBridgeMorse_a76646983e1c3b9aadda9eeed315f9b27}} 
+void {\bfseries state\+Change} (int state)
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_ae6244685079a700b140e6dec7be6272d}\label{classEmacsBridgeMorse_ae6244685079a700b140e6dec7be6272d}} 
+void {\bfseries keys} (Q\+String \&key)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_a30afdd8960899d3a4169a7bc90a06d7c}\label{classEmacsBridgeMorse_a30afdd8960899d3a4169a7bc90a06d7c}} 
+void {\bfseries set\+Low\+State} (int state)
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_ae73d9fc1c1389c102499a27b9e0d1534}\label{classEmacsBridgeMorse_ae73d9fc1c1389c102499a27b9e0d1534}} 
+void {\bfseries set\+High\+State} (int state)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_abeedcb7a920573796bdb11256011f41f}\label{classEmacsBridgeMorse_abeedcb7a920573796bdb11256011f41f}} 
+void {\bfseries timeout\+Handler} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_a6c6626dedea05548f3b15596913315da}\label{classEmacsBridgeMorse_a6c6626dedea05548f3b15596913315da}} 
+Q\+Elapsed\+Timer {\bfseries m\+\_\+state\+Timer}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_a204833b2829407694ec022b3acb37096}\label{classEmacsBridgeMorse_a204833b2829407694ec022b3acb37096}} 
+Q\+Timer $\ast$ {\bfseries m\+\_\+end\+Timer}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_a2354ed904378341894b857d92b9c229f}\label{classEmacsBridgeMorse_a2354ed904378341894b857d92b9c229f}} 
+Q\+Hash$<$ Q\+String, Q\+String $>$ {\bfseries m\+\_\+dict}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_a9a77fbfdd375186517e07e96b9eaf215}\label{classEmacsBridgeMorse_a9a77fbfdd375186517e07e96b9eaf215}} 
+Q\+String {\bfseries current\+Input} =\char`\"{}\char`\"{}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_a19610e0b2d8b653f0b39b7a4f5b466c8}\label{classEmacsBridgeMorse_a19610e0b2d8b653f0b39b7a4f5b466c8}} 
+int {\bfseries m\+\_\+high\+State} =3
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_a162067f569bb2af729f55f1a5bf3e58e}\label{classEmacsBridgeMorse_a162067f569bb2af729f55f1a5bf3e58e}} 
+int {\bfseries m\+\_\+low\+State} =1
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_a43befa8f13d30a04e3445537c2936562}\label{classEmacsBridgeMorse_a43befa8f13d30a04e3445537c2936562}} 
+int {\bfseries m\+\_\+old\+State}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_ab31671f6191d364721d27f7712d5fbcb}\label{classEmacsBridgeMorse_ab31671f6191d364721d27f7712d5fbcb}} 
+int {\bfseries m\+\_\+short\+Max} =200
+\item 
+\mbox{\Hypertarget{classEmacsBridgeMorse_a4d5c6cc26723200d83148fd39f698cae}\label{classEmacsBridgeMorse_a4d5c6cc26723200d83148fd39f698cae}} 
+int {\bfseries m\+\_\+long\+Max} =700
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsbridgemorse_8h}{emacsbridgemorse.\+h}}\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsbridgemorse_8cpp}{emacsbridgemorse.\+cpp}}\end{DoxyCompactItemize}

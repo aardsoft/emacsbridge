@@ -1,0 +1,200 @@
+\hypertarget{classEmacsBridge}{}\doxysection{Emacs\+Bridge Class Reference}
+\label{classEmacsBridge}\index{EmacsBridge@{EmacsBridge}}
+
+
+{\ttfamily \#include $<$emacsbridge.\+h$>$}
+
+Inheritance diagram for Emacs\+Bridge\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classEmacsBridge}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_ac2754f20e19bc5723ae1a97e13079b85}\label{classEmacsBridge_ac2754f20e19bc5723ae1a97e13079b85}} 
+void {\bfseries query\+Finished} (const Q\+String \&query\+Key, const Q\+String \&query\+Result)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a6fe8a5a48ec6becf8c27d7dd734d26cb}\label{classEmacsBridge_a6fe8a5a48ec6becf8c27d7dd734d26cb}} 
+void {\bfseries query\+Error} (const Q\+String \&query\+Key, const Q\+String \&error\+Message)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a374742199b26a6d58f7f0d9bc216890e}\label{classEmacsBridge_a374742199b26a6d58f7f0d9bc216890e}} 
+void {\bfseries component\+Added} (const \mbox{\hyperlink{structQmlFileContainer}{Qml\+File\+Container}} \&qml\+File)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_ac41f2a86312aacce16f3cc020cc3b133}\label{classEmacsBridge_ac41f2a86312aacce16f3cc020cc3b133}} 
+void {\bfseries component\+Removed} (const Q\+String \&qml\+File)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a7f9a301234739bd1354397b4f8ccb2cc}\label{classEmacsBridge_a7f9a301234739bd1354397b4f8ccb2cc}} 
+void {\bfseries data\+Set} (const Q\+String \&requester\+Id, const Q\+J\+S\+Value \&json\+Data)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a8afe52ea46996b302367a01158b9b643}\label{classEmacsBridge_a8afe52ea46996b302367a01158b9b643}} 
+void {\bfseries default\+Page\+Changed} ()
+\item 
+\mbox{\Hypertarget{classEmacsBridge_ad88e74afcdf65cb89f900da7df867bbf}\label{classEmacsBridge_ad88e74afcdf65cb89f900da7df867bbf}} 
+void {\bfseries active\+Server\+Listen\+Port\+Changed} (quint16 server\+Port)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_ab886b1fb96c82ab7fb895c895416e0fa}\label{classEmacsBridge_ab886b1fb96c82ab7fb895c895416e0fa}} 
+void {\bfseries server\+Listen\+Address\+Changed} (Q\+String \&server\+Address)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_adf86320de48413a54df7a9e3353d8395}\label{classEmacsBridge_adf86320de48413a54df7a9e3353d8395}} 
+void {\bfseries server\+Listen\+Port\+Changed} (quint16 server\+Port)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a3380ed669f307f3efae019e6d56f0d8a}\label{classEmacsBridge_a3380ed669f307f3efae019e6d56f0d8a}} 
+{\bfseries Emacs\+Bridge} (Q\+Object $\ast$parent=0)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a0e4ead7674732c5eef7e72f624cb862f}\label{classEmacsBridge_a0e4ead7674732c5eef7e72f624cb862f}} 
+{\bfseries Emacs\+Bridge} (const Q\+String \&dummy, Q\+Object $\ast$parent=0)
+\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void \mbox{\hyperlink{classEmacsBridge_a95d6d68416303b3aa353daff6cb4370f}{copy\+To\+Clipboard}} (const Q\+String \&text)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_acbb75f804ba7024017097d051f9a2247}\label{classEmacsBridge_acbb75f804ba7024017097d051f9a2247}} 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void {\bfseries run\+Query} (const Q\+String \&query\+Key, const Q\+String \&query)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a761b80719e67efd7f91d9c0026fbec50}\label{classEmacsBridge_a761b80719e67efd7f91d9c0026fbec50}} 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void {\bfseries init\+Drawer} ()
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a45985f7331850cf1409b08c77d5af324}\label{classEmacsBridge_a45985f7331850cf1409b08c77d5af324}} 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE Q\+Variant {\bfseries server\+Property} (const Q\+String \&key)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a7a3511077fae804f28cfe7ed6bc22e63}\label{classEmacsBridge_a7a3511077fae804f28cfe7ed6bc22e63}} 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void {\bfseries copy\+Server\+Property} (const Q\+String \&key)
+\item 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void \mbox{\hyperlink{classEmacsBridge_a3cd2fbf0ec3964c8a0d525ed580f304b}{open\+App\+Settings}} ()
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a58b3130842cfb15cfb28e8d5b5c396cb}\label{classEmacsBridge_a58b3130842cfb15cfb28e8d5b5c396cb}} 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void {\bfseries call\+Intent} (const Q\+String \&i\+Action, const Q\+String \&i\+Data=\char`\"{}\char`\"{}, const Q\+String \&i\+Package=\char`\"{}\char`\"{}, const Q\+String \&i\+Class=\char`\"{}\char`\"{})
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a69b7b176521b9dad9be978eeebb9bbde}\label{classEmacsBridge_a69b7b176521b9dad9be978eeebb9bbde}} 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void {\bfseries request\+Android\+Permission} (const Q\+String \&permission\+Name)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a7693c5a7ef4114b221a6cec4a6ef6e9f}\label{classEmacsBridge_a7693c5a7ef4114b221a6cec4a6ef6e9f}} 
+Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void {\bfseries setup\+Termux} ()
+\item 
+\mbox{\Hypertarget{classEmacsBridge_aa91ecd35d9f1573e3d11749083d1f597}\label{classEmacsBridge_aa91ecd35d9f1573e3d11749083d1f597}} 
+Q\+Date\+Time {\bfseries service\+Startup\+Time} () const
+\item 
+\mbox{\Hypertarget{classEmacsBridge_ab559f73a4f6a8a96f807c9def375e234}\label{classEmacsBridge_ab559f73a4f6a8a96f807c9def375e234}} 
+Q\+Date\+Time {\bfseries startup\+Time} () const
+\item 
+\mbox{\Hypertarget{classEmacsBridge_aa52856c049f56d02900814200123b557}\label{classEmacsBridge_aa52856c049f56d02900814200123b557}} 
+Q\+String {\bfseries default\+Page} () const
+\item 
+\mbox{\Hypertarget{classEmacsBridge_ae08ebb216ae5285441890e8b2361696c}\label{classEmacsBridge_ae08ebb216ae5285441890e8b2361696c}} 
+void {\bfseries set\+Default\+Page} (const Q\+String \&default\+Page)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a3697791b45058fdc9a9a376e7ea607c6}\label{classEmacsBridge_a3697791b45058fdc9a9a376e7ea607c6}} 
+quint16 {\bfseries active\+Server\+Listen\+Port} () const
+\item 
+\mbox{\Hypertarget{classEmacsBridge_ad31bd7fdd2374f3abeb3b567e289f9f9}\label{classEmacsBridge_ad31bd7fdd2374f3abeb3b567e289f9f9}} 
+Q\+String {\bfseries server\+Listen\+Address} () const
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a0cf8180b3b59ffd292551e9ed0a0ba6e}\label{classEmacsBridge_a0cf8180b3b59ffd292551e9ed0a0ba6e}} 
+void {\bfseries set\+Server\+Listen\+Address} (const Q\+String \&server\+Address) const
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a16ecfa55203fde6afea877150c5ae278}\label{classEmacsBridge_a16ecfa55203fde6afea877150c5ae278}} 
+quint16 {\bfseries server\+Listen\+Port} () const
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a50ecb9716aa0847ae0ce148e2735b189}\label{classEmacsBridge_a50ecb9716aa0847ae0ce148e2735b189}} 
+void {\bfseries set\+Server\+Listen\+Port} (const quint16 server\+Port) const
+\item 
+bool \mbox{\hyperlink{classEmacsBridge_a6cb4876d7db47b824491892f0e0b3b0d}{mobile}} () const
+\end{DoxyCompactItemize}
+\doxysubsection*{Properties}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a428ec33761c3d30f465e12f9762b6370}\label{classEmacsBridge_a428ec33761c3d30f465e12f9762b6370}} 
+bool {\bfseries mobile}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_ac180414220619acc779ab421c64b2079}\label{classEmacsBridge_ac180414220619acc779ab421c64b2079}} 
+quint16 {\bfseries active\+Server\+Listen\+Port}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a2c83345dc7446bcf97aa10355f9f88a9}\label{classEmacsBridge_a2c83345dc7446bcf97aa10355f9f88a9}} 
+Q\+String {\bfseries server\+Listen\+Address}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_ab42da20e961aae43a9a760d5bf4fcb75}\label{classEmacsBridge_ab42da20e961aae43a9a760d5bf4fcb75}} 
+quint16 {\bfseries server\+Listen\+Port}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a3ecc67baa1b6e993eee4215c9f0f33f0}\label{classEmacsBridge_a3ecc67baa1b6e993eee4215c9f0f33f0}} 
+Q\+Date\+Time {\bfseries service\+Startup\+Time}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a9f123a18c90bd05d5b4b7a46e47078b7}\label{classEmacsBridge_a9f123a18c90bd05d5b4b7a46e47078b7}} 
+Q\+Date\+Time {\bfseries startup\+Time}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a890f0fc6a9ffd924035b6701c5223e72}\label{classEmacsBridge_a890f0fc6a9ffd924035b6701c5223e72}} 
+Q\+String {\bfseries default\+Page}
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a5869c96f0c921c82ae9e6e6fea1c86e9}\label{classEmacsBridge_a5869c96f0c921c82ae9e6e6fea1c86e9}} 
+void {\bfseries update\+Query\+Result} (const Q\+String \&query\+Key, const Q\+String \&result)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a4aed920c71bcfbc1e5027c23ed25e644}\label{classEmacsBridge_a4aed920c71bcfbc1e5027c23ed25e644}} 
+void {\bfseries add\+Component} (const \mbox{\hyperlink{structQmlFileContainer}{Qml\+File\+Container}} \&qml\+File)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a98e7da34aa05e51a82988ad43d3f8ef0}\label{classEmacsBridge_a98e7da34aa05e51a82988ad43d3f8ef0}} 
+void {\bfseries remove\+Component} (const Q\+String \&qml\+File)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_ad2cd5fbecd1bb8de07ca2cae9bb27e9b}\label{classEmacsBridge_ad2cd5fbecd1bb8de07ca2cae9bb27e9b}} 
+void {\bfseries set\+Data} (const \mbox{\hyperlink{structJsonDataContainer}{Json\+Data\+Container}} \&json\+Container)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a683c02fce325369f2856ee946eafecfe}\label{classEmacsBridge_a683c02fce325369f2856ee946eafecfe}} 
+Q\+Date\+Time \mbox{\hyperlink{classEmacsBridge_a683c02fce325369f2856ee946eafecfe}{m\+\_\+startup\+Time}}
+\begin{DoxyCompactList}\small\item\em The startup time of the UI part. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classEmacsBridge_abd8829f2f059a01656f678b5ace94336}\label{classEmacsBridge_abd8829f2f059a01656f678b5ace94336}} 
+Q\+Remote\+Object\+Node {\bfseries m\+\_\+rep\+Node}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a43ca8abd24d48c769a6d5be53ea73706}\label{classEmacsBridge_a43ca8abd24d48c769a6d5be53ea73706}} 
+Q\+Shared\+Pointer$<$ Emacs\+Bridge\+Remote\+Replica $>$ {\bfseries m\+\_\+rep}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_aca5298f9b6445ad81fd69641c2a8f900}\label{classEmacsBridge_aca5298f9b6445ad81fd69641c2a8f900}} 
+Q\+Qml\+Application\+Engine $\ast$ {\bfseries m\+\_\+engine}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a2f841dc930809e27375db2325e2c81a4}\label{classEmacsBridge_a2f841dc930809e27375db2325e2c81a4}} 
+bool {\bfseries m\+\_\+is\+Dummy} =false
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a20eae9e9287f57d76ec2c679ef3a7f0c}\label{classEmacsBridge_a20eae9e9287f57d76ec2c679ef3a7f0c}} 
+Q\+String\+List {\bfseries m\+\_\+drawer\+Components}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This is the main class for the service process. Per default it sets up a connection to the service using Qt remote objects, and exposes select service A\+P\+Is to Q\+ML. It is also possible to use the dummy constructor to test loading of Q\+ML components without providing the full backend logic. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classEmacsBridge_a95d6d68416303b3aa353daff6cb4370f}\label{classEmacsBridge_a95d6d68416303b3aa353daff6cb4370f}} 
+\index{EmacsBridge@{EmacsBridge}!copyToClipboard@{copyToClipboard}}
+\index{copyToClipboard@{copyToClipboard}!EmacsBridge@{EmacsBridge}}
+\doxysubsubsection{\texorpdfstring{copyToClipboard()}{copyToClipboard()}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+::copy\+To\+Clipboard (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{text }\end{DoxyParamCaption})}
+
+Copies {\itshape text} to the systems clipboard \mbox{\Hypertarget{classEmacsBridge_a6cb4876d7db47b824491892f0e0b3b0d}\label{classEmacsBridge_a6cb4876d7db47b824491892f0e0b3b0d}} 
+\index{EmacsBridge@{EmacsBridge}!mobile@{mobile}}
+\index{mobile@{mobile}!EmacsBridge@{EmacsBridge}}
+\doxysubsubsection{\texorpdfstring{mobile()}{mobile()}}
+{\footnotesize\ttfamily bool Emacs\+Bridge\+::mobile (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [inline]}}
+
+Check if the application is running on a mobile device \begin{DoxyReturn}{Returns}
+true on Android 
+
+false on any other platform 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsBridge_a3cd2fbf0ec3964c8a0d525ed580f304b}\label{classEmacsBridge_a3cd2fbf0ec3964c8a0d525ed580f304b}} 
+\index{EmacsBridge@{EmacsBridge}!openAppSettings@{openAppSettings}}
+\index{openAppSettings@{openAppSettings}!EmacsBridge@{EmacsBridge}}
+\doxysubsubsection{\texorpdfstring{openAppSettings()}{openAppSettings()}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+::open\+App\+Settings (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Open the Android application settings 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsbridge_8h}{emacsbridge.\+h}}\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsbridge_8cpp}{emacsbridge.\+cpp}}\end{DoxyCompactItemize}

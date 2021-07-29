@@ -1,0 +1,242 @@
+\hypertarget{classEmacsBridgeLog}{}\doxysection{Emacs\+Bridge\+Log Class Reference}
+\label{classEmacsBridgeLog}\index{EmacsBridgeLog@{EmacsBridgeLog}}
+
+
+{\ttfamily \#include $<$emacsbridgelog.\+h$>$}
+
+Inheritance diagram for Emacs\+Bridge\+Log\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classEmacsBridgeLog}
+\end{center}
+\end{figure}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classEmacsBridgeLog_ab8966ded9209285d8621b1d5b0c005c8}{log\+Added}} (const Q\+String \&message)
+\item 
+void \mbox{\hyperlink{classEmacsBridgeLog_aa82ee82cc02ac3467eb150b0d4270501}{raw\+Log\+Added}} (const Q\+Hash$<$ Q\+String, Q\+Variant $>$ entry)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static \mbox{\hyperlink{classEmacsBridgeLog}{Emacs\+Bridge\+Log}} $\ast$ \mbox{\hyperlink{classEmacsBridgeLog_a4a52cbb9a15ee1d9a7b437e07d54c0e0}{instance}} ()
+\item 
+static void \mbox{\hyperlink{classEmacsBridgeLog_a1329ec3671500f70dd8ddf6b5e1494d3}{message\+Handler}} (Qt\+Msg\+Type type, const Q\+Message\+Log\+Context \&context, const Q\+String \&msg)
+\item 
+static void \mbox{\hyperlink{classEmacsBridgeLog_abd8bbe95e3f4654359310d4f6c13b983}{set\+Buffer\+Size}} (int \mbox{\hyperlink{classEmacsBridgeLog_ab69be75970436f6ca4f4b30e59b1d837}{buffer\+Size}})
+\item 
+static int \mbox{\hyperlink{classEmacsBridgeLog_ab69be75970436f6ca4f4b30e59b1d837}{buffer\+Size}} ()
+\item 
+static void \mbox{\hyperlink{classEmacsBridgeLog_aeafd6a5ecdc77a18662ab5f1742a0291}{inject\+Log\+Entry}} (const Q\+Hash$<$ Q\+String, Q\+Variant $>$ entry)
+\item 
+static Q\+String\+List \mbox{\hyperlink{classEmacsBridgeLog_a77bb615a320a7ce82c607761917c6d39}{log\+Buffer}} ()
+\item 
+static void \mbox{\hyperlink{classEmacsBridgeLog_ac339c376b4d0e2939bb1a39590602439}{set\+Priority}} (const int \mbox{\hyperlink{classEmacsBridgeLog_a1181707dc3b81fcf0df3d249bea2efce}{priority}})
+\item 
+static void \mbox{\hyperlink{classEmacsBridgeLog_a6e306e33683bf05d88e57e2f30fdddd7}{set\+Console\+Logging}} (const int value)
+\item 
+static void \mbox{\hyperlink{classEmacsBridgeLog_a887b0d655244da7379eaaddaa907c5c0}{set\+Buffer\+Logging}} (const int value)
+\item 
+static void \mbox{\hyperlink{classEmacsBridgeLog_a6db49383846642b6672cd153c0cd3083}{set\+Logging}} (bool state)
+\item 
+static void \mbox{\hyperlink{classEmacsBridgeLog_ad170f42b361d27682461052c7d628cfa}{set\+Log\+Prefix}} (const Q\+String \&prefix)
+\item 
+static int \mbox{\hyperlink{classEmacsBridgeLog_a1181707dc3b81fcf0df3d249bea2efce}{priority}} ()
+\item 
+static int \mbox{\hyperlink{classEmacsBridgeLog_af5fc98e0321f9a8bfec2e943144cbd32}{console\+Logging}} ()
+\item 
+static int \mbox{\hyperlink{classEmacsBridgeLog_abb5f9afd7a2ee88e24fcd778e3d41520}{buffer\+Logging}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeLog_a44182672bdf78cde7d04d14c83cd8a04}\label{classEmacsBridgeLog_a44182672bdf78cde7d04d14c83cd8a04}} 
+{\bfseries Emacs\+Bridge\+Log} (const \mbox{\hyperlink{classEmacsBridgeLog}{Emacs\+Bridge\+Log}} \&)
+\item 
+void \mbox{\hyperlink{classEmacsBridgeLog_a84f34d6dccea5699e94ace5d036280fa}{add\+Log\+Entry}} (const Q\+Hash$<$ Q\+String, Q\+Variant $>$ entry, bool injected=false)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeLog_a991285a038b176bc7ee230f31555cb3f}\label{classEmacsBridgeLog_a991285a038b176bc7ee230f31555cb3f}} 
+bool {\bfseries m\+\_\+initialized} =false
+\item 
+\mbox{\Hypertarget{classEmacsBridgeLog_a897b0de2e55caf2a391c467413a63161}\label{classEmacsBridgeLog_a897b0de2e55caf2a391c467413a63161}} 
+Q\+String {\bfseries m\+\_\+log\+Prefix} =\char`\"{}\char`\"{}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeLog_abd68ea033c5e9d0f6be2c3651638ad15}\label{classEmacsBridgeLog_abd68ea033c5e9d0f6be2c3651638ad15}} 
+int {\bfseries m\+\_\+log\+Level}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeLog_a1e1713b142d313101da90392606c681e}\label{classEmacsBridgeLog_a1e1713b142d313101da90392606c681e}} 
+int {\bfseries m\+\_\+console\+Logging}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeLog_a80db399ba013ac387e4595dff8ad2529}\label{classEmacsBridgeLog_a80db399ba013ac387e4595dff8ad2529}} 
+int {\bfseries m\+\_\+ring\+Buffer\+Logging}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeLog_a0493fd9c333a8b4c3424e7d558c6c88c}\label{classEmacsBridgeLog_a0493fd9c333a8b4c3424e7d558c6c88c}} 
+bool \mbox{\hyperlink{classEmacsBridgeLog_a0493fd9c333a8b4c3424e7d558c6c88c}{m\+\_\+log\+State}}
+\begin{DoxyCompactList}\small\item\em logging state. true\+: log false\+: just emit a row log entry signal \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classEmacsBridgeLog_a874d031ebb579a491fd890742db3813b}\label{classEmacsBridgeLog_a874d031ebb579a491fd890742db3813b}} 
+Q\+Contiguous\+Cache$<$ Q\+String $>$ \mbox{\hyperlink{classEmacsBridgeLog_a874d031ebb579a491fd890742db3813b}{m\+\_\+log\+Buffer}}
+\begin{DoxyCompactList}\small\item\em the internal ringbuffer \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridgeLog_aea8e6144a36cf4db2d473e1f0da8121b}\label{classEmacsBridgeLog_aea8e6144a36cf4db2d473e1f0da8121b}} 
+static \mbox{\hyperlink{classEmacsBridgeLog}{Emacs\+Bridge\+Log}} $\ast$ {\bfseries emacs\+Bridge\+Log} =0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class handles logging of messages from the Qt log functions to various useful outputs. Depending on the system this may be one or more of the following\+:
+\begin{DoxyItemize}
+\item stdout/stderr
+\item systemd journal
+\item Android log, readable via logcat
+\item internal ringbuffer, readable via emacsbridge -\/log
+\end{DoxyItemize}
+
+This class is a singleton, and most methods are static for ease of use. Additionally it is possible to inject raw log entries for parsing, which generally is usable to forward messages from multiple processes to a single logging instance. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classEmacsBridgeLog_a84f34d6dccea5699e94ace5d036280fa}\label{classEmacsBridgeLog_a84f34d6dccea5699e94ace5d036280fa}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!addLogEntry@{addLogEntry}}
+\index{addLogEntry@{addLogEntry}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{addLogEntry()}{addLogEntry()}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+Log\+::add\+Log\+Entry (\begin{DoxyParamCaption}\item[{const Q\+Hash$<$ Q\+String, Q\+Variant $>$}]{entry,  }\item[{bool}]{injected = {\ttfamily false} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Format and log an entry to various facilities. Log injection just calls this method with {\itshape injected} set to {\ttfamily true}. \mbox{\Hypertarget{classEmacsBridgeLog_abb5f9afd7a2ee88e24fcd778e3d41520}\label{classEmacsBridgeLog_abb5f9afd7a2ee88e24fcd778e3d41520}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!bufferLogging@{bufferLogging}}
+\index{bufferLogging@{bufferLogging}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{bufferLogging()}{bufferLogging()}}
+{\footnotesize\ttfamily int Emacs\+Bridge\+Log\+::buffer\+Logging (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyReturn}{Returns}
+the current setting for logging messages to ringbuffer 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsBridgeLog_ab69be75970436f6ca4f4b30e59b1d837}\label{classEmacsBridgeLog_ab69be75970436f6ca4f4b30e59b1d837}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!bufferSize@{bufferSize}}
+\index{bufferSize@{bufferSize}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{bufferSize()}{bufferSize()}}
+{\footnotesize\ttfamily int Emacs\+Bridge\+Log\+::buffer\+Size (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyReturn}{Returns}
+the current size of the internal ringbuffer 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsBridgeLog_af5fc98e0321f9a8bfec2e943144cbd32}\label{classEmacsBridgeLog_af5fc98e0321f9a8bfec2e943144cbd32}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!consoleLogging@{consoleLogging}}
+\index{consoleLogging@{consoleLogging}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{consoleLogging()}{consoleLogging()}}
+{\footnotesize\ttfamily int Emacs\+Bridge\+Log\+::console\+Logging (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyReturn}{Returns}
+the current setting for logging messages to stdout/stderr 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsBridgeLog_aeafd6a5ecdc77a18662ab5f1742a0291}\label{classEmacsBridgeLog_aeafd6a5ecdc77a18662ab5f1742a0291}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!injectLogEntry@{injectLogEntry}}
+\index{injectLogEntry@{injectLogEntry}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{injectLogEntry()}{injectLogEntry()}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+Log\+::inject\+Log\+Entry (\begin{DoxyParamCaption}\item[{const Q\+Hash$<$ Q\+String, Q\+Variant $>$}]{entry }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Inject a raw log entry. No testing if messages of the entries priority should be logged is performed -\/ the class directly jumps into formatting and logging the entry. \mbox{\Hypertarget{classEmacsBridgeLog_a4a52cbb9a15ee1d9a7b437e07d54c0e0}\label{classEmacsBridgeLog_a4a52cbb9a15ee1d9a7b437e07d54c0e0}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!instance@{instance}}
+\index{instance@{instance}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{instance()}{instance()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classEmacsBridgeLog}{Emacs\+Bridge\+Log}} $\ast$ Emacs\+Bridge\+Log\+::instance (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+A handle for the class instance. Generally just using static methods should be sufficient. \mbox{\Hypertarget{classEmacsBridgeLog_ab8966ded9209285d8621b1d5b0c005c8}\label{classEmacsBridgeLog_ab8966ded9209285d8621b1d5b0c005c8}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!logAdded@{logAdded}}
+\index{logAdded@{logAdded}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{logAdded}{logAdded}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+Log\+::log\+Added (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{message }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+A string with a formatted log message is emitted when it has been logged to the usual facilities \mbox{\Hypertarget{classEmacsBridgeLog_a77bb615a320a7ce82c607761917c6d39}\label{classEmacsBridgeLog_a77bb615a320a7ce82c607761917c6d39}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!logBuffer@{logBuffer}}
+\index{logBuffer@{logBuffer}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{logBuffer()}{logBuffer()}}
+{\footnotesize\ttfamily Q\+String\+List Emacs\+Bridge\+Log\+::log\+Buffer (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyReturn}{Returns}
+the complete internal ringbuffer as a string list 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsBridgeLog_a1329ec3671500f70dd8ddf6b5e1494d3}\label{classEmacsBridgeLog_a1329ec3671500f70dd8ddf6b5e1494d3}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!messageHandler@{messageHandler}}
+\index{messageHandler@{messageHandler}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{messageHandler()}{messageHandler()}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+Log\+::message\+Handler (\begin{DoxyParamCaption}\item[{Qt\+Msg\+Type}]{type,  }\item[{const Q\+Message\+Log\+Context \&}]{context,  }\item[{const Q\+String \&}]{msg }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+The Qt message handler to redirect the output of Qts log functions to this class. This typically needs to be called once early on for registration\+: {\ttfamily q\+Install\+Message\+Handler(\+Emacs\+Bridge\+Log\+::message\+Handler);} \mbox{\Hypertarget{classEmacsBridgeLog_a1181707dc3b81fcf0df3d249bea2efce}\label{classEmacsBridgeLog_a1181707dc3b81fcf0df3d249bea2efce}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!priority@{priority}}
+\index{priority@{priority}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{priority()}{priority()}}
+{\footnotesize\ttfamily int Emacs\+Bridge\+Log\+::priority (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+\begin{DoxyReturn}{Returns}
+the current lowest priority for logging messages 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsBridgeLog_aa82ee82cc02ac3467eb150b0d4270501}\label{classEmacsBridgeLog_aa82ee82cc02ac3467eb150b0d4270501}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!rawLogAdded@{rawLogAdded}}
+\index{rawLogAdded@{rawLogAdded}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{rawLogAdded}{rawLogAdded}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+Log\+::raw\+Log\+Added (\begin{DoxyParamCaption}\item[{const Q\+Hash$<$ Q\+String, Q\+Variant $>$}]{entry }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [signal]}}
+
+An unformatted log entry is emitted if logging to regular facilities is disabled. Typically a processes main class would catch that and make sure a different process injects the log message into its log class \mbox{\Hypertarget{classEmacsBridgeLog_a887b0d655244da7379eaaddaa907c5c0}\label{classEmacsBridgeLog_a887b0d655244da7379eaaddaa907c5c0}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!setBufferLogging@{setBufferLogging}}
+\index{setBufferLogging@{setBufferLogging}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{setBufferLogging()}{setBufferLogging()}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+Log\+::set\+Buffer\+Logging (\begin{DoxyParamCaption}\item[{const int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Configure which messages are logged to the internal ringbuffer. {\itshape value} can take the values as documented for \mbox{\hyperlink{classEmacsBridgeLog_a6e306e33683bf05d88e57e2f30fdddd7}{set\+Console\+Logging}} \mbox{\Hypertarget{classEmacsBridgeLog_abd8bbe95e3f4654359310d4f6c13b983}\label{classEmacsBridgeLog_abd8bbe95e3f4654359310d4f6c13b983}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!setBufferSize@{setBufferSize}}
+\index{setBufferSize@{setBufferSize}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{setBufferSize()}{setBufferSize()}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+Log\+::set\+Buffer\+Size (\begin{DoxyParamCaption}\item[{int}]{buffer\+Size }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Set the size of the internal ringbuffer to {\itshape buffer\+Size}. The value refers to the number of lines it can hold.
+
+Per default it is initialized at 50 lines to be able to capture early log messages before it is possible to re-\/initialize it with a larger number. \mbox{\Hypertarget{classEmacsBridgeLog_a6e306e33683bf05d88e57e2f30fdddd7}\label{classEmacsBridgeLog_a6e306e33683bf05d88e57e2f30fdddd7}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!setConsoleLogging@{setConsoleLogging}}
+\index{setConsoleLogging@{setConsoleLogging}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{setConsoleLogging()}{setConsoleLogging()}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+Log\+::set\+Console\+Logging (\begin{DoxyParamCaption}\item[{const int}]{value }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Configure which messages are logged to stdout/stderr. {\itshape value} can take the following values\+: \tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ }\\\cline{1-2}
+\endhead
+-\/1 &no console logging at all  \\\cline{1-2}
+0 &only critical/fatal to stderr  \\\cline{1-2}
+1 &info and warnings to stdout  \\\cline{1-2}
+2 &debug messages to stdout as well  \\\cline{1-2}
+\end{longtabu}
+\mbox{\Hypertarget{classEmacsBridgeLog_a6db49383846642b6672cd153c0cd3083}\label{classEmacsBridgeLog_a6db49383846642b6672cd153c0cd3083}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!setLogging@{setLogging}}
+\index{setLogging@{setLogging}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{setLogging()}{setLogging()}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+Log\+::set\+Logging (\begin{DoxyParamCaption}\item[{bool}]{state }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Enable or disable logging \mbox{\Hypertarget{classEmacsBridgeLog_ad170f42b361d27682461052c7d628cfa}\label{classEmacsBridgeLog_ad170f42b361d27682461052c7d628cfa}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!setLogPrefix@{setLogPrefix}}
+\index{setLogPrefix@{setLogPrefix}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{setLogPrefix()}{setLogPrefix()}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+Log\+::set\+Log\+Prefix (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{prefix }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Set a prefix to be logged in front of all log messages \mbox{\Hypertarget{classEmacsBridgeLog_ac339c376b4d0e2939bb1a39590602439}\label{classEmacsBridgeLog_ac339c376b4d0e2939bb1a39590602439}} 
+\index{EmacsBridgeLog@{EmacsBridgeLog}!setPriority@{setPriority}}
+\index{setPriority@{setPriority}!EmacsBridgeLog@{EmacsBridgeLog}}
+\doxysubsubsection{\texorpdfstring{setPriority()}{setPriority()}}
+{\footnotesize\ttfamily void Emacs\+Bridge\+Log\+::set\+Priority (\begin{DoxyParamCaption}\item[{const int}]{priority }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+
+Set the lowest priority for which log messages should still get printed. The {\itshape priority} matches syslog priorities, and defaults to L\+O\+G\+\_\+\+I\+N\+FO. 
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsbridgelog_8h}{emacsbridgelog.\+h}}\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsbridgelog_8cpp}{emacsbridgelog.\+cpp}}\end{DoxyCompactItemize}

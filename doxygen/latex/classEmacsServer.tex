@@ -1,0 +1,306 @@
+\hypertarget{classEmacsServer}{}\doxysection{Emacs\+Server Class Reference}
+\label{classEmacsServer}\index{EmacsServer@{EmacsServer}}
+
+
+{\ttfamily \#include $<$emacsserver.\+h$>$}
+
+Inheritance diagram for Emacs\+Server\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classEmacsServer}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+void \mbox{\hyperlink{classEmacsServer_aad292c65d5dba28d68f3859e8957a71a}{start\+Server}} ()
+\item 
+void \mbox{\hyperlink{classEmacsServer_a50e722ccfd406721163115ac76a81ca4}{restart\+Server}} ()
+\item 
+quint16 \mbox{\hyperlink{classEmacsServer_a098e452eb92dff0d713643e8d9eadcb9}{active\+Server\+Port}} ()
+\item 
+Q\+String \mbox{\hyperlink{classEmacsServer_a114290124c50580493b66cc653b5bbde}{call\+Intent}} (const Q\+String \&json\+String)
+\item 
+Q\+String \mbox{\hyperlink{classEmacsServer_a24c1f7a59c0784abb3058f8ff08048a9}{check\+Permissions}} (const Q\+String \&intent\+Class)
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsServer_ae24fcebc0859ee8950e988554610e730}\label{classEmacsServer_ae24fcebc0859ee8950e988554610e730}} 
+void {\bfseries component\+Added} (const \mbox{\hyperlink{structQmlFileContainer}{Qml\+File\+Container}} \&qml\+File)
+\item 
+\mbox{\Hypertarget{classEmacsServer_a7a46d6fa39d7d6fafba6895095e4d86d}\label{classEmacsServer_a7a46d6fa39d7d6fafba6895095e4d86d}} 
+void {\bfseries component\+Removed} (const Q\+String \&qml\+File)
+\item 
+\mbox{\Hypertarget{classEmacsServer_af180efd48dd38f462c2c8765a9020636}\label{classEmacsServer_af180efd48dd38f462c2c8765a9020636}} 
+void {\bfseries data\+Set} (const \mbox{\hyperlink{structJsonDataContainer}{Json\+Data\+Container}} \&json\+Data)
+\item 
+\mbox{\Hypertarget{classEmacsServer_a16cf04e88f7a955e806426fb2694ab96}\label{classEmacsServer_a16cf04e88f7a955e806426fb2694ab96}} 
+void {\bfseries notification\+Added} (const Q\+String \&title, const Q\+String \&message)
+\item 
+\mbox{\Hypertarget{classEmacsServer_ae775e21a8fce68fd9cc0b93daad63a3f}\label{classEmacsServer_ae775e21a8fce68fd9cc0b93daad63a3f}} 
+void {\bfseries active\+Port\+Changed} (const quint16 port)
+\item 
+\mbox{\Hypertarget{classEmacsServer_ab3be8522e56dc966bc474668a4acbbd8}\label{classEmacsServer_ab3be8522e56dc966bc474668a4acbbd8}} 
+void {\bfseries android\+Permission\+Denied} (const Q\+String \&permission)
+\item 
+\mbox{\Hypertarget{classEmacsServer_a7e3335b2cc6ad03f55de50b1caea3cab}\label{classEmacsServer_a7e3335b2cc6ad03f55de50b1caea3cab}} 
+void {\bfseries parse\+Morse} (int level)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+bool \mbox{\hyperlink{classEmacsServer_ada18dbe6e2d80ea9ca508fb7c0c36b6f}{valid\+Auth\+Token}} (const Q\+String \&token)
+\item 
+void \mbox{\hyperlink{classEmacsServer_a496f57b0b4ad930622b7770215335c74}{start\+Http\+Server}} ()
+\item 
+Q\+String \mbox{\hyperlink{classEmacsServer_a43de9f904b2b8f8be59252fde1af20ca}{list\+Directory}} (const Q\+String \&directory)
+\item 
+Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_a136119742da0ab7287740db85fb82fa4}{method\+Call}} (const Q\+String \&method, const Q\+Byte\+Array \&payload)
+\item 
+Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_a16d5d4f4f10c9b8bc9f6276ad6b15d75}{setting\+Call}} (const Q\+String \&setting, const Q\+Byte\+Array \&payload)
+\item 
+Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_ad13c46e6369996e64d2e51d7b128b1df}{add\+Component}} (const Q\+Json\+Object \&json\+Object)
+\item 
+Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_a73c7d5f66cae91486fd0ab5146833a51}{add\+Notification}} (const Q\+Json\+Object \&json\+Object)
+\item 
+Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_a8c44753b6c67b48ff08fbedc92fe0c67}{handle\+Intent}} (const Q\+Json\+Object \&json\+Object, const Q\+String \&json\+String)
+\item 
+Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_ac1509713c1dce19643ad4c10d8c5c2b6}{handle\+Sensor\+Call}} (const Q\+Json\+Object \&json\+Object)
+\item 
+Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_aba32ce7ceec3aa0beef9530db8459d35}{parse\+File}} (const Q\+String \&file\+Name)
+\item 
+Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_aaec7b23b312a475a45c2832c44e437d2}{remove\+Component}} (const Q\+Json\+Object \&json\+Object)
+\item 
+Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_a9fc08811ca1c3827ff560cd353b97f2a}{set\+Data}} (const Q\+Json\+Object \&json\+Object, const Q\+String \&json\+String)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsServer_a1f7643741777ff443c97e0ec8215c287}\label{classEmacsServer_a1f7643741777ff443c97e0ec8215c287}} 
+Q\+Http\+Server $\ast$ {\bfseries m\+\_\+server}
+\item 
+\mbox{\Hypertarget{classEmacsServer_ab663666b7f210f79038622eb82961325}\label{classEmacsServer_ab663666b7f210f79038622eb82961325}} 
+Q\+Date\+Time {\bfseries m\+\_\+startup\+Time}
+\item 
+\mbox{\Hypertarget{classEmacsServer_abb76dcd6c826ae5f1e1791065b68449b}\label{classEmacsServer_abb76dcd6c826ae5f1e1791065b68449b}} 
+Q\+String {\bfseries m\+\_\+html\+Template}
+\item 
+\mbox{\Hypertarget{classEmacsServer_a95f9b314c9946189ee826f68ce02cfd2}\label{classEmacsServer_a95f9b314c9946189ee826f68ce02cfd2}} 
+Q\+String {\bfseries m\+\_\+data\+Path}
+\item 
+\mbox{\Hypertarget{classEmacsServer_ac8e0226e0fb891de0253930ac90f0136}\label{classEmacsServer_ac8e0226e0fb891de0253930ac90f0136}} 
+\mbox{\hyperlink{classEmacsBridgeMorse}{Emacs\+Bridge\+Morse}} $\ast$ {\bfseries m\+\_\+morse\+Interpreter}
+\item 
+\mbox{\Hypertarget{classEmacsServer_ae4101bb529a46957252e47356268aa7e}\label{classEmacsServer_ae4101bb529a46957252e47356268aa7e}} 
+Q\+Ambient\+Light\+Sensor $\ast$ {\bfseries m\+\_\+ambient\+Light\+Sensor}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class provides the H\+T\+TP server to serve documentation pages, allow initial configuration from Emacs side, and provide the R\+PC endpoints used from Emacs. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classEmacsServer_a098e452eb92dff0d713643e8d9eadcb9}\label{classEmacsServer_a098e452eb92dff0d713643e8d9eadcb9}} 
+\index{EmacsServer@{EmacsServer}!activeServerPort@{activeServerPort}}
+\index{activeServerPort@{activeServerPort}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{activeServerPort}{activeServerPort}}
+{\footnotesize\ttfamily quint16 Emacs\+Server\+::active\+Server\+Port (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+\begin{DoxyReturn}{Returns}
+the current server listen port, or 0
+\end{DoxyReturn}
+The server is supposed to listen to only one port. If something went went wrong and the server listens to more than one the first listen port is returned. In this case, and if the server is not listening at all a critical log message is logged. \mbox{\Hypertarget{classEmacsServer_ad13c46e6369996e64d2e51d7b128b1df}\label{classEmacsServer_ad13c46e6369996e64d2e51d7b128b1df}} 
+\index{EmacsServer@{EmacsServer}!addComponent@{addComponent}}
+\index{addComponent@{addComponent}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{addComponent()}{addComponent()}}
+{\footnotesize\ttfamily Q\+Http\+Server\+Response Emacs\+Server\+::add\+Component (\begin{DoxyParamCaption}\item[{const Q\+Json\+Object \&}]{json\+Object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Verify the data, and add a new Q\+ML component to the application if the provided data is valid. Note that overwriting an existing component typically requires a restart of the applications due to shortcomings in the Q\+ML garbage collector.
+
+\begin{DoxyReturn}{Returns}
+Q\+Http\+Server\+Responder\+::\+Status\+Code\+::\+Bad\+Request on error. Both the error and success messages are designed to be exposed to the Emacs UI and are translatable. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_a73c7d5f66cae91486fd0ab5146833a51}\label{classEmacsServer_a73c7d5f66cae91486fd0ab5146833a51}} 
+\index{EmacsServer@{EmacsServer}!addNotification@{addNotification}}
+\index{addNotification@{addNotification}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{addNotification()}{addNotification()}}
+{\footnotesize\ttfamily Q\+Http\+Server\+Response Emacs\+Server\+::add\+Notification (\begin{DoxyParamCaption}\item[{const Q\+Json\+Object \&}]{json\+Object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Display the provided notification via platform specific UI.
+
+\begin{DoxyReturn}{Returns}
+OK. Most notification backends don\textquotesingle{}t provide much error error handling, so the assumption is always that the call succeeded. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_a114290124c50580493b66cc653b5bbde}\label{classEmacsServer_a114290124c50580493b66cc653b5bbde}} 
+\index{EmacsServer@{EmacsServer}!callIntent@{callIntent}}
+\index{callIntent@{callIntent}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{callIntent}{callIntent}}
+{\footnotesize\ttfamily Q\+String Emacs\+Server\+::call\+Intent (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{json\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+Call a J\+S\+ON encoded Android intent through call\+Intent\+From\+Json() on Java side in Emacs\+Bridge\+Service.
+
+\begin{DoxyReturn}{Returns}
+OK on success, Java exception string on error 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_a24c1f7a59c0784abb3058f8ff08048a9}\label{classEmacsServer_a24c1f7a59c0784abb3058f8ff08048a9}} 
+\index{EmacsServer@{EmacsServer}!checkPermissions@{checkPermissions}}
+\index{checkPermissions@{checkPermissions}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{checkPermissions}{checkPermissions}}
+{\footnotesize\ttfamily Q\+String Emacs\+Server\+::check\+Permissions (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{intent\+Class }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+Look up the permissions required for {\itshape intent\+Class}, check if those are granted, and request the permission dialog from the UI if they are not.
+
+An Android service is not allowed to request permissions, so all we can do here is check if permissions have been granted already. If the result is \char`\"{}denied\char`\"{} the UI is triggered to request permission -\/ but to avoid blocking this function returns without waiting for the result.
+
+The permission may not be granted, or be granted at a later time (and possibly revoked again), so code should handle missing permissions gracefully. If a permission was denied code should continue without those permissions, if possible. If it is not possible a short wait and several retries are an option before aborting.
+
+The following classes are currently supported\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Class }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Permission  }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Class }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Permission  }\\\cline{1-2}
+\endhead
+com.\+termux.\+app.\+Run\+Command\+Service &com.\+termux.\+permission.\+R\+U\+N\+\_\+\+C\+O\+M\+M\+A\+ND  \\\cline{1-2}
+\end{longtabu}
+
+
+Note\+: Currently the implementation can only request a single permission per class name.
+
+\begin{DoxyReturn}{Returns}
+\char`\"{}\char`\"{} on success, or the denied permission name 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_a8c44753b6c67b48ff08fbedc92fe0c67}\label{classEmacsServer_a8c44753b6c67b48ff08fbedc92fe0c67}} 
+\index{EmacsServer@{EmacsServer}!handleIntent@{handleIntent}}
+\index{handleIntent@{handleIntent}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{handleIntent()}{handleIntent()}}
+{\footnotesize\ttfamily Q\+Http\+Server\+Response Emacs\+Server\+::handle\+Intent (\begin{DoxyParamCaption}\item[{const Q\+Json\+Object \&}]{json\+Object,  }\item[{const Q\+String \&}]{json\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Do a validity check on the provided data before executing the intent through \mbox{\hyperlink{classEmacsServer_a114290124c50580493b66cc653b5bbde}{call\+Intent()}}
+
+\begin{DoxyReturn}{Returns}
+Q\+Http\+Server\+Responder\+::\+Status\+Code\+::\+Bad\+Request on error. Both the error and success messages are designed to be exposed to the Emacs UI and are translatable. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_ac1509713c1dce19643ad4c10d8c5c2b6}\label{classEmacsServer_ac1509713c1dce19643ad4c10d8c5c2b6}} 
+\index{EmacsServer@{EmacsServer}!handleSensorCall@{handleSensorCall}}
+\index{handleSensorCall@{handleSensorCall}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{handleSensorCall()}{handleSensorCall()}}
+{\footnotesize\ttfamily Q\+Http\+Server\+Response Emacs\+Server\+::handle\+Sensor\+Call (\begin{DoxyParamCaption}\item[{const Q\+Json\+Object \&}]{json\+Object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Dummy method supposed to handle sensor control in the future \mbox{\Hypertarget{classEmacsServer_a43de9f904b2b8f8be59252fde1af20ca}\label{classEmacsServer_a43de9f904b2b8f8be59252fde1af20ca}} 
+\index{EmacsServer@{EmacsServer}!listDirectory@{listDirectory}}
+\index{listDirectory@{listDirectory}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{listDirectory()}{listDirectory()}}
+{\footnotesize\ttfamily Q\+String Emacs\+Server\+::list\+Directory (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{directory }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+List the directory given in {\itshape directory}.
+
+\begin{DoxyReturn}{Returns}
+a string containing a H\+T\+ML page with the directory listing 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_a136119742da0ab7287740db85fb82fa4}\label{classEmacsServer_a136119742da0ab7287740db85fb82fa4}} 
+\index{EmacsServer@{EmacsServer}!methodCall@{methodCall}}
+\index{methodCall@{methodCall}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{methodCall()}{methodCall()}}
+{\footnotesize\ttfamily Q\+Http\+Server\+Response Emacs\+Server\+::method\+Call (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{method,  }\item[{const Q\+Byte\+Array \&}]{payload }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Check which R\+PC method to call, verify data, and call the method if everything is correct.
+
+This got split out from the /rpc mapping of \mbox{\hyperlink{classEmacsServer_a496f57b0b4ad930622b7770215335c74}{start\+Http\+Server()}} to simplify the code.
+
+This function does some basic validation of the provided J\+S\+ON data, and calls the endpoint specific method with verified data. It then returns the return value of that method call.
+
+\begin{DoxyReturn}{Returns}
+Q\+Http\+Server\+Responder\+::\+Status\+Code\+::\+Bad\+Request on error or the return value of the endpoint method call 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_aba32ce7ceec3aa0beef9530db8459d35}\label{classEmacsServer_aba32ce7ceec3aa0beef9530db8459d35}} 
+\index{EmacsServer@{EmacsServer}!parseFile@{parseFile}}
+\index{parseFile@{parseFile}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{parseFile()}{parseFile()}}
+{\footnotesize\ttfamily Q\+Http\+Server\+Response Emacs\+Server\+::parse\+File (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{file\+Name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Open a file (from filesystem or resource) and replace all valid keys in template notation (\{\{key\}\}) with their values.
+
+\begin{DoxyReturn}{Returns}
+Q\+Http\+Server\+Responder\+::\+Status\+Code\+::\+Bad\+Request on error or the templated file on success. Both the error and success messages are designed to be exposed to the Emacs UI and are translatable. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_aaec7b23b312a475a45c2832c44e437d2}\label{classEmacsServer_aaec7b23b312a475a45c2832c44e437d2}} 
+\index{EmacsServer@{EmacsServer}!removeComponent@{removeComponent}}
+\index{removeComponent@{removeComponent}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{removeComponent()}{removeComponent()}}
+{\footnotesize\ttfamily Q\+Http\+Server\+Response Emacs\+Server\+::remove\+Component (\begin{DoxyParamCaption}\item[{const Q\+Json\+Object \&}]{json\+Object }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Verify the data, and remove a Q\+ML component from the application if the provided data is valid. Note that overwriting an existing component typically requires a restart of the applications due to shortcomings in the Q\+ML garbage collector.
+
+\begin{DoxyReturn}{Returns}
+Q\+Http\+Server\+Responder\+::\+Status\+Code\+::\+Bad\+Request on error. Both the error and success messages are designed to be exposed to the Emacs UI and are translatable. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_a50e722ccfd406721163115ac76a81ca4}\label{classEmacsServer_a50e722ccfd406721163115ac76a81ca4}} 
+\index{EmacsServer@{EmacsServer}!restartServer@{restartServer}}
+\index{restartServer@{restartServer}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{restartServer}{restartServer}}
+{\footnotesize\ttfamily void Emacs\+Server\+::restart\+Server (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+Restart the web server after configuration has changed. This just destroys the internal H\+T\+TP server object, and then calls \mbox{\hyperlink{classEmacsServer_aad292c65d5dba28d68f3859e8957a71a}{start\+Server()}} \mbox{\Hypertarget{classEmacsServer_a9fc08811ca1c3827ff560cd353b97f2a}\label{classEmacsServer_a9fc08811ca1c3827ff560cd353b97f2a}} 
+\index{EmacsServer@{EmacsServer}!setData@{setData}}
+\index{setData@{setData}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{setData()}{setData()}}
+{\footnotesize\ttfamily Q\+Http\+Server\+Response Emacs\+Server\+::set\+Data (\begin{DoxyParamCaption}\item[{const Q\+Json\+Object \&}]{json\+Object,  }\item[{const Q\+String \&}]{json\+String }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Verify if incoming data as a response to a request triggered through elisp contains a requester ID, and then throw the J\+S\+ON data up to the UI. No checks if the data itself is useful for the application is possible here.
+
+\begin{DoxyReturn}{Returns}
+Q\+Http\+Server\+Responder\+::\+Status\+Code\+::\+Bad\+Request on error. Both the error and success messages are designed to be exposed to the Emacs UI and are translatable. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_a16d5d4f4f10c9b8bc9f6276ad6b15d75}\label{classEmacsServer_a16d5d4f4f10c9b8bc9f6276ad6b15d75}} 
+\index{EmacsServer@{EmacsServer}!settingCall@{settingCall}}
+\index{settingCall@{settingCall}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{settingCall()}{settingCall()}}
+{\footnotesize\ttfamily Q\+Http\+Server\+Response Emacs\+Server\+::setting\+Call (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{setting,  }\item[{const Q\+Byte\+Array \&}]{payload }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Method for handling /settings mapping of \mbox{\hyperlink{classEmacsServer_a496f57b0b4ad930622b7770215335c74}{start\+Http\+Server()}}.
+
+Currently the only settings supported are {\itshape server-\/key} and {\itshape server-\/socket}. Those two settings are provided wit the key in the header, and the complete P\+O\+ST containing the data, without any padding.
+
+Code for parsing additional key/value pairs fom the P\+O\+ST body is present, but not yet hooked up to the settings backend.
+
+\begin{DoxyReturn}{Returns}
+Q\+Http\+Server\+Responder\+::\+Status\+Code\+::\+Bad\+Request on error. Both the error and success messages are designed to be exposed to the Emacs UI and are translatable. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_a496f57b0b4ad930622b7770215335c74}\label{classEmacsServer_a496f57b0b4ad930622b7770215335c74}} 
+\index{EmacsServer@{EmacsServer}!startHttpServer@{startHttpServer}}
+\index{startHttpServer@{startHttpServer}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{startHttpServer()}{startHttpServer()}}
+{\footnotesize\ttfamily void Emacs\+Server\+::start\+Http\+Server (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Start up the actual H\+T\+TP server. This creates a new Q\+Http\+Server in m\+\_\+server, and sets up all the mappings. If possible this also does auth token checking -\/ though not for all endpoints it\textquotesingle{}s clear if an auth token is required before evaluating the messag content.
+
+For simple endpoints the implementation is in here as well, though some of that should get split out for simplicity. \mbox{\Hypertarget{classEmacsServer_aad292c65d5dba28d68f3859e8957a71a}\label{classEmacsServer_aad292c65d5dba28d68f3859e8957a71a}} 
+\index{EmacsServer@{EmacsServer}!startServer@{startServer}}
+\index{startServer@{startServer}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{startServer}{startServer}}
+{\footnotesize\ttfamily void Emacs\+Server\+::start\+Server (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [slot]}}
+
+Setup everything required for the server to work properly, and start it. This is a separate function to allow easy server restarts and to make sure it runs in a separate thread. \mbox{\Hypertarget{classEmacsServer_ada18dbe6e2d80ea9ca508fb7c0c36b6f}\label{classEmacsServer_ada18dbe6e2d80ea9ca508fb7c0c36b6f}} 
+\index{EmacsServer@{EmacsServer}!validAuthToken@{validAuthToken}}
+\index{validAuthToken@{validAuthToken}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{validAuthToken()}{validAuthToken()}}
+{\footnotesize\ttfamily bool Emacs\+Server\+::valid\+Auth\+Token (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{token }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Check if the provided string is a valid auth token.
+
+\begin{DoxyReturn}{Returns}
+true if valid, false if invalid 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsserver_8h}{emacsserver.\+h}}\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsserver_8cpp}{emacsserver.\+cpp}}\end{DoxyCompactItemize}

@@ -1,0 +1,94 @@
+\hypertarget{classEmacsClient}{}\doxysection{Emacs\+Client Class Reference}
+\label{classEmacsClient}\index{EmacsClient@{EmacsClient}}
+Inheritance diagram for Emacs\+Client\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classEmacsClient}
+\end{center}
+\end{figure}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structEmacsClient_1_1Query}{Query}}
+\item 
+struct \mbox{\hyperlink{structEmacsClient_1_1QueryResult}{Query\+Result}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Types}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsClient_af096d5f88863923959c03e60384814b5}\label{classEmacsClient_af096d5f88863923959c03e60384814b5}} 
+enum {\bfseries Lisp\+Type} \{ \newline
+{\bfseries Invalid}, 
+{\bfseries String}, 
+{\bfseries Number}, 
+{\bfseries Object}, 
+\newline
+{\bfseries Error}
+ \}
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsClient_a650b936b92ed902aae16507d6316d0d8}\label{classEmacsClient_a650b936b92ed902aae16507d6316d0d8}} 
+void {\bfseries insert\+Key\+Sequence} (const Q\+String \&sequence)
+\item 
+\mbox{\Hypertarget{classEmacsClient_af56d6a7e46cbee7176b713945d9a643a}\label{classEmacsClient_af56d6a7e46cbee7176b713945d9a643a}} 
+bool {\bfseries query\+Agent} (const Q\+String \&query\+Key, const Q\+String \&query\+String)
+\item 
+\mbox{\Hypertarget{classEmacsClient_af7fb11d7f3a72e7f1e0aa06325de0196}\label{classEmacsClient_af7fb11d7f3a72e7f1e0aa06325de0196}} 
+bool {\bfseries is\+Connected} ()
+\item 
+\mbox{\Hypertarget{classEmacsClient_a6a4798eeee3fd0c605b2b0f742012a27}\label{classEmacsClient_a6a4798eeee3fd0c605b2b0f742012a27}} 
+bool {\bfseries is\+Setup} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Signals}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsClient_acf82293e7d1bf4eefb496aad88199043}\label{classEmacsClient_acf82293e7d1bf4eefb496aad88199043}} 
+void {\bfseries query\+Started} (const Q\+String \&query\+Key, const Q\+String \&query\+String)
+\item 
+\mbox{\Hypertarget{classEmacsClient_ae4af5f01c7de776677b2b8907a1d45c4}\label{classEmacsClient_ae4af5f01c7de776677b2b8907a1d45c4}} 
+void {\bfseries query\+Finished} (const Q\+String \&query\+Key, const Q\+String \&query\+Result)
+\item 
+\mbox{\Hypertarget{classEmacsClient_ad430e4934f55a4f20fc8829211617ba4}\label{classEmacsClient_ad430e4934f55a4f20fc8829211617ba4}} 
+void {\bfseries query\+Finished} (const \mbox{\hyperlink{structEmacsClient_1_1QueryResult}{Query\+Result}} \&result)
+\item 
+\mbox{\Hypertarget{classEmacsClient_ac53035beb3dbd9a19ea64cb5dfa58c80}\label{classEmacsClient_ac53035beb3dbd9a19ea64cb5dfa58c80}} 
+void {\bfseries query\+Error} (const Q\+String \&query\+Key, const Q\+String \&error\+Message)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsClient_adb3e8ebe0d7b33154d35f64c13145bee}\label{classEmacsClient_adb3e8ebe0d7b33154d35f64c13145bee}} 
+static \mbox{\hyperlink{classEmacsClient}{Emacs\+Client}} $\ast$ {\bfseries instance} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Slots}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsClient_aa2a77f0d92046d3e398664cb39c69e04}\label{classEmacsClient_aa2a77f0d92046d3e398664cb39c69e04}} 
+Q\+String {\bfseries do\+Query} (const Q\+String \&query\+Key, const Q\+String \&query\+String)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsClient_ab91696db67b22b7d3523f7f15388ac00}\label{classEmacsClient_ab91696db67b22b7d3523f7f15388ac00}} 
+Q\+String {\bfseries query} (const Q\+String \&query\+Key, const Q\+String \&query\+String, Q\+I\+O\+Device \&socket)
+\end{DoxyCompactItemize}
+\doxysubsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsClient_affbed535d6fb19dd5dd58f1e21348b36}\label{classEmacsClient_affbed535d6fb19dd5dd58f1e21348b36}} 
+Q\+Queue$<$ \mbox{\hyperlink{structEmacsClient_1_1Query}{Query}} $>$ {\bfseries queries}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsClient_a4659a3a2d5aa68844874169957bfe37a}\label{classEmacsClient_a4659a3a2d5aa68844874169957bfe37a}} 
+static \mbox{\hyperlink{classEmacsClient}{Emacs\+Client}} $\ast$ {\bfseries emacs\+Client} =0
+\end{DoxyCompactItemize}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsclient_8h}{emacsclient.\+h}}\item 
+/home/runner/work/emacsbridge/emacsbridge/emacsbridge/\mbox{\hyperlink{emacsclient_8cpp}{emacsclient.\+cpp}}\end{DoxyCompactItemize}
