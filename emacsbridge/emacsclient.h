@@ -45,16 +45,21 @@ class EmacsClient: public QObject{
     ~EmacsClient();
     static EmacsClient *emacsClient;
     QString query(const QString &queryKey, const QString &queryString, QIODevice &socket);
+    void resetTimer(const bool success=false);
     QQueue<Query> queries;
+    QTimer *m_checkTimer;
+    QDateTime m_emacsLastSeen;
 
   private slots:
     QString doQuery(const QString &queryKey, const QString &queryString);
+    void timeoutHandler();
 
   signals:
     void queryStarted(const QString &queryKey, const QString &queryString);
     void queryFinished(const QString &queryKey, const QString &queryResult);
     void queryFinished(const QueryResult &result);
     void queryError(const QString &queryKey, const QString &errorMessage);
+    void emacsLastSeenChanged(const QDateTime &lastSeen);
 };
 
 #endif

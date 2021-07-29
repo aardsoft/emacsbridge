@@ -20,13 +20,16 @@
 #include "rep_emacsbridgeremote_replica.h"
 
 /**
- * This is the main class for the service process. Per default it sets up
+ * This is the main class for the GUI process. Per default it sets up
  * a connection to the service using Qt remote objects, and exposes select
  * service APIs to QML. It is also possible to use the dummy constructor to
  * test loading of QML components without providing the full backend logic.
  */
 class EmacsBridge: public QObject{
     Q_OBJECT
+    Q_PROPERTY(bool configured READ isConfigured NOTIFY configuredStatusChanged)
+    Q_PROPERTY(bool connected READ isConnected NOTIFY connectedStatusChanged)
+    Q_PROPERTY(QDateTime emacsLastSeen READ emacsLastSeen NOTIFY emacsLastSeenChanged)
     Q_PROPERTY(bool mobile READ mobile CONSTANT)
     Q_PROPERTY(quint16 activeServerListenPort READ activeServerListenPort NOTIFY activeServerListenPortChanged)
     Q_PROPERTY(QString serverListenAddress READ serverListenAddress WRITE setServerListenAddress NOTIFY serverListenAddressChanged)
@@ -57,6 +60,9 @@ class EmacsBridge: public QObject{
     Q_INVOKABLE void requestAndroidPermission(const QString &permissionName);
     Q_INVOKABLE void setupTermux();
 #endif
+    bool isConnected() const;
+    bool isConfigured() const;
+    QDateTime emacsLastSeen() const;
     QDateTime serviceStartupTime() const;
     QDateTime startupTime() const;
     QString defaultPage() const;
@@ -80,6 +86,7 @@ class EmacsBridge: public QObject{
     };
 
   signals:
+    void emacsLastSeenChanged(const QDateTime &lastSeen);
     void queryFinished(const QString &queryKey, const QString &queryResult);
     void queryError(const QString &queryKey, const QString &errorMessage);
     void componentAdded(const QmlFileContainer &qmlFile);
@@ -89,6 +96,8 @@ class EmacsBridge: public QObject{
     void activeServerListenPortChanged(quint16 serverPort);
     void serverListenAddressChanged(QString &serverAddress);
     void serverListenPortChanged(quint16 serverPort);
+    void connectedStatusChanged(const bool status);
+    void configuredStatusChanged(const bool status);
 
   private slots:
 #ifndef __ANDROID_API__

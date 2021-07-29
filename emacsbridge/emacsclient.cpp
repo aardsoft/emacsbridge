@@ -44,6 +44,10 @@ store a ready state, and only accept changes if ready state is back to normal.
 have configurable timer which pings emacs in regular intervals (important on android where emacs might get killed)
  */
 EmacsClient::EmacsClient(): QObject(){
+  m_checkTimer=new QTimer();
+  m_checkTimer->setSingleShot(true);
+
+  connect(m_checkTimer, SIGNAL(timeout()), this, SLOT(timoutHandler()));
   connect(this, SIGNAL(queryStarted(QString, QString)), this, SLOT(doQuery(QString, QString)));
 
   // this used to be a thread class with a reimplementation of QThread::run,
@@ -215,6 +219,17 @@ QString EmacsClient::doQuery(const QString &queryKey, const QString &queryString
 void EmacsClient::insertKeySequence(const QString &sequence){
   QString queryTemplate="(setq unread-command-events (listify-key-sequence \"%1\"))";
   doQuery(OWN_QUERY_KEY, queryTemplate.arg(sequence));
+}
+
+void EmacsClient::resetTimer(const bool success){
+  if (success==true){
+    m_emacsLastSeen=QDateTime::currentDateTime();
+    emit emacsLastSeenChanged(m_emacsLastSeen);
+  }
+}
+
+void EmacsClient::timeoutHandler(){
+
 }
 
 bool EmacsClient::queryAgent(const QString &queryKey, const QString &queryString){

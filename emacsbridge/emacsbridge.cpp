@@ -90,6 +90,14 @@ EmacsBridge::EmacsBridge(QObject *parent)
           this, SLOT(setData(JsonDataContainer)));
   connect(m_rep.data(), SIGNAL(activeServerListenPortChanged(quint16)),
           this, SIGNAL(activeServerListenPortChanged(quint16)));
+  connect(m_rep.data(), SIGNAL(isConnectedChanged(bool)),
+          this, SIGNAL(connectedStatusChanged(bool)));
+  connect(m_rep.data(), SIGNAL(isConfiguredChanged(bool)),
+          this, SIGNAL(configuredStatusChanged(bool)));
+
+  connect(m_rep.data(), &EmacsBridgeRemoteReplica::emacsLastSeenChanged,
+          this,
+          [=](const QDateTime lastSeen){emit emacsLastSeenChanged(lastSeen);});
 
   // with logging disabled the logger emits log entries in the rawLogAdded
   // signal, which can be connected to the remote object to log into the server
@@ -253,6 +261,18 @@ void EmacsBridge::setupTermux(){
   m_rep->setupTermux();
 }
 #endif
+
+QDateTime EmacsBridge::emacsLastSeen() const{
+  return m_rep->emacsLastSeen();
+}
+
+bool EmacsBridge::isConnected() const{
+  return m_rep->isConnected();
+}
+
+bool EmacsBridge::isConfigured() const{
+  return m_rep->isConfigured();
+}
 
 quint16 EmacsBridge::activeServerListenPort() const{
   return m_rep->activeServerListenPort();

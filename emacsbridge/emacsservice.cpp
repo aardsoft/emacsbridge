@@ -24,6 +24,9 @@ EmacsService::EmacsService(): QObject(){
   m_remote.setServerListenAddress(settings->value("http/bindAddress", "127.0.0.1").toString());
   m_remote.setActiveServerListenPort(0);
 
+  m_remote.setIsConfigured(settings->value("core/configured", false).toBool());
+  m_remote.setIsConnected(false);
+
   m_startupTime=QDateTime::currentDateTime();
   m_remote.setStartupTime(m_startupTime);
 
@@ -78,6 +81,9 @@ EmacsService::EmacsService(): QObject(){
   connect(this, SIGNAL(restartServer()),
           m_server, SLOT(restartServer()));
 
+  connect(m_client, &EmacsClient::emacsLastSeenChanged,
+          this,
+          [=](const QDateTime lastSeen){m_remote.setEmacsLastSeen(lastSeen);});
   serverThread.start();
   emit startServer();
 }
@@ -109,6 +115,7 @@ void EmacsService::settingChanged(const QString &key){
   if (key.startsWith("localSocket/") || key.startsWith("networkSocket/")){
     if (m_client->isSetup()){
       settings->setValue("core/configured", true);
+      m_remote.setIsConfigured(true);
     }
   }
   if (key.startsWith("http/")){

@@ -3,8 +3,11 @@
 
 class EmacsBridgeRemote{
     PROP(QString authToken SOURCEONLYSETTER);
+    PROP(QDateTime emacsLastSeen SOURCEONLYSETTER);
     PROP(QDateTime startupTime SOURCEONLYSETTER);
     PROP(quint16 activeServerListenPort SOURCEONLYSETTER);
+    PROP(bool isConfigured SOURCEONLYSETTER);
+    PROP(bool isConnected SOURCEONLYSETTER);
     PROP(quint16 serverListenPort);
     PROP(QString serverListenAddress);
     SLOT(QStringList logBuffer());
