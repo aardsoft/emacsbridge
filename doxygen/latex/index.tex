@@ -1,0 +1,250 @@
+\hypertarget{index_working_with_core}{}\doxysection{Working with the core}\label{index_working_with_core}
+\hypertarget{index_qt_requirementsQt}{}\doxysubsection{requirements}\label{index_qt_requirementsQt}
+The following table contains the Qt versions suitable for compiling emacsbridge\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ OS }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Version }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ State  }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ OS }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Version }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ State  }\\\cline{1-3}
+\endhead
+Android &5.\+15.\+1 &recommended  \\\cline{1-3}
+Android &5.\+15.\+0 &minimum  \\\cline{1-3}
+PC &5.\+14.\+x &minimum  \\\cline{1-3}
+PC &5.\+15.\+x &recommended  \\\cline{1-3}
+PC &5.\+13.\+0 &compiles, works mostly, but not recommended  \\\cline{1-3}
+\end{longtabu}
+
+
+For building on PC compiling Qt is straightforward, and your distribution might already have a correct version. The following packages should pull in all the other required dependencies for building\+:
+
+
+\begin{DoxyItemize}
+\item Qt5\+Quick
+\item Qt5\+Quick\+Controls2
+\item Qt5\+Web\+Sockets
+\item Qt5\+Remote\+Objects
+\item Qt5\+Network
+\item Qt5\+Sensors
+\item lib\+Qt5\+Core-\/private-\/headers-\/devel
+\end{DoxyItemize}
+
+The package names are for Open\+Su\+SE, other distributions should have similar naming.
+
+To build for Android an Android development environment needs to be set up. It should work with Android Studio or similar, below is a summary on how to setup a non-\/\+G\+UI build environment.\hypertarget{index_preparing_sources}{}\doxysubsection{Preparing the sources}\label{index_preparing_sources}
+Emacsbridge requires qthttpserver, which is included as a submodule. qthttpserver also has submodules. The following snippet clones the repository and initializes all submodules\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\$ git clone https://github.com/aardsoft/emacsbridge.git}
+\DoxyCodeLine{\$ cd emacsbridge}
+\DoxyCodeLine{\$ git submodule update -\/-\/init -\/-\/recursive qthttpserver}
+\end{DoxyCode}
+
+
+Now the code can be configured for qmake -\/ for Android the qmake from inside the Android Qt tree needs to be called.\hypertarget{index_buildhelper}{}\doxysubsection{Build helper}\label{index_buildhelper}
+The source repository contains a build helper ({\ttfamily build.\+sh}). Outside of simple Linux builds using that might be easiest.
+
+Variables controlling the build include\+:
+\begin{DoxyItemize}
+\item A\+N\+D\+R\+O\+I\+D\+\_\+\+A\+B\+IS\+: A\+B\+Is to build, default {\ttfamily arm64-\/v8a x86\+\_\+64 armeabi-\/v7a}
+\item A\+N\+D\+R\+O\+I\+D\+\_\+\+S\+D\+K\+\_\+\+V\+E\+R\+S\+I\+ON\+: Android S\+DK version to use, default {\ttfamily android-\/29}. When targetting Play store the version from the script generally is the one which has to be used.
+\item Q\+T\+\_\+\+V\+E\+R\+S\+I\+ON\+: The Qt version used for trying to find directories, default {\ttfamily 5.\+15.\+1} 
+\item Q\+T\+\_\+\+A\+N\+D\+R\+O\+I\+D\+\_\+\+B\+IN\+: The bin directory inside of the Qt Android installation, defaulting to {\ttfamily \$\+H\+O\+ME/qt/qt\$\{Q\+T\+\_\+\+V\+E\+R\+S\+I\+ON\}-\/\$\{A\+N\+D\+R\+O\+I\+D\+\_\+\+S\+D\+K\+\_\+\+V\+E\+R\+S\+I\+ON\}/bin} 
+\item Q\+T\+\_\+\+W\+I\+N\+D\+O\+W\+S\+\_\+\+B\+IN\+: The bin directory inside of the Windows Qt installation, defaulting to {\ttfamily \$\+H\+O\+ME/qt/qt\$\{Q\+T\+\_\+\+V\+E\+R\+S\+I\+ON\}-\/mingw64/bin} 
+\item W\+I\+N32\+\_\+\+O\+B\+J\+D\+U\+MP\+: The name of the objdump binary for Windows, default {\ttfamily x86\+\_\+64-\/w64-\/mingw32-\/objdump} 
+\item W\+I\+N32\+\_\+\+S\+Y\+S\+R\+O\+OT\+: Path to the mingw32 sysroot, default {\ttfamily /usr/x86\+\_\+64-\/w64-\/mingw32/sys-\/root/mingw/bin} 
+\item W\+I\+N32\+\_\+\+P\+L\+U\+G\+I\+NS\+: List of win32 plugins to use, default {\ttfamily platforms} 
+\item B\+U\+I\+L\+D\+\_\+\+D\+IR\+: Name of the build directory, default {\ttfamily build} 
+\item Q\+M\+A\+K\+E\+\_\+\+C\+XX\+: The C++ compiler to use for PC, default {\ttfamily clang++} 
+\item Q\+M\+A\+K\+E\+\_\+\+L\+I\+NK\+: The linker to use for PC, default {\ttfamily clang++} 
+\end{DoxyItemize}\hypertarget{index_debugging}{}\doxysubsection{Debugging}\label{index_debugging}
+To see what goes over the local socket, start socat and adjust socket address\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{while true; do echo "Restart."; socat -\/v GOPEN:/tmp/Emacs1000/server UNIX-\/LISTEN:/tmp/es; done}
+\end{DoxyCode}
+
+
+Building for Android and Windows requires a proper cross-\/compiled toolchain,\hypertarget{index_architecture}{}\doxysection{Architecture}\label{index_architecture}
+The application is separated into a client and a server part, communicating via \href{https://doc.qt.io/qt-5/qtremoteobjects-index.html}{\texttt{ Qt Remote Objects}}\hypertarget{index_connection_setup}{}\doxysubsection{Connection setup}\label{index_connection_setup}
+Emacsbridge starts up with some open settings endpoints to make initial configuration easier. To set the connection up,
+
+
+\begin{DoxyItemize}
+\item Emacs provides information about its server connection
+\item Emacsbridge uses that to connect to Emacs. If that connection was successful it will disable the open endpoints, and make the R\+PC interface available.
+\end{DoxyItemize}\hypertarget{index_urls}{}\doxysubsection{U\+R\+Ls}\label{index_urls}
+\hypertarget{index_icons}{}\doxysubsubsection{/icons}\label{index_icons}
+Icons bundled with the application. Served without modification, directory index is enabled. No authentication required.\hypertarget{index_lisp}{}\doxysubsubsection{/lisp}\label{index_lisp}
+Lisp files bundled with the application. Served without modification, directory index is enabled. No authentication required.\hypertarget{index_rpc}{}\doxysubsubsection{/rpc}\label{index_rpc}
+Expects J\+S\+ON data in a P\+O\+ST request, with a valid auth token. The method for which J\+S\+ON data is sent must be specified in the {\ttfamily method} header. Only available after initial setup has been completed. The following methods are available\+:\hypertarget{index_addComponent}{}\doxyparagraph{add\+Component}\label{index_addComponent}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ name }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ required }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ default  }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ name }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ required }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ default  }\\\cline{1-3}
+\endhead
+in-\/drawer &no &false  \\\cline{1-3}
+qml\+Data &yes &\\\cline{1-3}
+qml\+File &yes &\\\cline{1-3}
+title &no &{\ttfamily qml\+File}   \\\cline{1-3}
+\end{longtabu}
+\hypertarget{index_setData}{}\doxyparagraph{set\+Data}\label{index_setData}
+\hypertarget{index_notification}{}\doxyparagraph{notification}\label{index_notification}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ name }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ required }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ default  }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ name }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ required }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ default  }\\\cline{1-3}
+\endhead
+title &no &\char`\"{}\+Missing notification title\char`\"{}  \\\cline{1-3}
+text &no &\char`\"{}\+Missing notification text\char`\"{}  \\\cline{1-3}
+\end{longtabu}
+\hypertarget{index_intent}{}\doxyparagraph{intent}\label{index_intent}
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{3}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ name }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ required }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ default  }\\\cline{1-3}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ name }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ required }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ default  }\\\cline{1-3}
+\endhead
+action &no &\\\cline{1-3}
+data &no &\\\cline{1-3}
+package &no &\\\cline{1-3}
+class &no &\\\cline{1-3}
+extra &no &\\\cline{1-3}
+start\+Type &no &\char`\"{}activity\char`\"{}  \\\cline{1-3}
+\end{longtabu}
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{(emacsbridge-\/post-\/json "intent" (json-\/encode `((:package . "com.termux")}
+\DoxyCodeLine{                                               (:startType . "service")}
+\DoxyCodeLine{                                               (:class . "com.termux.app.RunCommandService")}
+\DoxyCodeLine{                                               (:extra . (((:type . "string")}
+\DoxyCodeLine{                                                           (:key . "com.termux.RUN\_COMMAND\_PATH")}
+\DoxyCodeLine{                                                           (:value . "/data/data/com.termux/files/usr/bin/ps"))}
+\DoxyCodeLine{                                                          ((:type . "stringarray")}
+\DoxyCodeLine{                                                           (:key . "com.termux.RUN\_COMMAND\_ARGUMENTS")}
+\DoxyCodeLine{                                                           (:value . (((:value . "a"))}
+\DoxyCodeLine{                                                                      ((:value . "x")))))))}
+\DoxyCodeLine{                                               (:action . "com.termux.RUN\_COMMAND"))))}
+\end{DoxyCode}
+\hypertarget{index_sensor}{}\doxyparagraph{sensor}\label{index_sensor}
+\hypertarget{index_removeComponent}{}\doxyparagraph{remove\+Component}\label{index_removeComponent}
+\hypertarget{_}{}\doxysubsubsection{}\label{_}
+Shell scripts bundled with the application. Served with simple template expansion, directory index is enabled. \hypertarget{index_settings}{}\doxysubsubsection{/settings}\label{index_settings}
+\hypertarget{index_test_connection}{}\doxysubsubsection{/test\+\_\+connection}\label{index_test_connection}
+Returns a page reporting the setup status of the connection to Emacs in human friendly text. No authentication required.\hypertarget{index_preparing_build_env}{}\doxysection{Preparing the build environment}\label{index_preparing_build_env}
+\hypertarget{index_android_builds}{}\doxysubsection{Android builds}\label{index_android_builds}
+First the directory structure gets prepared, and some variables need to be set. The S\+DK directory used here is {\ttfamily $\sim$/}.android/sdk\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{export ANDROID\_SDK\_ROOT=\$HOME/.android/sdk}
+\DoxyCodeLine{export ANDROID\_HOME=\$HOME/.android/sdk}
+\DoxyCodeLine{mkdir -\/p \$ANDROID\_HOME}
+\end{DoxyCode}
+
+
+Next the command line tools need to be downloaded from \href{https://developer.android.com/studio\#downloads}{\texttt{ the Android S\+DK download page}} in the \textquotesingle{}Command line tools only\textquotesingle{} section, and extracted\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{unzip -\/d \$ANDROID\_HOME \string~/Downloads/commandlinetools-\/linux-\/6858069\_latest.zip}
+\DoxyCodeLine{export PATH=\$PATH:\$ANDROID\_HOME/cmdline-\/tools/tools/bin}
+\end{DoxyCode}
+
+
+Now sdkmanager can be used to initialize the S\+DK and download required packages\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{sdkmanager -\/-\/verbose -\/-\/licenses}
+\DoxyCodeLine{sdkmanager -\/-\/update}
+\DoxyCodeLine{sdkmanager "platforms;android-\/29" "ndk-\/bundle" "build-\/tools;30.0.2" "platform-\/tools" "tools"}
+\end{DoxyCode}
+
+
+Next Qt needs to be Downloaded (\href{http://download.qt.io/official_releases/qt/5.15/5.15.1/single/qt-everywhere-src-5.15.1.tar.xz.mirrorlist}{\texttt{ 5.\+15.\+1 mirror list}}), extracted and built\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{tar xf qt-\/everywhere-\/src-\/5.15.1.tar.xz}
+\DoxyCodeLine{cd qt-\/everywhere-\/src-\/5.15.1}
+\DoxyCodeLine{./configure -\/opensource -\/confirm-\/license -\/android-\/abis armeabi-\/v7a,arm64-\/v8a,x86\_64 -\/xplatform android-\/clang -\/-\/disable-\/rpath -\/nomake tests -\/nomake examples -\/no-\/warnings-\/are-\/errors -\/android-\/ndk \$HOME/.android/sdk/ndk-\/bundle -\/android-\/sdk \$HOME/.android/sdk/platforms -\/android-\/ndk-\/platform android-\/29 -\/prefix \$HOME/qt/qt5.15.1-\/android-\/29}
+\DoxyCodeLine{make -\/j\$(nproc)}
+\DoxyCodeLine{make -\/j\$(nproc) install}
+\end{DoxyCode}
+\hypertarget{index_windows_builds}{}\doxysubsection{Windows builds}\label{index_windows_builds}
+The Windows version is highly experimental, seems to segfault due to issues with Qt remote objects, and probably won\textquotesingle{}t see any work unless I\textquotesingle{}m very bored or somebody is interested in actually using it on Windows. Therefore the following just contains a few pointers for a chance to have a build environment.
+
+A Visual Studio build might have the best chances to actually work, but probably will require code changes. Min\+GW compiles without code changes. On Open\+Su\+SE probably the following packages are required\+:
+
+
+\begin{DoxyItemize}
+\item mingw64-\/cross-\/pkgconf
+\item mingw64-\/libicu-\/devel
+\item mingw64-\/angleproject-\/devel
+\item mingw64-\/cross-\/binutils
+\item mingw64-\/cross-\/gcc
+\item mingw64-\/cross-\/gcc-\/c++
+\item mingw64-\/cross-\/pkg-\/config
+\item mingw64-\/dbus-\/1-\/devel
+\item mingw64-\/filesystem
+\item mingw64-\/libicu-\/devel
+\item mingw64-\/libjpeg-\/devel
+\item mingw64-\/libopenssl-\/devel
+\item mingw64-\/libpng-\/devel
+\item mingw64-\/libtiff-\/devel
+\item mingw64-\/mysql-\/connector-\/c-\/devel
+\item mingw64-\/pcre-\/devel
+\item mingw64-\/sqlite-\/devel
+\item mingw64-\/zlib-\/devel
+\item mingw64-\/libharfbuzz-\/devel
+\item mingw64-\/glib2-\/devel
+\item mingw64-\/libintl-\/devel
+\end{DoxyItemize}
+
+With those installed this should provide a more or less working build of Qt for Windows\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{rm -\/Rf qtactiveqt}
+\DoxyCodeLine{./configure -\/opensource -\/confirm-\/license -\/xplatform win32-\/g++ -\/device-\/option CROSS\_COMPILE=x86\_64-\/w64-\/mingw32-\/ -\/nomake examples -\/release -\/make tools -\/prefix \$HOME/qt/qt5.15.0-\/mingw64 -\/opengl desktop -\/skip qtlocation -\/skip qtactiveqt}
+\end{DoxyCode}
+\hypertarget{index_resources}{}\doxysection{Resources}\label{index_resources}
+\hypertarget{index_android}{}\doxysubsection{Android}\label{index_android}
+
+\begin{DoxyItemize}
+\item \href{https://developer.android.com/guide/topics/providers/contacts-provider}{\texttt{ Android contacts provider}}
+\item \href{https://developers.google.com/maps/documentation/urls/guide}{\texttt{ Google Maps U\+RL schemes}}
+\item \href{https://developer.android.com/training/sync-adapters}{\texttt{ Android sync adapters}}
+\item \href{https://developer.android.com/guide/topics/providers/content-providers}{\texttt{ Android content providers}} 
+\end{DoxyItemize}\hypertarget{index_qt}{}\doxysubsection{Qt}\label{index_qt}
+
+\begin{DoxyItemize}
+\item \href{https://www.qt.io/blog/2019/01/25/introducing-qt-http-server}{\texttt{ Qt Http Server announcement}}
+\item \href{https://bugreports.qt.io/browse/QTBUG-60105}{\texttt{ Q\+T\+B\+U\+G-\/60105 Lightweight H\+T\+TP server}}
+\item \href{https://doc.qt.io/qt-5/qtremoteobjects-index.html}{\texttt{ Qt Remote objects}}
+\item \href{https://doc.qt.io/qt-5/android-services.html}{\texttt{ Android services with Qt}}
+\item \href{https://doc.qt.io/qt-5/qtandroidextras-index.html}{\texttt{ Android extras}} 
+\end{DoxyItemize}

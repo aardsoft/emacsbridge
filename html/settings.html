@@ -230,58 +230,20 @@ for the JavaScript code in this tag.
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#org969bd45">1. Emacsbridge user documentation</a>
-<ul>
-<li><a href="#orgf49bd6a">1.1. Setup</a>
-<ul>
-<li><a href="#orgc251eae">1.1.1. Manual setup</a></li>
-<li><a href="#org27523dc">1.1.2. Termux setup</a></li>
-<li><a href="#orgfecea65">1.1.3. PC setup</a></li>
-</ul>
-</li>
-<li><a href="#orgb431298">1.2. The user interface</a></li>
-</ul>
-</li>
+<li><a href="#orgc756502">1. Emacsbridge Settings</a></li>
 </ul>
 </div>
 </div>
-<div id="outline-container-org969bd45" class="outline-2">
-<h2 id="org969bd45"><span class="section-number-2">1</span> Emacsbridge user documentation</h2>
+<div id="outline-container-orgc756502" class="outline-2">
+<h2 id="orgc756502"><span class="section-number-2">1</span> Emacsbridge Settings</h2>
 <div class="outline-text-2" id="text-1">
-<p>
-{{NOTE: This file is designed to have templates like this expanded by the Emacsbridge webserver. When using this page from other sources those templates need to be manually expanded}}
-</p>
-
-<p>
-This manual covers using Emacs bridge, including using its high level Lisp APIs. For lower level details or to work on the application core see the <a href="/html/hacking.html">developer manual</a>.
-</p>
-
-<p>
-<a href="/lisp/">Lisp files</a>
-</p>
-</div>
-<div id="outline-container-orgf49bd6a" class="outline-3">
-<h3 id="orgf49bd6a"><span class="section-number-3">1.1</span> Setup</h3>
-<div class="outline-text-3" id="text-1-1">
-</div>
-<div id="outline-container-orgc251eae" class="outline-4">
-<h4 id="orgc251eae"><span class="section-number-4">1.1.1</span> <a id="org07d08fc"></a>Manual setup</h4>
-</div>
-<div id="outline-container-org27523dc" class="outline-4">
-<h4 id="org27523dc"><span class="section-number-4">1.1.2</span> <a id="org6eaf2a5"></a>Termux setup</h4>
-</div>
-<div id="outline-container-orgfecea65" class="outline-4">
-<h4 id="orgfecea65"><span class="section-number-4">1.1.3</span> <a id="org1ec54af"></a>PC setup</h4>
-<div class="outline-text-4" id="text-1-1-3">
-<div class="org-src-container">
-<pre class="src src-bash">scripts/pc-init.sh
-</pre>
-</div>
-</div>
-</div>
-</div>
-<div id="outline-container-orgb431298" class="outline-3">
-<h3 id="orgb431298"><span class="section-number-3">1.2</span> The user interface</h3>
+<form action="/settings" method="post">
+  <label for="fname">First name:</label>
+  <input type="text" id="fname" name="networkSocket/address"><br><br>
+  <label for="lname">Last name:</label>
+  <input type="text" id="lname" name="networkSocket/port"><br><br>
+  <input type="submit" value="Submit">
+</form>
 </div>
 </div>
 </div>
