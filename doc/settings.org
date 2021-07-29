@@ -1,0 +1,13 @@
+#+OPTIONS: broken-links:t
+#+OPTIONS: ^:nil
+* Emacsbridge Settings
+
+#+BEGIN_EXPORT html
+<form action="/settings" method="post">
+  <label for="fname">First name:</label>
+  <input type="text" id="fname" name="networkSocket/address"><br><br>
+  <label for="lname">Last name:</label>
+  <input type="text" id="lname" name="networkSocket/port"><br><br>
+  <input type="submit" value="Submit">
+</form>
+#+END_EXPORT

@@ -53,7 +53,7 @@ jobs:
 
       - name: build org pages
         run: |
-          _org_files="index hacking user"
+          _org_files="index hacking user settings"
           for _file in $_org_files; do
             echo "Building $_file"
             emacs ${BUILD_DIR}/$_file.org -L ${BUILD_DIR} --batch --eval '(load-file "export-html.lisp")' -f org-html-export-to-html --kill

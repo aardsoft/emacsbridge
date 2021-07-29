@@ -196,7 +196,7 @@ org_to_html(){
     if ! [ -f ${BUILD_DIR}/htmlize.el ]; then
         wget --compression=none -O ${BUILD_DIR}/htmlize.el https://raw.githubusercontent.com/hniksic/emacs-htmlize/master/htmlize.el
     fi
-    _org_files="index hacking user"
+    _org_files="index hacking user settings"
     for _file in $_org_files; do
         echo "Building $_file"
         emacs doc/$_file.org -L ${BUILD_DIR} --batch --eval '(load-file "export-html.lisp")' -f org-html-export-to-html --kill
