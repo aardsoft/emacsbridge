@@ -1,0 +1,81 @@
+name: gh-pages
+
+on:
+  push:
+    branches: [ master ]
+
+  workflow_dispatch:
+
+jobs:
+  generate-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      # checkout the gh-pages branch to add any changed documentation
+      - uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+          ref: gh-pages
+          path: gh-pages
+
+      - name: install dependencies
+        run: sudo apt-get install doxygen doxygen-doc doxygen-latex doxygen-gui graphviz emacs
+
+      - name: generate doxygen documentation
+        run: doxygen ../Doxyfile
+        working-directory: gh-pages
+        env:
+          DOXYGEN_SOURCE_DIRECTORY: ..
+          DOXYGEN_OUTPUT_DIRECTORY: doxygen/
+
+      - name: copy documentation pictures
+        run: |
+          mkdir -p doc html
+          cp ../doc/*.png doc/
+        working-directory: gh-pages
+
+      - name: copy CSS files
+        run: |
+          cp -R ../css .
+        working-directory: gh-pages
+
+      - name: download htmlize
+        run: |
+          wget --compression=none -O ${BUILD_DIR}/htmlize.el https://raw.githubusercontent.com/hniksic/emacs-htmlize/master/htmlize.el
+        working-directory: gh-pages
+        env:
+          BUILD_DIR: ../doc
+
+      - name: build org pages
+        run: |
+          _org_files="index hacking user"
+          for _file in $_org_files; do
+            echo "Building $_file"
+            emacs ${BUILD_DIR}/$_file.org -L ${BUILD_DIR} --batch --eval '(load-file "export-html.lisp")' -f org-html-export-to-html --kill
+            mv ${BUILD_DIR}/$_file.html html/$_file.html
+          done
+        working-directory: gh-pages
+        env:
+          BUILD_DIR: ../doc
+
+      - name: build index file
+        run: |
+          emacs ../README.org -L doc/ --batch --eval '(load-file "doc/export-html.lisp")' -f org-html-export-to-html --kill
+          mv ../README.html index.html
+        working-directory: gh-pages
+
+      - name: commit changes
+        run: |
+          git config --local user.email "invalid@aardsoft.fi"
+          git config --local user.name "Github Action"
+          git add --all
+          git commit -m "Update documentation by ${GITHUB_ACTOR} for ${GITHUB_EVENT_NAME} @${GITHUB_SHA} #${GITHUB_RUN_ID}" -a
+          git push "https://${GITHUB_ACTOR}:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" --force
+        working-directory: gh-pages
+        env:
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}

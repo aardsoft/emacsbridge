@@ -4,7 +4,7 @@ Emacsbridge is a tool to bridge some activities between the Emacs and Android wo
 
 Actions from Android side are sent as Lisp to be evaluated in Emacs through the Emacs daemon. Actions from Emacs are sent as JSON over HTTP.
 
-Join the [[https://t.me/joinchat/LKbFBxtp5cY6wj8xdNse4w][emacsbridge Telegram group]] to discuss emacsbridge.
+Join the [[https://t.me/joinchat/LKbFBxtp5cY6wj8xdNse4w][emacsbridge Telegram group]] to discuss emacsbridge, or read the [[https://aardsoft.github.io/emacsbridge/html/][on-device]] or [[https://aardsoft.github.io/emacsbridge/doxygen/html/][Doxygen]] documentation.
 
 ** Getting started
 
@@ -21,21 +21,25 @@ Setting =server-auth-key= prevents the key from changing every emacs restart, bu
 Once Emacs is started with the TCP server the connection to the Android application needs to be set up. The easiest way for this is opening eww in Emacs, navigating to http://localhost:1616/ and evaluating the three lisp snippets there:
 
 #+CAPTION: Setup page in eww
+#+ATTR_HTML: :style max-width:100%
 [[./doc/setup_page.png]]
 
 Doing so will first set the current server key in the Android application:
 
 #+CAPTION: Confirmation of server key change
+#+ATTR_HTML: :style max-width:100%
 [[./doc/setup_auth_key.png]]
 
 Then have the Android application test the connectivity, which sets =emacsbridge-auth-token= as custom variable (i.e, persistent), and marks the Android application as fully configured, which causes the RPC interfaces to required the auth token for reconfiguration. Pay attention to the status code and messages:
 
 #+CAPTION: Successful initialisation
+#+ATTR_HTML: :style max-width:100%
 [[./doc/setup_OK_status.png]]
 
 With that part of the setup completed a test notification can be triggered:
 
 #+CAPTION: Test notification
+#+ATTR_HTML: :style max-width:100%
 [[./doc/setup_notification.png]]
 
 To work correctly the Android application needs to run a foreground service. The UI can be closed at any time without impacting operation. The notification about the background service does nothing useful, and can be ignored by long-pressing on it.
@@ -64,9 +68,11 @@ With this configured the following should trigger a notification on Android side
 #+END_SRC
 
 #+CAPTION: Test notification from scratch
+#+ATTR_HTML: :style max-width:100%
 [[./doc/test_from_scratch.png]]
 
 Other applications capable of using alert.el can make use of it. This shows a [[https://github.com/zevlg/telega.el][telega]] query notification:
 
 #+CAPTION: Notification from telega
+#+ATTR_HTML: :style max-width:100%
 [[./doc/telega_notification.png]]

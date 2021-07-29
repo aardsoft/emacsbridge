@@ -3,7 +3,7 @@
 #+OPTIONS: toc:nil
 #+TITLE: Emacs bridge quick start
 
-This page contains the generic quick start instruction for [[https://github.com/aardsoft/emacsbridge][Emacs bridge]]. You also may want to check out the [[export:/html/user.html][user manual]] for device specific setup options and other useful information.
+This page contains the generic quick start instruction for [[https://github.com/aardsoft/emacsbridge][Emacs bridge]]. You also may want to check out the [[export:../html/user.html][user manual]] for device specific setup options and other useful information.
 
 For the basic configuration open this page in eww (M-x eww {{http/bindAddress}}:{{http/bindPort}}), scroll through the page, and evaluate (C-x e) all lisp snippets relevant to your setup. If you want to redo the initial setup you'll first need to clear the application data to enable access without auth token.
 
