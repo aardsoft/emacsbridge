@@ -83,13 +83,16 @@ void EmacsBridgeMorse::setHighState(int state){
 }
 
 void EmacsBridgeMorse::stateChange(int state){
-// we can also check here if the timer is active, for valid inputs it should be active except for the very first state change
 
   // nothing changed, so ignore
   if (state==m_oldState)
     return;
 
-  bool timerWasActive=m_endTimer->isActive();
+  /**
+   * @TODO we can also check here if the timer is active, for valid inputs it
+   *       should be active except for the very first state change
+   */
+  //bool timerWasActive=m_endTimer->isActive();
   m_endTimer->stop();
 
   if (state>m_lowState){
