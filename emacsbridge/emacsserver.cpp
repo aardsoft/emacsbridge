@@ -85,24 +85,25 @@ void EmacsServer::startHttpServer(){
   });
 
   m_server->route("/lisp/<arg>", [this](const QUrl &url){
-                                  if (url.path()=="")
-                                    return QHttpServerResponse(listDirectory(":/lisp"));
-                                  else
-                                    return QHttpServerResponse::fromFile(QStringLiteral(":/lisp/%1").arg(url.path()));
-                                 });
+    return downloadFileOrDirectory(":/lisp", url.path());
+  });
 
   m_server->route("/icons/<arg>", [this](const QUrl &url){
-                                  if (url.path()=="")
-                                    return QHttpServerResponse(listDirectory(":/icons"));
-                                  else
-                                    return QHttpServerResponse::fromFile(QStringLiteral(":/icons/%1").arg(url.path()));
-                                 });
+    return downloadFileOrDirectory(":/icons", url.path());
+  });
 
   m_server->route("/scripts/<arg>", [this](const QUrl &url){
-    if (url.path()=="")
-      return QHttpServerResponse(listDirectory(":/scripts"));
+    return parseFileOrDirectory(":/scripts", url.path());
+  });
+
+  m_server->route("/local/<arg>", [this,settings](const QUrl &url){
+    QString localDir=settings->value("http/localDir", "").toString();
+    if (localDir=="")
+      return QHttpServerResponse("text/plain",
+                                 tr("Local directory not configured").toUtf8(),
+                                 QHttpServerResponder::StatusCode::BadRequest);
     else
-      return parseFile(QStringLiteral(":/scripts/%1").arg(url.path()));
+      return parseFileOrDirectory(localDir, url.path());
   });
 
   m_server->route("/html/<arg>", [this](const QUrl &url){
@@ -183,11 +184,27 @@ void EmacsServer::restartServer(){
 }
 
 QString EmacsServer::listDirectory(const QString &directory){
-  QDirIterator it(directory, QDirIterator::Subdirectories);
-  QString ret="<ul><li><a href=\"..\">..</a></li>\n";
+  QDir dir;
+  dir.setPath(directory);
+  QString ret="<ul>\n";
+
+  // resources don't include a ..
+  if (directory.startsWith(":"))
+    ret+="<li>d <a href=\"..\">..</a></li>\n";
+
+  QStringList entryList=
+    dir.entryList(QDir::NoDot|QDir::Dirs|QDir::Files,
+                  QDir::Name|QDir::DirsFirst);
+
+  QStringListIterator it(entryList);
   while (it.hasNext()) {
-    QFileInfo f(it.next());
-    ret+="<li><a href=\""%f.fileName()%"\">"%f.fileName()%"</a></li>\n";
+    QFileInfo f(directory+"/"+it.next());
+    if (f.isDir())
+      ret+="<li>d <a href=\""%f.fileName()%"/\">"%f.fileName()%"</a></li>\n";
+    else if (f.isFile())
+      ret+="<li>f <a href=\""%f.fileName()%"\">"%f.fileName()%"</a></li>\n";
+    else
+      ret+="<li>? <a href=\""%f.fileName()%"\">"%f.fileName()%"</a></li>\n";
   }
   ret+="</ul>\n";
 
@@ -363,6 +380,23 @@ QHttpServerResponse EmacsServer::addNotification(const QJsonObject &jsonObject){
   return "OK";
 }
 
+QHttpServerResponse EmacsServer::downloadFileOrDirectory(const QString &base, const QString &name){
+  QString path=base;
+  if (name!="")
+    path=QStringLiteral("%1/%2").arg(base).arg(name);
+
+  QFileInfo f(path);
+
+  if (f.isDir())
+    return QHttpServerResponse(listDirectory(path));
+  else if (f.isFile())
+    return QHttpServerResponse::fromFile(path);
+  else
+    return QHttpServerResponse("text/plain",
+                               tr("Requested location is neither file nor directory").toUtf8(),
+                               QHttpServerResponder::StatusCode::BadRequest);
+}
+
 #ifdef __ANDROID_API__
 QString EmacsServer::callIntent(const QString &jsonString){
   QAndroidJniEnvironment env;
@@ -469,6 +503,23 @@ QHttpServerResponse EmacsServer::parseFile(const QString &fileName){
                         settings->value(i).toString());
   }
   return fileContent;
+}
+
+QHttpServerResponse EmacsServer::parseFileOrDirectory(const QString &base, const QString &name){
+  QString path=base;
+  if (name!="")
+    path=QStringLiteral("%1/%2").arg(base).arg(name);
+
+  QFileInfo f(path);
+
+  if (f.isDir())
+    return QHttpServerResponse(listDirectory(path));
+  else if (f.isFile())
+    return parseFile(path);
+  else
+    return QHttpServerResponse("text/plain",
+                               tr("Requested location is neither file nor directory").toUtf8(),
+                               QHttpServerResponder::StatusCode::BadRequest);
 }
 
 QHttpServerResponse EmacsServer::removeComponent(const QJsonObject &jsonObject){

@@ -172,6 +172,17 @@ class EmacsServer: public QObject{
      *         call succeeded.
      */
     QHttpServerResponse addNotification(const QJsonObject &jsonObject);
+    /**
+     * Check if the given base and name combination is a valid file or
+     * directory (from filesystem or resource) and then either download
+     * or list it, depending on what was found.
+     *
+     * @return QHttpServerResponder::StatusCode::BadRequest on error or
+     *         the file content/directory listing on success. Both the
+     *         error and success messages are designed to be exposed to
+     *         the Emacs UI and are translatable.
+     */
+    QHttpServerResponse downloadFileOrDirectory(const QString &base, const QString &name);
 #ifdef __ANDROID_API__
     /**
      * Do a validity check on the provided data before executing the intent
@@ -198,6 +209,17 @@ class EmacsServer: public QObject{
      *         translatable.
      */
     QHttpServerResponse parseFile(const QString &fileName);
+    /**
+     * Check if the given base and name combination is a valid file or
+     * directory (from filesystem or resource) and then either template
+     * or list it, depending on what was found.
+     *
+     * @return QHttpServerResponder::StatusCode::BadRequest on error or
+     *         the templated file/directory listing on success. Both the
+     *         error and success messages are designed to be exposed to
+     *         the Emacs UI and are translatable.
+     */
+    QHttpServerResponse parseFileOrDirectory(const QString &base, const QString &name);
     /**
      * Verify the data, and remove a QML component from the application if
      * the provided data is valid. Note that overwriting an existing component

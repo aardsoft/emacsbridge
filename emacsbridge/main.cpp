@@ -108,6 +108,10 @@
  * Lisp files bundled with the application. Served without modification,
  * directory index is enabled. No authentication required.
  *
+ * @subsubsection local /local
+ * Files served from a local directory, as set in the @c serversettings.ini in
+ * the @c http/localDir key. Per default this is not configured.
+ *
  * @subsubsection rpc /rpc
  * Expects JSON data in a POST request, with a valid auth token. The method for
  * which JSON data is sent must be specified in the @c method header. Only
