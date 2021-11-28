@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['rawlogadded_153',['rawLogAdded',['../classEmacsBridgeLog.html#aa82ee82cc02ac3467eb150b0d4270501',1,'EmacsBridgeLog']]],
-  ['removecomponent_154',['removeComponent',['../classEmacsServer.html#aaec7b23b312a475a45c2832c44e437d2',1,'EmacsServer']]],
-  ['restartserver_155',['restartServer',['../classEmacsServer.html#a50e722ccfd406721163115ac76a81ca4',1,'EmacsServer']]]
+  ['parsefile_155',['parseFile',['../classEmacsServer.html#aba32ce7ceec3aa0beef9530db8459d35',1,'EmacsServer']]],
+  ['parsefileordirectory_156',['parseFileOrDirectory',['../classEmacsServer.html#afedf1d40e26b5263e382b95cf68792d7',1,'EmacsServer']]],
+  ['priority_157',['priority',['../classEmacsBridgeLog.html#a1181707dc3b81fcf0df3d249bea2efce',1,'EmacsBridgeLog']]]
 ];

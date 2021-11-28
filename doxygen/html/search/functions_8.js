@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['onbind_149',['onBind',['../classfi_1_1aardsoft_1_1emacsbridge_1_1SyncService.html#a06079bcd0b293ffce8016f9e414793da',1,'fi::aardsoft::emacsbridge::SyncService']]],
-  ['openappsettings_150',['openAppSettings',['../classEmacsBridge.html#a3cd2fbf0ec3964c8a0d525ed580f304b',1,'EmacsBridge']]]
+  ['main_149',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main.cpp']]],
+  ['messagehandler_150',['messageHandler',['../classEmacsBridgeLog.html#a1329ec3671500f70dd8ddf6b5e1494d3',1,'EmacsBridgeLog']]],
+  ['methodcall_151',['methodCall',['../classEmacsServer.html#a136119742da0ab7287740db85fb82fa4',1,'EmacsServer']]],
+  ['mobile_152',['mobile',['../classEmacsBridge.html#a6cb4876d7db47b824491892f0e0b3b0d',1,'EmacsBridge']]]
 ];

@@ -133,12 +133,16 @@ Private Member Functions</h2></td></tr>
 <tr class="separator:ad13c46e6369996e64d2e51d7b128b1df"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a73c7d5f66cae91486fd0ab5146833a51"><td class="memItemLeft" align="right" valign="top">QHttpServerResponse&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEmacsServer.html#a73c7d5f66cae91486fd0ab5146833a51">addNotification</a> (const QJsonObject &amp;jsonObject)</td></tr>
 <tr class="separator:a73c7d5f66cae91486fd0ab5146833a51"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9258d2af4f1ebb68d78fb605dd755d7a"><td class="memItemLeft" align="right" valign="top">QHttpServerResponse&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEmacsServer.html#a9258d2af4f1ebb68d78fb605dd755d7a">downloadFileOrDirectory</a> (const QString &amp;base, const QString &amp;name)</td></tr>
+<tr class="separator:a9258d2af4f1ebb68d78fb605dd755d7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8c44753b6c67b48ff08fbedc92fe0c67"><td class="memItemLeft" align="right" valign="top">QHttpServerResponse&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEmacsServer.html#a8c44753b6c67b48ff08fbedc92fe0c67">handleIntent</a> (const QJsonObject &amp;jsonObject, const QString &amp;jsonString)</td></tr>
 <tr class="separator:a8c44753b6c67b48ff08fbedc92fe0c67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac1509713c1dce19643ad4c10d8c5c2b6"><td class="memItemLeft" align="right" valign="top">QHttpServerResponse&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEmacsServer.html#ac1509713c1dce19643ad4c10d8c5c2b6">handleSensorCall</a> (const QJsonObject &amp;jsonObject)</td></tr>
 <tr class="separator:ac1509713c1dce19643ad4c10d8c5c2b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba32ce7ceec3aa0beef9530db8459d35"><td class="memItemLeft" align="right" valign="top">QHttpServerResponse&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEmacsServer.html#aba32ce7ceec3aa0beef9530db8459d35">parseFile</a> (const QString &amp;fileName)</td></tr>
 <tr class="separator:aba32ce7ceec3aa0beef9530db8459d35"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afedf1d40e26b5263e382b95cf68792d7"><td class="memItemLeft" align="right" valign="top">QHttpServerResponse&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEmacsServer.html#afedf1d40e26b5263e382b95cf68792d7">parseFileOrDirectory</a> (const QString &amp;base, const QString &amp;name)</td></tr>
+<tr class="separator:afedf1d40e26b5263e382b95cf68792d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaec7b23b312a475a45c2832c44e437d2"><td class="memItemLeft" align="right" valign="top">QHttpServerResponse&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEmacsServer.html#aaec7b23b312a475a45c2832c44e437d2">removeComponent</a> (const QJsonObject &amp;jsonObject)</td></tr>
 <tr class="separator:aaec7b23b312a475a45c2832c44e437d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9fc08811ca1c3827ff560cd353b97f2a"><td class="memItemLeft" align="right" valign="top">QHttpServerResponse&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEmacsServer.html#a9fc08811ca1c3827ff560cd353b97f2a">setData</a> (const QJsonObject &amp;jsonObject, const QString &amp;jsonString)</td></tr>
@@ -317,6 +321,44 @@ QAmbientLightSensor *&#160;</td><td class="memItemRight" valign="bottom"><b>m_am
 
 </div>
 </div>
+<a id="a9258d2af4f1ebb68d78fb605dd755d7a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9258d2af4f1ebb68d78fb605dd755d7a">&#9670;&nbsp;</a></span>downloadFileOrDirectory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QHttpServerResponse EmacsServer::downloadFileOrDirectory </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Check if the given base and name combination is a valid file or directory (from filesystem or resource) and then either download or list it, depending on what was found.</p>
+<dl class="section return"><dt>Returns</dt><dd>QHttpServerResponder::StatusCode::BadRequest on error or the file content/directory listing on success. Both the error and success messages are designed to be exposed to the Emacs UI and are translatable. </dd></dl>
+
+</div>
+</div>
 <a id="a8c44753b6c67b48ff08fbedc92fe0c67"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a8c44753b6c67b48ff08fbedc92fe0c67">&#9670;&nbsp;</a></span>handleIntent()</h2>
 
@@ -475,6 +517,44 @@ QAmbientLightSensor *&#160;</td><td class="memItemRight" valign="bottom"><b>m_am
 </div><div class="memdoc">
 <p>Open a file (from filesystem or resource) and replace all valid keys in template notation ({{key}}) with their values.</p>
 <dl class="section return"><dt>Returns</dt><dd>QHttpServerResponder::StatusCode::BadRequest on error or the templated file on success. Both the error and success messages are designed to be exposed to the Emacs UI and are translatable. </dd></dl>
+
+</div>
+</div>
+<a id="afedf1d40e26b5263e382b95cf68792d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afedf1d40e26b5263e382b95cf68792d7">&#9670;&nbsp;</a></span>parseFileOrDirectory()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">QHttpServerResponse EmacsServer::parseFileOrDirectory </td>
+          <td>(</td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>base</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const QString &amp;&#160;</td>
+          <td class="paramname"><em>name</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Check if the given base and name combination is a valid file or directory (from filesystem or resource) and then either template or list it, depending on what was found.</p>
+<dl class="section return"><dt>Returns</dt><dd>QHttpServerResponder::StatusCode::BadRequest on error or the templated file/directory listing on success. Both the error and success messages are designed to be exposed to the Emacs UI and are translatable. </dd></dl>
 
 </div>
 </div>

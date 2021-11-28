@@ -132,6 +132,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>queryFinished</b> (co
 <tr class="memitem:ac53035beb3dbd9a19ea64cb5dfa58c80"><td class="memItemLeft" align="right" valign="top"><a id="ac53035beb3dbd9a19ea64cb5dfa58c80"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>queryError</b> (const QString &amp;queryKey, const QString &amp;errorMessage)</td></tr>
 <tr class="separator:ac53035beb3dbd9a19ea64cb5dfa58c80"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a2b3e93012f2a606dba2c6891a84779"><td class="memItemLeft" align="right" valign="top"><a id="a8a2b3e93012f2a606dba2c6891a84779"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>emacsLastSeenChanged</b> (const QDateTime &amp;lastSeen)</td></tr>
+<tr class="separator:a8a2b3e93012f2a606dba2c6891a84779"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
@@ -144,18 +147,30 @@ Private Slots</h2></td></tr>
 <tr class="memitem:aa2a77f0d92046d3e398664cb39c69e04"><td class="memItemLeft" align="right" valign="top"><a id="aa2a77f0d92046d3e398664cb39c69e04"></a>
 QString&#160;</td><td class="memItemRight" valign="bottom"><b>doQuery</b> (const QString &amp;queryKey, const QString &amp;queryString)</td></tr>
 <tr class="separator:aa2a77f0d92046d3e398664cb39c69e04"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a30d8a7b7844c74a33bedb796b6839f6a"><td class="memItemLeft" align="right" valign="top"><a id="a30d8a7b7844c74a33bedb796b6839f6a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>timeoutHandler</b> ()</td></tr>
+<tr class="separator:a30d8a7b7844c74a33bedb796b6839f6a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr class="memitem:ab91696db67b22b7d3523f7f15388ac00"><td class="memItemLeft" align="right" valign="top"><a id="ab91696db67b22b7d3523f7f15388ac00"></a>
 QString&#160;</td><td class="memItemRight" valign="bottom"><b>query</b> (const QString &amp;queryKey, const QString &amp;queryString, QIODevice &amp;socket)</td></tr>
 <tr class="separator:ab91696db67b22b7d3523f7f15388ac00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acafbc2f4b9b7dc9ff1c52eb135262bae"><td class="memItemLeft" align="right" valign="top"><a id="acafbc2f4b9b7dc9ff1c52eb135262bae"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>resetTimer</b> (const bool success=false)</td></tr>
+<tr class="separator:acafbc2f4b9b7dc9ff1c52eb135262bae"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:affbed535d6fb19dd5dd58f1e21348b36"><td class="memItemLeft" align="right" valign="top"><a id="affbed535d6fb19dd5dd58f1e21348b36"></a>
 QQueue&lt; <a class="el" href="structEmacsClient_1_1Query.html">Query</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>queries</b></td></tr>
 <tr class="separator:affbed535d6fb19dd5dd58f1e21348b36"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae17789e7d53ad6e7bfa46ef261be8648"><td class="memItemLeft" align="right" valign="top"><a id="ae17789e7d53ad6e7bfa46ef261be8648"></a>
+QTimer *&#160;</td><td class="memItemRight" valign="bottom"><b>m_checkTimer</b></td></tr>
+<tr class="separator:ae17789e7d53ad6e7bfa46ef261be8648"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a123f64a96305428d4ed6b800144c0b8a"><td class="memItemLeft" align="right" valign="top"><a id="a123f64a96305428d4ed6b800144c0b8a"></a>
+QDateTime&#160;</td><td class="memItemRight" valign="bottom"><b>m_emacsLastSeen</b></td></tr>
+<tr class="separator:a123f64a96305428d4ed6b800144c0b8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>

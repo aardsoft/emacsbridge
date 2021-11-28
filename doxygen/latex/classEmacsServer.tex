@@ -64,11 +64,15 @@ Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_ad13c46e6369996e64d2
 \item 
 Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_a73c7d5f66cae91486fd0ab5146833a51}{add\+Notification}} (const Q\+Json\+Object \&json\+Object)
 \item 
+Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_a9258d2af4f1ebb68d78fb605dd755d7a}{download\+File\+Or\+Directory}} (const Q\+String \&base, const Q\+String \&name)
+\item 
 Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_a8c44753b6c67b48ff08fbedc92fe0c67}{handle\+Intent}} (const Q\+Json\+Object \&json\+Object, const Q\+String \&json\+String)
 \item 
 Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_ac1509713c1dce19643ad4c10d8c5c2b6}{handle\+Sensor\+Call}} (const Q\+Json\+Object \&json\+Object)
 \item 
 Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_aba32ce7ceec3aa0beef9530db8459d35}{parse\+File}} (const Q\+String \&file\+Name)
+\item 
+Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_afedf1d40e26b5263e382b95cf68792d7}{parse\+File\+Or\+Directory}} (const Q\+String \&base, const Q\+String \&name)
 \item 
 Q\+Http\+Server\+Response \mbox{\hyperlink{classEmacsServer_aaec7b23b312a475a45c2832c44e437d2}{remove\+Component}} (const Q\+Json\+Object \&json\+Object)
 \item 
@@ -176,6 +180,17 @@ Note\+: Currently the implementation can only request a single permission per cl
 \begin{DoxyReturn}{Returns}
 \char`\"{}\char`\"{} on success, or the denied permission name 
 \end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_a9258d2af4f1ebb68d78fb605dd755d7a}\label{classEmacsServer_a9258d2af4f1ebb68d78fb605dd755d7a}} 
+\index{EmacsServer@{EmacsServer}!downloadFileOrDirectory@{downloadFileOrDirectory}}
+\index{downloadFileOrDirectory@{downloadFileOrDirectory}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{downloadFileOrDirectory()}{downloadFileOrDirectory()}}
+{\footnotesize\ttfamily Q\+Http\+Server\+Response Emacs\+Server\+::download\+File\+Or\+Directory (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{base,  }\item[{const Q\+String \&}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Check if the given base and name combination is a valid file or directory (from filesystem or resource) and then either download or list it, depending on what was found.
+
+\begin{DoxyReturn}{Returns}
+Q\+Http\+Server\+Responder\+::\+Status\+Code\+::\+Bad\+Request on error or the file content/directory listing on success. Both the error and success messages are designed to be exposed to the Emacs UI and are translatable. 
+\end{DoxyReturn}
 \mbox{\Hypertarget{classEmacsServer_a8c44753b6c67b48ff08fbedc92fe0c67}\label{classEmacsServer_a8c44753b6c67b48ff08fbedc92fe0c67}} 
 \index{EmacsServer@{EmacsServer}!handleIntent@{handleIntent}}
 \index{handleIntent@{handleIntent}!EmacsServer@{EmacsServer}}
@@ -229,6 +244,17 @@ Open a file (from filesystem or resource) and replace all valid keys in template
 
 \begin{DoxyReturn}{Returns}
 Q\+Http\+Server\+Responder\+::\+Status\+Code\+::\+Bad\+Request on error or the templated file on success. Both the error and success messages are designed to be exposed to the Emacs UI and are translatable. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEmacsServer_afedf1d40e26b5263e382b95cf68792d7}\label{classEmacsServer_afedf1d40e26b5263e382b95cf68792d7}} 
+\index{EmacsServer@{EmacsServer}!parseFileOrDirectory@{parseFileOrDirectory}}
+\index{parseFileOrDirectory@{parseFileOrDirectory}!EmacsServer@{EmacsServer}}
+\doxysubsubsection{\texorpdfstring{parseFileOrDirectory()}{parseFileOrDirectory()}}
+{\footnotesize\ttfamily Q\+Http\+Server\+Response Emacs\+Server\+::parse\+File\+Or\+Directory (\begin{DoxyParamCaption}\item[{const Q\+String \&}]{base,  }\item[{const Q\+String \&}]{name }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+Check if the given base and name combination is a valid file or directory (from filesystem or resource) and then either template or list it, depending on what was found.
+
+\begin{DoxyReturn}{Returns}
+Q\+Http\+Server\+Responder\+::\+Status\+Code\+::\+Bad\+Request on error or the templated file/directory listing on success. Both the error and success messages are designed to be exposed to the Emacs UI and are translatable. 
 \end{DoxyReturn}
 \mbox{\Hypertarget{classEmacsServer_aaec7b23b312a475a45c2832c44e437d2}\label{classEmacsServer_aaec7b23b312a475a45c2832c44e437d2}} 
 \index{EmacsServer@{EmacsServer}!removeComponent@{removeComponent}}

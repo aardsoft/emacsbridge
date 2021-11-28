@@ -110,19 +110,24 @@ $(function() {
 <div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    ~<a class="code" href="classEmacsClient.html">EmacsClient</a>();</div>
 <div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    <span class="keyword">static</span> <a class="code" href="classEmacsClient.html">EmacsClient</a> *emacsClient;</div>
 <div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    QString query(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;queryString, QIODevice &amp;socket);</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    QQueue&lt;Query&gt; queries;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160; </div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;  <span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    QString doQuery(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;queryString);</div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    <span class="keywordtype">void</span> resetTimer(<span class="keyword">const</span> <span class="keywordtype">bool</span> success=<span class="keyword">false</span>);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    QQueue&lt;Query&gt; queries;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    QTimer *m_checkTimer;</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    QDateTime m_emacsLastSeen;</div>
 <div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  signals:</div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    <span class="keywordtype">void</span> queryStarted(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;queryString);</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">void</span> queryFinished(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;queryResult);</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    <span class="keywordtype">void</span> queryFinished(<span class="keyword">const</span> <a class="code" href="structEmacsClient_1_1QueryResult.html">QueryResult</a> &amp;result);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <span class="keywordtype">void</span> queryError(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;errorMessage);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;};</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160; </div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;  <span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    QString doQuery(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;queryString);</div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">void</span> timeoutHandler();</div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;  signals:</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    <span class="keywordtype">void</span> queryStarted(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;queryString);</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    <span class="keywordtype">void</span> queryFinished(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;queryResult);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    <span class="keywordtype">void</span> queryFinished(<span class="keyword">const</span> <a class="code" href="structEmacsClient_1_1QueryResult.html">QueryResult</a> &amp;result);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">void</span> queryError(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;errorMessage);</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    <span class="keywordtype">void</span> emacsLastSeenChanged(<span class="keyword">const</span> QDateTime &amp;lastSeen);</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;};</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="astructEmacsClient_1_1QueryResult_html"><div class="ttname"><a href="structEmacsClient_1_1QueryResult.html">EmacsClient::QueryResult</a></div><div class="ttdef"><b>Definition:</b> emacsclient.h:29</div></div>
 <div class="ttc" id="astructEmacsClient_1_1Query_html"><div class="ttname"><a href="structEmacsClient_1_1Query.html">EmacsClient::Query</a></div><div class="ttdef"><b>Definition:</b> emacsclient.h:25</div></div>

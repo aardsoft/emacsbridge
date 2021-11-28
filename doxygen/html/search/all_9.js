@@ -1,5 +1,11 @@
 var searchData=
 [
-  ['onbind_61',['onBind',['../classfi_1_1aardsoft_1_1emacsbridge_1_1SyncService.html#a06079bcd0b293ffce8016f9e414793da',1,'fi::aardsoft::emacsbridge::SyncService']]],
-  ['openappsettings_62',['openAppSettings',['../classEmacsBridge.html#a3cd2fbf0ec3964c8a0d525ed580f304b',1,'EmacsBridge']]]
+  ['m_5flogbuffer_54',['m_logBuffer',['../classEmacsBridgeLog.html#a874d031ebb579a491fd890742db3813b',1,'EmacsBridgeLog']]],
+  ['m_5flogstate_55',['m_logState',['../classEmacsBridgeLog.html#a0493fd9c333a8b4c3424e7d558c6c88c',1,'EmacsBridgeLog']]],
+  ['m_5fstartuptime_56',['m_startupTime',['../classEmacsBridge.html#a683c02fce325369f2856ee946eafecfe',1,'EmacsBridge']]],
+  ['main_57',['main',['../main_8cpp.html#a3c04138a5bfe5d72780bb7e82a18e627',1,'main.cpp']]],
+  ['main_2ecpp_58',['main.cpp',['../main_8cpp.html',1,'']]],
+  ['messagehandler_59',['messageHandler',['../classEmacsBridgeLog.html#a1329ec3671500f70dd8ddf6b5e1494d3',1,'EmacsBridgeLog']]],
+  ['methodcall_60',['methodCall',['../classEmacsServer.html#a136119742da0ab7287740db85fb82fa4',1,'EmacsServer']]],
+  ['mobile_61',['mobile',['../classEmacsBridge.html#a6cb4876d7db47b824491892f0e0b3b0d',1,'EmacsBridge']]]
 ];

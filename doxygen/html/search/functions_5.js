@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['jcritical_141',['jCritical',['../main_8cpp.html#af3c8befab3f021635e20aee3c524c11f',1,'main.cpp']]]
+  ['injectlogentry_143',['injectLogEntry',['../classEmacsBridgeLog.html#aeafd6a5ecdc77a18662ab5f1742a0291',1,'EmacsBridgeLog']]],
+  ['instance_144',['instance',['../classEmacsBridgeLog.html#a4a52cbb9a15ee1d9a7b437e07d54c0e0',1,'EmacsBridgeLog']]]
 ];

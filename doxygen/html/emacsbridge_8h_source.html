@@ -86,89 +86,98 @@ $(function() {
 <div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160; </div>
 <div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="classEmacsBridge.html">   28</a></span>&#160;<span class="keyword">class </span><a class="code" href="classEmacsBridge.html">EmacsBridge</a>: <span class="keyword">public</span> QObject{</div>
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    Q_OBJECT</div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    Q_PROPERTY(<span class="keywordtype">bool</span> mobile READ mobile CONSTANT)</div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    Q_PROPERTY(quint16 activeServerListenPort READ activeServerListenPort NOTIFY activeServerListenPortChanged)</div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    Q_PROPERTY(QString serverListenAddress READ serverListenAddress WRITE setServerListenAddress NOTIFY serverListenAddressChanged)</div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    Q_PROPERTY(quint16 serverListenPort READ serverListenPort WRITE setServerListenPort NOTIFY serverListenPortChanged)</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    Q_PROPERTY(QDateTime serviceStartupTime READ serviceStartupTime CONSTANT)</div>
-<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    Q_PROPERTY(QDateTime startupTime READ startupTime CONSTANT)</div>
-<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    Q_PROPERTY(QString defaultPage READ defaultPage WRITE setDefaultPage NOTIFY defaultPageChanged)</div>
-<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;  <span class="keyword">public</span>:</div>
-<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classEmacsBridge.html">EmacsBridge</a>(QObject *parent=0);</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classEmacsBridge.html">EmacsBridge</a>(<span class="keyword">const</span> QString &amp;dummy, QObject *parent=0){(void)dummy; (void)parent; m_isDummy=<span class="keyword">true</span>;};</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    ~<a class="code" href="classEmacsBridge.html">EmacsBridge</a>();</div>
-<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160; </div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> <a class="code" href="classEmacsBridge.html#a95d6d68416303b3aa353daff6cb4370f">copyToClipboard</a>(<span class="keyword">const</span> QString &amp;text);</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> runQuery(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;query);</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> initDrawer();</div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    Q_INVOKABLE QVariant serverProperty(<span class="keyword">const</span> QString &amp;key);</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> copyServerProperty(<span class="keyword">const</span> QString &amp;key);</div>
-<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor">#ifdef __ANDROID_API__</span></div>
-<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160; </div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> <a class="code" href="classEmacsBridge.html#a3cd2fbf0ec3964c8a0d525ed580f304b">openAppSettings</a>();</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> callIntent(<span class="keyword">const</span> QString &amp;iAction, <span class="keyword">const</span> QString &amp;iData=<span class="stringliteral">&quot;&quot;</span>,</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;                                <span class="keyword">const</span> QString &amp;iPackage=<span class="stringliteral">&quot;&quot;</span>, <span class="keyword">const</span> QString &amp;iClass=<span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> requestAndroidPermission(<span class="keyword">const</span> QString &amp;permissionName);</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> setupTermux();</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    QDateTime serviceStartupTime() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    QDateTime startupTime() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    QString defaultPage() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">void</span> setDefaultPage(<span class="keyword">const</span> QString &amp;defaultPage);</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    quint16 activeServerListenPort() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    QString serverListenAddress() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    <span class="keywordtype">void</span> setServerListenAddress(<span class="keyword">const</span> QString &amp;serverAddress) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    quint16 serverListenPort() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> setServerListenPort(<span class="keyword">const</span> quint16 serverPort) <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00074"></a><span class="lineno"><a class="line" href="classEmacsBridge.html#a6cb4876d7db47b824491892f0e0b3b0d">   74</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classEmacsBridge.html#a6cb4876d7db47b824491892f0e0b3b0d">mobile</a>()<span class="keyword"> const</span>{</div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor">#ifdef __ANDROID_API__</span></div>
-<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;<span class="preprocessor">#else</span></div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    };</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160; </div>
-<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;  signals:</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">void</span> queryFinished(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;queryResult);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    <span class="keywordtype">void</span> queryError(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;errorMessage);</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <span class="keywordtype">void</span> componentAdded(<span class="keyword">const</span> <a class="code" href="structQmlFileContainer.html">QmlFileContainer</a> &amp;qmlFile);</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <span class="keywordtype">void</span> componentRemoved(<span class="keyword">const</span> QString &amp;qmlFile);</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;    <span class="keywordtype">void</span> dataSet(<span class="keyword">const</span> QString &amp;requesterId, <span class="keyword">const</span> QJSValue &amp;jsonData);</div>
-<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;    <span class="keywordtype">void</span> defaultPageChanged();</div>
-<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">void</span> activeServerListenPortChanged(quint16 serverPort);</div>
-<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">void</span> serverListenAddressChanged(QString &amp;serverAddress);</div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">void</span> serverListenPortChanged(quint16 serverPort);</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160; </div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;  <span class="keyword">private</span> slots:</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;<span class="preprocessor">#ifndef __ANDROID_API__</span></div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">void</span> updateNotification(<span class="keyword">const</span> QString &amp;title, <span class="keyword">const</span> QString &amp;message);</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordtype">void</span> updateQueryResult(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;result);</div>
-<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">void</span> addComponent(<span class="keyword">const</span> <a class="code" href="structQmlFileContainer.html">QmlFileContainer</a> &amp;qmlFile);</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">void</span> removeComponent(<span class="keyword">const</span> QString &amp;qmlFile);</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">void</span> setData(<span class="keyword">const</span> <a class="code" href="structJsonDataContainer.html">JsonDataContainer</a> &amp;jsonContainer);</div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    Q_PROPERTY(<span class="keywordtype">bool</span> configured READ isConfigured NOTIFY configuredStatusChanged)</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    Q_PROPERTY(<span class="keywordtype">bool</span> connected READ isConnected NOTIFY connectedStatusChanged)</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    Q_PROPERTY(QDateTime emacsLastSeen READ emacsLastSeen NOTIFY emacsLastSeenChanged)</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    Q_PROPERTY(<span class="keywordtype">bool</span> mobile READ mobile CONSTANT)</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;    Q_PROPERTY(quint16 activeServerListenPort READ activeServerListenPort NOTIFY activeServerListenPortChanged)</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    Q_PROPERTY(QString serverListenAddress READ serverListenAddress WRITE setServerListenAddress NOTIFY serverListenAddressChanged)</div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    Q_PROPERTY(quint16 serverListenPort READ serverListenPort WRITE setServerListenPort NOTIFY serverListenPortChanged)</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    Q_PROPERTY(QDateTime serviceStartupTime READ serviceStartupTime CONSTANT)</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    Q_PROPERTY(QDateTime startupTime READ startupTime CONSTANT)</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    Q_PROPERTY(QString defaultPage READ defaultPage WRITE setDefaultPage NOTIFY defaultPageChanged)</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;  <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classEmacsBridge.html">EmacsBridge</a>(QObject *parent=0);</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;    <span class="keyword">explicit</span> <a class="code" href="classEmacsBridge.html">EmacsBridge</a>(<span class="keyword">const</span> QString &amp;dummy, QObject *parent=0){(void)dummy; (void)parent; m_isDummy=<span class="keyword">true</span>;};</div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    ~<a class="code" href="classEmacsBridge.html">EmacsBridge</a>();</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> <a class="code" href="classEmacsBridge.html#a95d6d68416303b3aa353daff6cb4370f">copyToClipboard</a>(<span class="keyword">const</span> QString &amp;text);</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> runQuery(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;query);</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> initDrawer();</div>
+<div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;    Q_INVOKABLE QVariant serverProperty(<span class="keyword">const</span> QString &amp;key);</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> copyServerProperty(<span class="keyword">const</span> QString &amp;key);</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#ifdef __ANDROID_API__</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160; </div>
+<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> <a class="code" href="classEmacsBridge.html#a3cd2fbf0ec3964c8a0d525ed580f304b">openAppSettings</a>();</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> callIntent(<span class="keyword">const</span> QString &amp;iAction, <span class="keyword">const</span> QString &amp;iData=<span class="stringliteral">&quot;&quot;</span>,</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;                                <span class="keyword">const</span> QString &amp;iPackage=<span class="stringliteral">&quot;&quot;</span>, <span class="keyword">const</span> QString &amp;iClass=<span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> requestAndroidPermission(<span class="keyword">const</span> QString &amp;permissionName);</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    Q_INVOKABLE <span class="keywordtype">void</span> setupTermux();</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    <span class="keywordtype">bool</span> isConnected() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <span class="keywordtype">bool</span> isConfigured() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;    QDateTime emacsLastSeen() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;    QDateTime serviceStartupTime() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    QDateTime startupTime() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    QString defaultPage() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span> setDefaultPage(<span class="keyword">const</span> QString &amp;defaultPage);</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    quint16 activeServerListenPort() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    QString serverListenAddress() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    <span class="keywordtype">void</span> setServerListenAddress(<span class="keyword">const</span> QString &amp;serverAddress) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;    quint16 serverListenPort() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;    <span class="keywordtype">void</span> setServerListenPort(<span class="keyword">const</span> quint16 serverPort) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00080"></a><span class="lineno"><a class="line" href="classEmacsBridge.html#a6cb4876d7db47b824491892f0e0b3b0d">   80</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classEmacsBridge.html#a6cb4876d7db47b824491892f0e0b3b0d">mobile</a>()<span class="keyword"> const</span>{</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;<span class="preprocessor">#ifdef __ANDROID_API__</span></div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;<span class="preprocessor">#else</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;      <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    };</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160; </div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;  signals:</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;    <span class="keywordtype">void</span> emacsLastSeenChanged(<span class="keyword">const</span> QDateTime &amp;lastSeen);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">void</span> queryFinished(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;queryResult);</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <span class="keywordtype">void</span> queryError(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;errorMessage);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <span class="keywordtype">void</span> componentAdded(<span class="keyword">const</span> <a class="code" href="structQmlFileContainer.html">QmlFileContainer</a> &amp;qmlFile);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <span class="keywordtype">void</span> componentRemoved(<span class="keyword">const</span> QString &amp;qmlFile);</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <span class="keywordtype">void</span> dataSet(<span class="keyword">const</span> QString &amp;requesterId, <span class="keyword">const</span> QJSValue &amp;jsonData);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    <span class="keywordtype">void</span> defaultPageChanged();</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;    <span class="keywordtype">void</span> activeServerListenPortChanged(quint16 serverPort);</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;    <span class="keywordtype">void</span> serverListenAddressChanged(QString &amp;serverAddress);</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    <span class="keywordtype">void</span> serverListenPortChanged(quint16 serverPort);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">void</span> connectedStatusChanged(<span class="keyword">const</span> <span class="keywordtype">bool</span> status);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">void</span> configuredStatusChanged(<span class="keyword">const</span> <span class="keywordtype">bool</span> status);</div>
 <div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keyword">private</span>:</div>
-<div class="line"><a name="l00104"></a><span class="lineno"><a class="line" href="classEmacsBridge.html#a683c02fce325369f2856ee946eafecfe">  104</a></span>&#160;    QDateTime <a class="code" href="classEmacsBridge.html#a683c02fce325369f2856ee946eafecfe">m_startupTime</a>;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#ifndef __ANDROID_API__</span></div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    QSystemTrayIcon *m_trayIcon;</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    QRemoteObjectNode m_repNode;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    QSharedPointer&lt;EmacsBridgeRemoteReplica&gt; m_rep;</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;    QQmlApplicationEngine *m_engine;</div>
-<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;    <span class="keywordtype">bool</span> m_isDummy=<span class="keyword">false</span>;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    QStringList m_drawerComponents;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;};</div>
-<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160; </div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;  <span class="keyword">private</span> slots:</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;<span class="preprocessor">#ifndef __ANDROID_API__</span></div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;    <span class="keywordtype">void</span> updateNotification(<span class="keyword">const</span> QString &amp;title, <span class="keyword">const</span> QString &amp;message);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordtype">void</span> updateQueryResult(<span class="keyword">const</span> QString &amp;queryKey, <span class="keyword">const</span> QString &amp;result);</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;    <span class="keywordtype">void</span> addComponent(<span class="keyword">const</span> <a class="code" href="structQmlFileContainer.html">QmlFileContainer</a> &amp;qmlFile);</div>
+<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;    <span class="keywordtype">void</span> removeComponent(<span class="keyword">const</span> QString &amp;qmlFile);</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordtype">void</span> setData(<span class="keyword">const</span> <a class="code" href="structJsonDataContainer.html">JsonDataContainer</a> &amp;jsonContainer);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160; </div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;  <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00113"></a><span class="lineno"><a class="line" href="classEmacsBridge.html#a683c02fce325369f2856ee946eafecfe">  113</a></span>&#160;    QDateTime <a class="code" href="classEmacsBridge.html#a683c02fce325369f2856ee946eafecfe">m_startupTime</a>;</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;<span class="preprocessor">#ifndef __ANDROID_API__</span></div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    QSystemTrayIcon *m_trayIcon;</div>
+<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;    QRemoteObjectNode m_repNode;</div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    QSharedPointer&lt;EmacsBridgeRemoteReplica&gt; m_rep;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    QQmlApplicationEngine *m_engine;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;    <span class="keywordtype">bool</span> m_isDummy=<span class="keyword">false</span>;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;    QStringList m_drawerComponents;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;};</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160; </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#endif</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <div class="ttc" id="aclassEmacsBridge_html"><div class="ttname"><a href="classEmacsBridge.html">EmacsBridge</a></div><div class="ttdef"><b>Definition:</b> emacsbridge.h:28</div></div>
-<div class="ttc" id="aclassEmacsBridge_html_a683c02fce325369f2856ee946eafecfe"><div class="ttname"><a href="classEmacsBridge.html#a683c02fce325369f2856ee946eafecfe">EmacsBridge::m_startupTime</a></div><div class="ttdeci">QDateTime m_startupTime</div><div class="ttdoc">The startup time of the UI part.</div><div class="ttdef"><b>Definition:</b> emacsbridge.h:104</div></div>
-<div class="ttc" id="aclassEmacsBridge_html_a3cd2fbf0ec3964c8a0d525ed580f304b"><div class="ttname"><a href="classEmacsBridge.html#a3cd2fbf0ec3964c8a0d525ed580f304b">EmacsBridge::openAppSettings</a></div><div class="ttdeci">Q_INVOKABLE void openAppSettings()</div><div class="ttdef"><b>Definition:</b> emacsbridge.cpp:201</div></div>
+<div class="ttc" id="aclassEmacsBridge_html_a683c02fce325369f2856ee946eafecfe"><div class="ttname"><a href="classEmacsBridge.html#a683c02fce325369f2856ee946eafecfe">EmacsBridge::m_startupTime</a></div><div class="ttdeci">QDateTime m_startupTime</div><div class="ttdoc">The startup time of the UI part.</div><div class="ttdef"><b>Definition:</b> emacsbridge.h:113</div></div>
+<div class="ttc" id="aclassEmacsBridge_html_a3cd2fbf0ec3964c8a0d525ed580f304b"><div class="ttname"><a href="classEmacsBridge.html#a3cd2fbf0ec3964c8a0d525ed580f304b">EmacsBridge::openAppSettings</a></div><div class="ttdeci">Q_INVOKABLE void openAppSettings()</div><div class="ttdef"><b>Definition:</b> emacsbridge.cpp:209</div></div>
 <div class="ttc" id="astructJsonDataContainer_html"><div class="ttname"><a href="structJsonDataContainer.html">JsonDataContainer</a></div><div class="ttdef"><b>Definition:</b> emacsbridgetypes.h:36</div></div>
-<div class="ttc" id="aclassEmacsBridge_html_a95d6d68416303b3aa353daff6cb4370f"><div class="ttname"><a href="classEmacsBridge.html#a95d6d68416303b3aa353daff6cb4370f">EmacsBridge::copyToClipboard</a></div><div class="ttdeci">Q_INVOKABLE void copyToClipboard(const QString &amp;text)</div><div class="ttdef"><b>Definition:</b> emacsbridge.cpp:158</div></div>
+<div class="ttc" id="aclassEmacsBridge_html_a95d6d68416303b3aa353daff6cb4370f"><div class="ttname"><a href="classEmacsBridge.html#a95d6d68416303b3aa353daff6cb4370f">EmacsBridge::copyToClipboard</a></div><div class="ttdeci">Q_INVOKABLE void copyToClipboard(const QString &amp;text)</div><div class="ttdef"><b>Definition:</b> emacsbridge.cpp:166</div></div>
 <div class="ttc" id="astructQmlFileContainer_html"><div class="ttname"><a href="structQmlFileContainer.html">QmlFileContainer</a></div><div class="ttdef"><b>Definition:</b> emacsbridgetypes.h:13</div></div>
-<div class="ttc" id="aclassEmacsBridge_html_a6cb4876d7db47b824491892f0e0b3b0d"><div class="ttname"><a href="classEmacsBridge.html#a6cb4876d7db47b824491892f0e0b3b0d">EmacsBridge::mobile</a></div><div class="ttdeci">bool mobile() const</div><div class="ttdef"><b>Definition:</b> emacsbridge.h:74</div></div>
+<div class="ttc" id="aclassEmacsBridge_html_a6cb4876d7db47b824491892f0e0b3b0d"><div class="ttname"><a href="classEmacsBridge.html#a6cb4876d7db47b824491892f0e0b3b0d">EmacsBridge::mobile</a></div><div class="ttdeci">bool mobile() const</div><div class="ttdef"><b>Definition:</b> emacsbridge.h:80</div></div>
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated by &#160;<a href="http://www.doxygen.org/index.html">

@@ -13,6 +13,9 @@ Inheritance diagram for Emacs\+Bridge\+:\begin{figure}[H]
 \doxysubsection*{Signals}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\Hypertarget{classEmacsBridge_ad8a7e237a1a24b99537c7e710fff3eca}\label{classEmacsBridge_ad8a7e237a1a24b99537c7e710fff3eca}} 
+void {\bfseries emacs\+Last\+Seen\+Changed} (const Q\+Date\+Time \&last\+Seen)
+\item 
 \mbox{\Hypertarget{classEmacsBridge_ac2754f20e19bc5723ae1a97e13079b85}\label{classEmacsBridge_ac2754f20e19bc5723ae1a97e13079b85}} 
 void {\bfseries query\+Finished} (const Q\+String \&query\+Key, const Q\+String \&query\+Result)
 \item 
@@ -39,6 +42,12 @@ void {\bfseries server\+Listen\+Address\+Changed} (Q\+String \&server\+Address)
 \item 
 \mbox{\Hypertarget{classEmacsBridge_adf86320de48413a54df7a9e3353d8395}\label{classEmacsBridge_adf86320de48413a54df7a9e3353d8395}} 
 void {\bfseries server\+Listen\+Port\+Changed} (quint16 server\+Port)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a681b447a732da020a809b836b1de5ef0}\label{classEmacsBridge_a681b447a732da020a809b836b1de5ef0}} 
+void {\bfseries connected\+Status\+Changed} (const bool status)
+\item 
+\mbox{\Hypertarget{classEmacsBridge_ac6e898955d2548da2ce2938070dd80fc}\label{classEmacsBridge_ac6e898955d2548da2ce2938070dd80fc}} 
+void {\bfseries configured\+Status\+Changed} (const bool status)
 \end{DoxyCompactItemize}
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -74,6 +83,15 @@ Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void {\bfseries request\+Android\+Permission} (
 \mbox{\Hypertarget{classEmacsBridge_a7693c5a7ef4114b221a6cec4a6ef6e9f}\label{classEmacsBridge_a7693c5a7ef4114b221a6cec4a6ef6e9f}} 
 Q\+\_\+\+I\+N\+V\+O\+K\+A\+B\+LE void {\bfseries setup\+Termux} ()
 \item 
+\mbox{\Hypertarget{classEmacsBridge_ad3e4eccae2c6dfbcc57c3e70c2dda928}\label{classEmacsBridge_ad3e4eccae2c6dfbcc57c3e70c2dda928}} 
+bool {\bfseries is\+Connected} () const
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a535fb06f7179bbf7b97506e56d345a5c}\label{classEmacsBridge_a535fb06f7179bbf7b97506e56d345a5c}} 
+bool {\bfseries is\+Configured} () const
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a794dea052d3ca03ea489c5addd5b9b51}\label{classEmacsBridge_a794dea052d3ca03ea489c5addd5b9b51}} 
+Q\+Date\+Time {\bfseries emacs\+Last\+Seen} () const
+\item 
 \mbox{\Hypertarget{classEmacsBridge_aa91ecd35d9f1573e3d11749083d1f597}\label{classEmacsBridge_aa91ecd35d9f1573e3d11749083d1f597}} 
 Q\+Date\+Time {\bfseries service\+Startup\+Time} () const
 \item 
@@ -105,6 +123,15 @@ bool \mbox{\hyperlink{classEmacsBridge_a6cb4876d7db47b824491892f0e0b3b0d}{mobile
 \end{DoxyCompactItemize}
 \doxysubsection*{Properties}
 \begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a79f93225953d44ede2f57ea54cc1db40}\label{classEmacsBridge_a79f93225953d44ede2f57ea54cc1db40}} 
+bool {\bfseries configured}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a049bae3d6f652cfc084430e16527b15e}\label{classEmacsBridge_a049bae3d6f652cfc084430e16527b15e}} 
+bool {\bfseries connected}
+\item 
+\mbox{\Hypertarget{classEmacsBridge_a2c96c92116ca9e07dc1fb6fbff8ab56f}\label{classEmacsBridge_a2c96c92116ca9e07dc1fb6fbff8ab56f}} 
+Q\+Date\+Time {\bfseries emacs\+Last\+Seen}
 \item 
 \mbox{\Hypertarget{classEmacsBridge_a428ec33761c3d30f465e12f9762b6370}\label{classEmacsBridge_a428ec33761c3d30f465e12f9762b6370}} 
 bool {\bfseries mobile}
@@ -166,7 +193,7 @@ Q\+String\+List {\bfseries m\+\_\+drawer\+Components}
 
 
 \doxysubsection{Detailed Description}
-This is the main class for the service process. Per default it sets up a connection to the service using Qt remote objects, and exposes select service A\+P\+Is to Q\+ML. It is also possible to use the dummy constructor to test loading of Q\+ML components without providing the full backend logic. 
+This is the main class for the G\+UI process. Per default it sets up a connection to the service using Qt remote objects, and exposes select service A\+P\+Is to Q\+ML. It is also possible to use the dummy constructor to test loading of Q\+ML components without providing the full backend logic. 
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classEmacsBridge_a95d6d68416303b3aa353daff6cb4370f}\label{classEmacsBridge_a95d6d68416303b3aa353daff6cb4370f}} 

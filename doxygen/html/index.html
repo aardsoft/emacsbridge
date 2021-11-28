@@ -75,6 +75,7 @@ $(function() {
 <li class="level1"><a href="#architecture">Architecture</a><ul><li class="level2"><a href="#connection_setup">Connection setup</a></li>
 <li class="level2"><a href="#urls">URLs</a><ul><li class="level3"><a href="#icons">/icons</a></li>
 <li class="level3"><a href="#lisp">/lisp</a></li>
+<li class="level3"><a href="#local">/local</a></li>
 <li class="level3"><a href="#rpc">/rpc</a><ul><li class="level4"><a href="#addComponent">addComponent</a></li>
 <li class="level4"><a href="#setData">setData</a></li>
 <li class="level4"><a href="#notification">notification</a></li>
@@ -176,6 +177,9 @@ URLs</h2>
 <h3><a class="anchor" id="lisp"></a>
 /lisp</h3>
 <p>Lisp files bundled with the application. Served without modification, directory index is enabled. No authentication required.</p>
+<h3><a class="anchor" id="local"></a>
+/local</h3>
+<p>Files served from a local directory, as set in the <code>serversettings.ini</code> in the <code>http/localDir</code> key. Per default this is not configured.</p>
 <h3><a class="anchor" id="rpc"></a>
 /rpc</h3>
 <p>Expects JSON data in a POST request, with a valid auth token. The method for which JSON data is sent must be specified in the <code>method</code> header. Only available after initial setup has been completed. The following methods are available:</p>

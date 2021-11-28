@@ -55,6 +55,9 @@ void {\bfseries query\+Finished} (const \mbox{\hyperlink{structEmacsClient_1_1Qu
 \item 
 \mbox{\Hypertarget{classEmacsClient_ac53035beb3dbd9a19ea64cb5dfa58c80}\label{classEmacsClient_ac53035beb3dbd9a19ea64cb5dfa58c80}} 
 void {\bfseries query\+Error} (const Q\+String \&query\+Key, const Q\+String \&error\+Message)
+\item 
+\mbox{\Hypertarget{classEmacsClient_a8a2b3e93012f2a606dba2c6891a84779}\label{classEmacsClient_a8a2b3e93012f2a606dba2c6891a84779}} 
+void {\bfseries emacs\+Last\+Seen\+Changed} (const Q\+Date\+Time \&last\+Seen)
 \end{DoxyCompactItemize}
 \doxysubsection*{Static Public Member Functions}
 \begin{DoxyCompactItemize}
@@ -67,18 +70,30 @@ static \mbox{\hyperlink{classEmacsClient}{Emacs\+Client}} $\ast$ {\bfseries inst
 \item 
 \mbox{\Hypertarget{classEmacsClient_aa2a77f0d92046d3e398664cb39c69e04}\label{classEmacsClient_aa2a77f0d92046d3e398664cb39c69e04}} 
 Q\+String {\bfseries do\+Query} (const Q\+String \&query\+Key, const Q\+String \&query\+String)
+\item 
+\mbox{\Hypertarget{classEmacsClient_a30d8a7b7844c74a33bedb796b6839f6a}\label{classEmacsClient_a30d8a7b7844c74a33bedb796b6839f6a}} 
+void {\bfseries timeout\+Handler} ()
 \end{DoxyCompactItemize}
 \doxysubsection*{Private Member Functions}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classEmacsClient_ab91696db67b22b7d3523f7f15388ac00}\label{classEmacsClient_ab91696db67b22b7d3523f7f15388ac00}} 
 Q\+String {\bfseries query} (const Q\+String \&query\+Key, const Q\+String \&query\+String, Q\+I\+O\+Device \&socket)
+\item 
+\mbox{\Hypertarget{classEmacsClient_acafbc2f4b9b7dc9ff1c52eb135262bae}\label{classEmacsClient_acafbc2f4b9b7dc9ff1c52eb135262bae}} 
+void {\bfseries reset\+Timer} (const bool success=false)
 \end{DoxyCompactItemize}
 \doxysubsection*{Private Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \mbox{\Hypertarget{classEmacsClient_affbed535d6fb19dd5dd58f1e21348b36}\label{classEmacsClient_affbed535d6fb19dd5dd58f1e21348b36}} 
 Q\+Queue$<$ \mbox{\hyperlink{structEmacsClient_1_1Query}{Query}} $>$ {\bfseries queries}
+\item 
+\mbox{\Hypertarget{classEmacsClient_ae17789e7d53ad6e7bfa46ef261be8648}\label{classEmacsClient_ae17789e7d53ad6e7bfa46ef261be8648}} 
+Q\+Timer $\ast$ {\bfseries m\+\_\+check\+Timer}
+\item 
+\mbox{\Hypertarget{classEmacsClient_a123f64a96305428d4ed6b800144c0b8a}\label{classEmacsClient_a123f64a96305428d4ed6b800144c0b8a}} 
+Q\+Date\+Time {\bfseries m\+\_\+emacs\+Last\+Seen}
 \end{DoxyCompactItemize}
 \doxysubsection*{Static Private Attributes}
 \begin{DoxyCompactItemize}

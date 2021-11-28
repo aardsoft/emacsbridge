@@ -83,6 +83,9 @@ Inheritance diagram for EmacsBridge:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="signals"></a>
 Signals</h2></td></tr>
+<tr class="memitem:ad8a7e237a1a24b99537c7e710fff3eca"><td class="memItemLeft" align="right" valign="top"><a id="ad8a7e237a1a24b99537c7e710fff3eca"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>emacsLastSeenChanged</b> (const QDateTime &amp;lastSeen)</td></tr>
+<tr class="separator:ad8a7e237a1a24b99537c7e710fff3eca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2754f20e19bc5723ae1a97e13079b85"><td class="memItemLeft" align="right" valign="top"><a id="ac2754f20e19bc5723ae1a97e13079b85"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>queryFinished</b> (const QString &amp;queryKey, const QString &amp;queryResult)</td></tr>
 <tr class="separator:ac2754f20e19bc5723ae1a97e13079b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -110,6 +113,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>serverListenAddressCh
 <tr class="memitem:adf86320de48413a54df7a9e3353d8395"><td class="memItemLeft" align="right" valign="top"><a id="adf86320de48413a54df7a9e3353d8395"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>serverListenPortChanged</b> (quint16 serverPort)</td></tr>
 <tr class="separator:adf86320de48413a54df7a9e3353d8395"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a681b447a732da020a809b836b1de5ef0"><td class="memItemLeft" align="right" valign="top"><a id="a681b447a732da020a809b836b1de5ef0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>connectedStatusChanged</b> (const bool status)</td></tr>
+<tr class="separator:a681b447a732da020a809b836b1de5ef0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6e898955d2548da2ce2938070dd80fc"><td class="memItemLeft" align="right" valign="top"><a id="ac6e898955d2548da2ce2938070dd80fc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>configuredStatusChanged</b> (const bool status)</td></tr>
+<tr class="separator:ac6e898955d2548da2ce2938070dd80fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -144,6 +153,15 @@ Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><b>requestAn
 <tr class="memitem:a7693c5a7ef4114b221a6cec4a6ef6e9f"><td class="memItemLeft" align="right" valign="top"><a id="a7693c5a7ef4114b221a6cec4a6ef6e9f"></a>
 Q_INVOKABLE void&#160;</td><td class="memItemRight" valign="bottom"><b>setupTermux</b> ()</td></tr>
 <tr class="separator:a7693c5a7ef4114b221a6cec4a6ef6e9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad3e4eccae2c6dfbcc57c3e70c2dda928"><td class="memItemLeft" align="right" valign="top"><a id="ad3e4eccae2c6dfbcc57c3e70c2dda928"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isConnected</b> () const</td></tr>
+<tr class="separator:ad3e4eccae2c6dfbcc57c3e70c2dda928"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a535fb06f7179bbf7b97506e56d345a5c"><td class="memItemLeft" align="right" valign="top"><a id="a535fb06f7179bbf7b97506e56d345a5c"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>isConfigured</b> () const</td></tr>
+<tr class="separator:a535fb06f7179bbf7b97506e56d345a5c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a794dea052d3ca03ea489c5addd5b9b51"><td class="memItemLeft" align="right" valign="top"><a id="a794dea052d3ca03ea489c5addd5b9b51"></a>
+QDateTime&#160;</td><td class="memItemRight" valign="bottom"><b>emacsLastSeen</b> () const</td></tr>
+<tr class="separator:a794dea052d3ca03ea489c5addd5b9b51"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa91ecd35d9f1573e3d11749083d1f597"><td class="memItemLeft" align="right" valign="top"><a id="aa91ecd35d9f1573e3d11749083d1f597"></a>
 QDateTime&#160;</td><td class="memItemRight" valign="bottom"><b>serviceStartupTime</b> () const</td></tr>
 <tr class="separator:aa91ecd35d9f1573e3d11749083d1f597"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -176,6 +194,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>setServerListenPort</
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="properties"></a>
 Properties</h2></td></tr>
+<tr class="memitem:a79f93225953d44ede2f57ea54cc1db40"><td class="memItemLeft" align="right" valign="top"><a id="a79f93225953d44ede2f57ea54cc1db40"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>configured</b></td></tr>
+<tr class="separator:a79f93225953d44ede2f57ea54cc1db40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a049bae3d6f652cfc084430e16527b15e"><td class="memItemLeft" align="right" valign="top"><a id="a049bae3d6f652cfc084430e16527b15e"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>connected</b></td></tr>
+<tr class="separator:a049bae3d6f652cfc084430e16527b15e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c96c92116ca9e07dc1fb6fbff8ab56f"><td class="memItemLeft" align="right" valign="top"><a id="a2c96c92116ca9e07dc1fb6fbff8ab56f"></a>
+QDateTime&#160;</td><td class="memItemRight" valign="bottom"><b>emacsLastSeen</b></td></tr>
+<tr class="separator:a2c96c92116ca9e07dc1fb6fbff8ab56f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a428ec33761c3d30f465e12f9762b6370"><td class="memItemLeft" align="right" valign="top"><a id="a428ec33761c3d30f465e12f9762b6370"></a>
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>mobile</b></td></tr>
 <tr class="separator:a428ec33761c3d30f465e12f9762b6370"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -236,7 +263,7 @@ QStringList&#160;</td><td class="memItemRight" valign="bottom"><b>m_drawerCompon
 <tr class="separator:a20eae9e9287f57d76ec2c679ef3a7f0c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>This is the main class for the service process. Per default it sets up a connection to the service using Qt remote objects, and exposes select service APIs to QML. It is also possible to use the dummy constructor to test loading of QML components without providing the full backend logic. </p>
+<div class="textblock"><p>This is the main class for the GUI process. Per default it sets up a connection to the service using Qt remote objects, and exposes select service APIs to QML. It is also possible to use the dummy constructor to test loading of QML components without providing the full backend logic. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a95d6d68416303b3aa353daff6cb4370f"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a95d6d68416303b3aa353daff6cb4370f">&#9670;&nbsp;</a></span>copyToClipboard()</h2>
